@@ -76,5 +76,7 @@ export const defaultUser: IUser = {
   image: '',
   posts: [],
   followers: [],
-  following: []
+  following: [],
+  createdAt: new Date(),
+  updatedAt: new Date()
 };
