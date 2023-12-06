@@ -1,22 +1,37 @@
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate } from '@tanstack/react-router';
 import { useInView } from 'react-intersection-observer';
 
-import { Loader, PostCard, UserCard } from '@/components/Shared';
 import { Button } from '@/components/ui/button';
+import Loader from '@/components/Shared/Loader';
+import UserCard from '@/components/User/UserCard';
+import PostCard from '@/components/Post/PostCard';
 import { useGetTopCreators, useGetPosts } from '@/lib/hooks/query';
-import { useEffect } from 'react';
 
 const Home = () => {
-  const [ref, isInView] = useInView({ threshold: 0 });
+  const [postsRef, isInPostsView] = useInView({ threshold: 0 });
+  const [creatorsRef, isInCreatorsView] = useInView({ threshold: 0 });
   const { isLoadingPosts, posts, hasNextPosts, isFetchingNextPosts, fetchNextPosts } = useGetPosts();
-  const { topCreators, isLoadingTopCreators } = useGetTopCreators();
+  const {
+    topCreators,
+    isLoadingTopCreators,
+    hasNextTopCreators,
+    isFetchingNextTopCreators,
+    fetchNextTopCreators
+  } = useGetTopCreators();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isInView && hasNextPosts && !isFetchingNextPosts) {
+    if (isInPostsView && hasNextPosts && !isFetchingNextPosts) {
       fetchNextPosts();
     }
-  }, [isInView]);
+  }, [isInPostsView]);
+
+  useEffect(() => {
+    if (isInCreatorsView && hasNextTopCreators && !isFetchingNextTopCreators) {
+      fetchNextTopCreators();
+    }
+  }, [isInCreatorsView]);
 
   useEffect(() => {
     document.title = 'InstaFram';
@@ -39,7 +54,7 @@ const Home = () => {
             </ul>
           )}
           {hasNextPosts && (
-            <div ref={ref}>
+            <div ref={postsRef}>
               <Loader />
             </div>
           )}
@@ -59,10 +74,15 @@ const Home = () => {
             ))}
           </ul>
         )}
+        {hasNextTopCreators && (
+          <div ref={creatorsRef}>
+            <Loader />
+          </div>
+        )}
       </div>
 
       <Button
-        onClick={() => navigate('/posts/create')}
+        onClick={() => navigate({ to: '/posts/create' })}
         className='hidden md:flex fixed h-12 w-12 p-3 rounded-full right-16 bottom-16 2xl:right-[32rem] xl:right-72'>
         <img src='/assets/icons/add-post.svg' alt='create post' className='w-9 h-9 invert-white' />
       </Button>

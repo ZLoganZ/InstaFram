@@ -1,6 +1,8 @@
-import { Outlet, Navigate } from 'react-router-dom';
+import { Outlet, Navigate } from '@tanstack/react-router';
 
-import { TopBar, BottomBar, LeftSideBar } from '@/components/Navbar';
+import TopBar from '@/components/Navbar/TopBar';
+import LeftSideBar from '@/components/Navbar/LeftSideBar';
+import BottomBar from '@/components/Navbar/BottomBar';
 import { useAuth } from '@/lib/hooks/useAuth';
 
 const MainLayout = () => {
@@ -9,11 +11,11 @@ const MainLayout = () => {
   return (
     <>
       {isAuthenticated ? (
-        <div className='w-full md:flex'>
+        <div className='w-full md:flex overflow-hidden'>
           <TopBar />
           <LeftSideBar />
 
-          <section className='flex flex-1 h-full'>
+          <section className='flex flex-1 h-full overflow-auto'>
             <Outlet />
           </section>
 

@@ -20,8 +20,8 @@ class UserService extends BaseService {
   getUserByID = (userID: string): Promise<AxiosResponse<IResponse<IUser>>> => {
     return this.get(`/users/${userID}`);
   };
-  getTopCreators = (): Promise<AxiosResponse<IResponse<IUser[]>>> => {
-    return this.get(`/users/top-creators`);
+  getTopCreators = (page: number): Promise<AxiosResponse<IResponse<IUser[]>>> => {
+    return this.get(`/users/top-creators?page=${page}`);
   };
   followUser = (userID: string): Promise<AxiosResponse<IResponse<boolean>>> => {
     return this.post(`/users/follow/${userID}`);

@@ -1,23 +1,26 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, Link, Outlet, useParams, useLocation } from 'react-router-dom';
+import { Link, Outlet, useParams, useRouterState } from '@tanstack/react-router';
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { Loader, StatBlock } from '@/components/Shared';
-import { EditProfile, LikedPosts, SavedPosts } from '@/pages';
+import Loader from '@/components/Shared/Loader';
+import StatBlock from '@/components/User/StatBlock';
+import EditProfile from '@/components/Forms/User/EditProfile';
+import { ProfileRoute } from '@/routes/private.routes';
 import { useGetUserByID } from '@/lib/hooks/query';
 import { useFollowUser } from '@/lib/hooks/mutation';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { cn, getImageURL } from '@/lib/utils';
-import UserPosts from './UserPosts';
 
 const Profile = () => {
-  const { id } = useParams();
+  const { profileID } = useParams({ from: ProfileRoute.id });
   const { currentUser, setUser } = useAuth();
-  const { pathname } = useLocation();
+  const routerState = useRouterState();
   const [open, setOpen] = useState(false);
 
-  const { user, isLoadingUser } = useGetUserByID(id ?? '');
+  const { pathname } = routerState.location;
+
+  const { user, isLoadingUser } = useGetUserByID(profileID);
 
   const { followUser, isLoadingFollowUser } = useFollowUser(currentUser._id);
 
@@ -27,9 +30,19 @@ const Profile = () => {
     if (user) document.title = `${user.name} (@${user.alias}) - InstaFram`;
   }, [user]);
 
+  const handleFollow = async () => {
+    await followUser(user._id);
+    setUser({
+      ...currentUser,
+      following: isFollowing
+        ? currentUser.following.filter((id) => id !== user._id)
+        : [...currentUser.following, user._id]
+    });
+  };
+
   return (
     <>
-      {isLoadingUser || !user ? (
+      {isLoadingUser ? (
         <div className='flex-center w-full h-full'>
           <Loader />
         </div>
@@ -70,29 +83,24 @@ const Profile = () => {
                           'h-12 bg-light-4 dark:bg-dark-4 px-5 flex-center gap-2 rounded-lg cursor-pointer',
                           currentUser._id !== user._id && 'hidden'
                         )}>
-                        <img src='/assets/icons/edit.svg' alt='edit' width={20} height={20} />
+                        <img src='/assets/icons/edit.svg' alt='edit' className='h-5 w-5' />
                         <p className='flex whitespace-nowrap small-medium'>Edit Profile</p>
                       </div>
                     </DialogTrigger>
-                    <DialogContent className='max-w-lg lg:max-w-5xl'>
+                    <DialogContent className='max-w-lg md:max-w-2xl lg:max-w-5xl'>
                       <EditProfile setOpen={setOpen} />
                     </DialogContent>
                   </Dialog>
                 </div>
-                <div className={cn(currentUser._id === id && 'hidden')}>
+                <div
+                  className={cn(
+                    (currentUser._id === profileID || currentUser.alias === profileID) && 'hidden'
+                  )}>
                   <Button
                     type='button'
                     className='px-8'
                     disabled={isLoadingFollowUser}
-                    onClick={async () => {
-                      await followUser(user._id);
-                      setUser({
-                        ...currentUser,
-                        following: isFollowing
-                          ? currentUser.following.filter((id) => id !== user._id)
-                          : [...currentUser.following, user._id]
-                      });
-                    }}>
+                    onClick={handleFollow}>
                     {isLoadingFollowUser ? (
                       <div className='flex-center gap-2'>
                         <Loader />
@@ -112,40 +120,37 @@ const Profile = () => {
           {user._id === currentUser._id && (
             <div className='flex max-w-5xl w-full'>
               <Link
-                to={`/profile/${id}`}
+                to='/profile/$profileID'
+                params={{ profileID: currentUser.alias || currentUser._id }}
                 className={cn(
-                  'flex-center gap-3 py-4 w-full xl:w-48 bg-light-2 dark:bg-dark-2 transition flex-1 xl:flex-initial rounded-l-lg',
-                  pathname === `/profile/${id}` && '!bg-light-4 dark:!bg-dark-4'
+                  'flex-center gap-3 py-4 w-full xl:w-48 bg-light-2 dark:bg-dark-2 flex-1 xl:flex-initial rounded-l-lg',
+                  pathname === `/profile/${profileID}` && '!bg-light-4 dark:!bg-dark-4'
                 )}>
-                <img src='/assets/icons/posts.svg' alt='posts' width={20} height={20} />
+                <img src='/assets/icons/posts.svg' alt='posts' className='h-5 w-5' />
                 Posts
               </Link>
               <Link
-                to={`/profile/${id}/liked`}
+                to='/profile/$profileID/liked'
+                params={{ profileID: currentUser.alias || currentUser._id }}
                 className={cn(
-                  'flex-center gap-3 py-4 w-full xl:w-48 bg-light-2 dark:bg-dark-2 transition flex-1 xl:flex-initial',
-                  pathname === `/profile/${id}/liked` && '!bg-light-4 dark:!bg-dark-4'
+                  'flex-center gap-3 py-4 w-full xl:w-48 bg-light-2 dark:bg-dark-2 flex-1 xl:flex-initial',
+                  pathname === `/profile/${profileID}/liked` && '!bg-light-4 dark:!bg-dark-4'
                 )}>
-                <img src='/assets/icons/like.svg' alt='liked' width={20} height={20} />
+                <img src='/assets/icons/like.svg' alt='liked' className='h-5 w-5' />
                 Liked Posts
               </Link>
               <Link
-                to={`/profile/${id}/saved`}
+                to='/profile/$profileID/saved'
+                params={{ profileID: currentUser.alias || currentUser._id }}
                 className={cn(
-                  'flex-center gap-3 py-4 w-full xl:w-48 bg-light-2 dark:bg-dark-2 transition flex-1 xl:flex-initial rounded-r-lg',
-                  pathname === `/profile/${id}/saved` && '!bg-light-4 dark:!bg-dark-4'
+                  'flex-center gap-3 py-4 w-full xl:w-48 bg-light-2 dark:bg-dark-2 flex-1 xl:flex-initial rounded-r-lg',
+                  pathname === `/profile/${profileID}/saved` && '!bg-light-4 dark:!bg-dark-4'
                 )}>
-                <img src='/assets/icons/save.svg' alt='saved' width={20} height={20} />
+                <img src='/assets/icons/save.svg' alt='saved' className='h-5 w-5' />
                 Saved Posts
               </Link>
             </div>
           )}
-
-          <Routes>
-            <Route index element={<UserPosts />} />
-            {user._id === currentUser._id && <Route path='/liked' element={<LikedPosts />} />}
-            {user._id === currentUser._id && <Route path='/saved' element={<SavedPosts />} />}
-          </Routes>
 
           <Outlet />
         </div>

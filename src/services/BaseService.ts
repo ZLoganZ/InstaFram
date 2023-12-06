@@ -1,16 +1,17 @@
 import axios from 'axios';
-import { API_KEY, CLIENT_ID, AUTHORIZATION, GITHUB_TOKEN } from '@/lib/SettingSystem';
+
+import { HEADER } from '@/lib/constants';
 
 const DOMAIN_NAME = import.meta.env.VITE_SERVER_URL as string;
 
 const headers = {
-  Authorization: localStorage.getItem(AUTHORIZATION),
-  'x-api-key': localStorage.getItem(API_KEY),
-  'x-client-id': localStorage.getItem(CLIENT_ID)
+  Authorization: localStorage.getItem(HEADER.AUTHORIZATION),
+  'x-api-key': localStorage.getItem(HEADER.API_KEY),
+  'x-client-id': localStorage.getItem(HEADER.CLIENT_ID)
 };
 
 const githubHeaders = {
-  'x-github-token': localStorage.getItem(GITHUB_TOKEN),
+  'x-github-token': localStorage.getItem(HEADER.GITHUB_TOKEN),
   ...headers
 };
 

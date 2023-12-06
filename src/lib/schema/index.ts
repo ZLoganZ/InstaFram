@@ -33,18 +33,6 @@ export const PostFormSchema = z.object({
   tags: z
     .string()
     .min(1, { message: 'Tags must not be empty' })
-    .refine((tags) => !tags.split(', ').some((tag) => tag.includes(' ')), {
-      message: 'Each tag must not contain spaces'
-    })
-    .refine(
-      (tags) => {
-        const tagsArray = tags.split(',');
-        return !tagsArray.some((tag) => tagsArray.reduce((acc, cur) => acc + (tag === cur ? 1 : 0), 0) > 1);
-      },
-      {
-        message: 'Tag must not duplicate'
-      }
-    )
     .refine(
       (tags) =>
         !tags.includes('.') ||
@@ -52,6 +40,16 @@ export const PostFormSchema = z.object({
         !tags.includes('?') ||
         !tags.includes(':') ||
         !tags.includes(';') ||
+        !tags.includes("'") ||
+        !tags.includes('"') ||
+        !tags.includes('[') ||
+        !tags.includes(']') ||
+        !tags.includes('{') ||
+        !tags.includes('}') ||
+        !tags.includes('(') ||
+        !tags.includes(')') ||
+        !tags.includes('<') ||
+        !tags.includes('>') ||
         !tags.includes('/'),
       {
         message: 'Tag must not contain special characters'
@@ -64,4 +62,8 @@ export const updateUserSchema = z.object({
   bio: z.string().min(5, { message: 'Bio must be at least 5 characters' }),
   alias: z.string().min(3, { message: 'Alias must be at least 3 characters' }),
   image: z.custom<File>()
+});
+
+export const commentSchema = z.object({
+  content: z.string().min(1, { message: 'Comment must not be empty' })
 });

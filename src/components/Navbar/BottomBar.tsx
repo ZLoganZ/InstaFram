@@ -1,22 +1,25 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useRouterState } from '@tanstack/react-router';
 
-import { bottomBarLinks } from '@/lib/constants';
+import { navbarLinks } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 const BottomBar = () => {
-  const { pathname } = useLocation();
+  const routerState = useRouterState();
+  
+  const { pathname } = routerState.location;
 
   return (
     <section className='z-50 flex-between w-full sticky bottom-0 rounded-t-[20px] bg-light-2 dark:bg-dark-2 px-5 py-4 md:hidden'>
-      {bottomBarLinks.map((link) => {
+      {navbarLinks.map((link) => {
         const isActive = pathname === link.route;
+
         return (
           <Link
-            to={link.route}
             key={link.label}
+            to={link.route}
             className={cn(
-              'flex-center flex-col gap-1 p-2 transition',
-              isActive && 'bg-primary rounded-[10px]'
+              'flex-center flex-col gap-1 p-2 transition group hover:bg-primary rounded-lg',
+              isActive && 'bg-primary rounded-lg'
             )}>
             <img
               src={link.imgURL}

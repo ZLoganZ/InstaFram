@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useRouterState } from '@tanstack/react-router';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -18,7 +18,9 @@ const TopBar = () => {
   const { signout } = useSignout();
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const routerState = useRouterState();
+
+  const { pathname } = routerState.location;
 
   return (
     <section className='sticky top-0 z-50 md:hidden bg-light-2 dark:bg-dark-2 w-full'>
@@ -49,7 +51,12 @@ const TopBar = () => {
                   type='button'
                   variant='ghost'
                   className='justify-start gap-4 py-6 hover:bg-primary group w-full'
-                  onClick={() => navigate(`/profile/${currentUser._id}`)}>
+                  onClick={() =>
+                    navigate({
+                      to: '/profile/$profileID',
+                      params: { profileID: currentUser.alias || currentUser._id }
+                    })
+                  }>
                   <img
                     src='/assets/icons/user.svg'
                     alt='logout'

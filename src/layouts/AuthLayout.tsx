@@ -1,4 +1,4 @@
-import { Outlet, Navigate } from 'react-router-dom';
+import { Outlet, Navigate } from '@tanstack/react-router';
 
 import { useAuth } from '@/lib/hooks/useAuth';
 
@@ -15,9 +15,9 @@ const AuthLayout = () => {
             <Outlet />
           </section>
           <img
-            className='hidden xl:block h-screen w-1/2 object-cover bg-no-repeat bg-center'
-            src='/assets/images/side-img2.svg'
-            alt='logo'
+            className='hidden lg:block h-screen w-1/2 object-cover bg-no-repeat bg-center'
+            src='/assets/images/side-img.svg'
+            alt='side-image'
           />
         </>
       )}

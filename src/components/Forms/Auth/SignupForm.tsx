@@ -1,12 +1,12 @@
 import { z } from 'zod';
-import { Link } from 'react-router-dom';
+import { Link } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Loader } from '@/components/Shared';
+import Loader from '@/components/Shared/Loader';
 import { useSignup } from '@/lib/hooks/mutation';
 import { SignupFormSchema } from '@/lib/schema';
 import { ErrorResponse } from '@/types';
@@ -32,20 +32,17 @@ const SignupForm = () => {
         switch (errorResponse.response.data.message) {
           case 'Email is already exist':
             form.setError('email', {
-              message: errorResponse.response.data.message
+              message: 'Email is already exist'
             });
             break;
           case 'Alias is already used':
             form.setError('alias', {
-              message: errorResponse.response.data.message
+              message: 'Alias is already used'
             });
             break;
           default:
             break;
         }
-      },
-      onSuccess: () => {
-        window.location.replace('/');
       }
     });
   };

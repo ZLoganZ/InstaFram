@@ -1,12 +1,12 @@
 import { z } from 'zod';
-import { Link } from 'react-router-dom';
+import { Link } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Loader } from '@/components/Shared';
+import Loader from '@/components/Shared/Loader';
 import { SigninFormSchema } from '@/lib/schema';
 import { useSignin } from '@/lib/hooks/mutation';
 import { ErrorResponse } from '@/types';
@@ -40,9 +40,6 @@ const SigninForm = () => {
           default:
             break;
         }
-      },
-      onSuccess: () => {
-        window.location.replace('/');
       }
     });
   };

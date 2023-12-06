@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useRouter } from '@tanstack/react-router';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ToastAction } from '@/components/ui/toast';
-import { ComboBox, FileUpload, Loader } from '@/components/Shared';
+import FileUpload from '@/components/Upload/FileUpload';
+import ComboBox from '@/components/Shared/ComboBox';
+import Loader from '@/components/Shared/Loader';
 import { PostFormSchema } from '@/lib/schema';
 import { useCreatePost, useUpdatePost } from '@/lib/hooks/mutation';
 import { useToast } from '@/lib/hooks/useToast';
@@ -36,6 +38,7 @@ const PostForm: React.FC<IPostForm> = ({ post, action, setOpen }) => {
   });
 
   const navigate = useNavigate();
+  const router = useRouter();
   const { toast } = useToast();
   const { currentUser } = useAuth();
   const { createPost } = useCreatePost();
@@ -85,7 +88,7 @@ const PostForm: React.FC<IPostForm> = ({ post, action, setOpen }) => {
               title: 'Success',
               description: 'Post created successfully'
             });
-            navigate('/', { replace: true });
+            navigate({ to: '/', replace: true });
           }
         }
       );
@@ -163,7 +166,6 @@ const PostForm: React.FC<IPostForm> = ({ post, action, setOpen }) => {
                   placeholder='Select a location'
                   searchPlaceholder='Search for a location'
                   defaultValue={field.value.toLowerCase()}
-                  buttonClassName='flex'
                   data={locationData ?? []}
                   notFound='No location found.'
                 />
@@ -179,7 +181,7 @@ const PostForm: React.FC<IPostForm> = ({ post, action, setOpen }) => {
             <FormItem>
               <FormLabel>Add Tags (separated by comma ", ")</FormLabel>
               <FormControl>
-                <Input type='text' placeholder='Javascript, React, Node,...' {...field} />
+                <Input type='text' autoComplete='off' placeholder='Javascript, React, Node,...' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -190,7 +192,7 @@ const PostForm: React.FC<IPostForm> = ({ post, action, setOpen }) => {
             type='button'
             variant='destructive'
             onClick={() => {
-              action === 'create' || !setOpen ? navigate(-1) : setOpen(false);
+              action === 'create' || !setOpen ? router.history.back() : setOpen(false);
             }}>
             Cancel
           </Button>

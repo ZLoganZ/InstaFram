@@ -114,6 +114,10 @@
     @apply text-[12px] font-semibold leading-[140%];
   }
 
+  .subtle-medium {
+    @apply text-[12px] font-medium leading-[140%];
+  }
+
   .tiny-medium {
     @apply text-[10px] font-medium leading-[140%];
   }

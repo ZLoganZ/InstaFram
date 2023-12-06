@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearch, useNavigate } from '@tanstack/react-router';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { Input } from '@/components/ui/input';
@@ -11,28 +11,33 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { GridPostsList, Loader, SearchResults } from '@/components/Shared';
 import { Label } from '@/components/ui/label';
+import SearchResults from '@/components/Post/SearchResults';
+import Loader from '@/components/Shared/Loader';
+import GridPostsList from '@/components/Post/GridPostsList';
+import { ExploreRoute } from '@/routes/private.routes';
 import { useGetTopPosts, useSearchPosts } from '@/lib/hooks/query';
 import { useDebounce } from '@/lib/hooks/useDebounce';
 import { FILTERS } from '@/lib/constants';
 
 const Explore = () => {
   const [ref, inView] = useInView({ threshold: 0 });
-  const [searchParams, setSearchParams] = useSearchParams();
+  const searchParams = useSearch({ from: ExploreRoute.id });
+  const navigate = useNavigate();
 
-  const [searchValue, setSearchValue] = useState(searchParams.get('search') ?? '');
-  const [filter, setFilter] = useState(FILTERS.ALL);
+  const filter = useMemo(() => searchParams.filter ?? FILTERS.ALL, [searchParams.filter]);
+
+  const [searchValue, setSearchValue] = useState(searchParams.search ?? '');
 
   const searchDebounce = useDebounce(searchValue, 500);
   const searchRef = useRef(searchDebounce);
 
-  const { posts, isLoadingPosts, hasNextPosts, fetchNextPosts, isFetchingNextPosts, refetchPosts } =
-    useGetTopPosts(filter);
-  const { searchPosts, isFetchingSearchPosts, refetchSearchPosts } = useSearchPosts(searchDebounce, filter);
+  const { posts, isLoadingPosts, hasNextPosts, fetchNextPosts, isFetchingNextPosts } = useGetTopPosts(filter);
 
-  const shouldShowSearchResults = searchDebounce !== '';
-  const shouldShowPopularToday = !shouldShowSearchResults && posts?.length === 0;
+  const { searchPosts, isLoadingSearchPosts } = useSearchPosts(searchDebounce, filter);
+
+  const showSearchResults = useMemo(() => searchDebounce !== '', [searchDebounce]);
+  const showNoPost = useMemo(() => !showSearchResults && posts?.length === 0, [hasNextPosts, posts]);
 
   useEffect(() => {
     document.title = 'Explore - InstaFram';
@@ -40,26 +45,18 @@ const Explore = () => {
 
   useEffect(() => {
     if (searchDebounce !== '' && searchDebounce !== searchRef.current) {
-      setSearchParams({ search: searchDebounce });
+      navigate({ search: (pre) => ({ ...pre, search: searchDebounce }), replace: true });
       searchRef.current = searchDebounce;
     } else if (searchDebounce === '') {
-      setSearchParams({});
+      navigate({ search: (pre) => ({ ...pre, search: undefined }), replace: true });
     }
   }, [searchDebounce]);
 
   useEffect(() => {
-    if (inView && hasNextPosts && !shouldShowSearchResults && !isFetchingNextPosts) {
+    if (inView && hasNextPosts && !showSearchResults && !isFetchingNextPosts) {
       fetchNextPosts();
     }
   }, [inView]);
-
-  useEffect(() => {
-    if (!shouldShowSearchResults) {
-      refetchPosts();
-    } else {
-      refetchSearchPosts();
-    }
-  }, [filter]);
 
   return (
     <div className='flex flex-col flex-1 items-center overflow-scroll py-10 px-5 md:p-14 custom-scrollbar'>
@@ -79,10 +76,11 @@ const Explore = () => {
           />
         </div>
       </div>
+
       <div className='flex-between w-full max-w-5xl mt-16 mb-7'>
         <h3 className='body-bold md:h3-bold'>Popular</h3>
         <DropdownMenu>
-          <DropdownMenuTrigger>
+          <DropdownMenuTrigger asChild>
             <div className='flex-center gap-3 bg-light-3 dark:bg-dark-3 rounded-xl px-4 py-2 cursor-pointer'>
               <p className='small-medium md:base-medium text-dark-2 dark:text-light-2'>{filter}</p>
               <img src='/assets/icons/filter.svg' alt='filter' className='w-5 h-5' />
@@ -95,7 +93,7 @@ const Explore = () => {
             {Object.values(FILTERS).map((filterValue) => (
               <DropdownMenuCheckboxItem
                 key={filterValue}
-                onClick={() => setFilter(filterValue)}
+                onClick={() => navigate({ search: (pre) => ({ ...pre, filter: filterValue }) })}
                 checked={filter === filterValue}>
                 {filterValue}
               </DropdownMenuCheckboxItem>
@@ -103,19 +101,20 @@ const Explore = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+
       <div className='flex flex-wrap gap-9 w-full max-w-5xl'>
-        {shouldShowSearchResults ? (
-          <SearchResults isFetching={isFetchingSearchPosts} searchPosts={searchPosts} />
-        ) : shouldShowPopularToday ? (
+        {showSearchResults ? (
+          <SearchResults isFetching={isLoadingSearchPosts} searchPosts={searchPosts} />
+        ) : showNoPost ? (
           <p className='text-[#5C5C7B] mt-10 text-center w-full'>End of posts</p>
         ) : isLoadingPosts ? (
           <Loader />
         ) : (
-          <GridPostsList posts={posts} />
+          <GridPostsList posts={posts} showStats showUser />
         )}
       </div>
 
-      {hasNextPosts && !shouldShowSearchResults && (
+      {hasNextPosts && !showSearchResults && (
         <div ref={ref} className='mt-6'>
           <Loader />
         </div>

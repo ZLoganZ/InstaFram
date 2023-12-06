@@ -1,16 +1,22 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { authService } from '@/services/AuthService';
 import { postService } from '@/services/PostService';
 import { userService } from '@/services/UserService';
-import { ILogin, INewPost, IRegister, IUpdatePost, IUpdateUser } from '@/types';
-import { QUERY_KEYS } from '@/lib/constants';
+import { commentService } from '@/services/CommentService';
+import { IComment, ILogin, INewComment, INewPost, IRegister, IUpdatePost, IUpdateUser } from '@/types';
+import { HEADER, QUERY_KEYS } from '@/lib/constants';
 import { parseFormData } from '@/lib/utils';
 
 export const useSignin = () => {
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: async (payload: ILogin) => {
-      return await authService.login(payload);
+      const { data } = await authService.login(payload);
+      return data.metadata;
+    },
+    onSuccess: (data) => {
+      localStorage.setItem(HEADER.CLIENT_ID, data.user._id);
+      window.location.replace('/');
     }
   });
   return {
@@ -25,7 +31,12 @@ export const useSignin = () => {
 export const useSignup = () => {
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: async (payload: IRegister) => {
-      return await authService.register(payload);
+      const { data } = await authService.register(payload);
+      return data.metadata;
+    },
+    onSuccess: (data) => {
+      localStorage.setItem(HEADER.CLIENT_ID, data.user._id);
+      window.location.replace('/');
     }
   });
   return {
@@ -43,10 +54,7 @@ export const useSignout = () => {
       return await authService.logout();
     },
     onSuccess: () => {
-      // delete cookie
-      document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-      document.cookie = 'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-
+      localStorage.removeItem(HEADER.CLIENT_ID);
       window.location.replace('/signin');
     }
   });
@@ -60,9 +68,16 @@ export const useSignout = () => {
 };
 
 export const useCreatePost = () => {
+  const queryCLient = useQueryClient();
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: async (payload: INewPost) => {
-      return await postService.createPost(parseFormData(payload));
+      const { data } = await postService.createPost(parseFormData(payload));
+      return data.metadata;
+    },
+    onSuccess: (_, newPost) => {
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID, newPost.creator] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
     }
   });
   return {
@@ -97,9 +112,17 @@ export const useUpdatePost = () => {
 };
 
 export const useDeletePost = () => {
+  const queryCLient = useQueryClient();
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: async (postID: string) => {
-      return await postService.deletePost(postID);
+      const { data } = await postService.deletePost(postID);
+      return data.metadata;
+    },
+    onSuccess: (post, postID) => {
+      queryCLient.removeQueries({ queryKey: [QUERY_KEYS.POST, postID] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID, post.creator] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
     }
   });
   return {
@@ -152,6 +175,42 @@ export const useSavePost = () => {
     isSavePostSuccess: isSuccess,
     isSavePostError: isError,
     errorSavePost: error
+  };
+};
+
+export const useCommentPost = () => {
+  const queryCLient = useQueryClient();
+  const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
+    mutationFn: async (payload: INewComment) => {
+      const { data } = await commentService.createComment(payload);
+      return data.metadata;
+    },
+    onSuccess: (newComment, { post }) => {
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POST, post] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID, newComment.user._id] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
+      queryCLient.setQueriesData<InfiniteData<IComment[], number>>(
+        { queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID, post] },
+        (oldData) => {
+          if (!oldData) return;
+          const { pages, pageParams } = oldData;
+          const firstPage = pages[0];
+
+          return {
+            pageParams,
+            pages: [[newComment, ...firstPage], ...pages.slice(1)]
+          };
+        }
+      );
+    }
+  });
+  return {
+    commentPost: mutateAsync,
+    isLoadingCommentPost: isPending,
+    isCommentPostSuccess: isSuccess,
+    isCommentPostError: isError,
+    errorCommentPost: error
   };
 };
 

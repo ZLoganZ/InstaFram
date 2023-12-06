@@ -35,7 +35,7 @@ class PostService extends BaseService {
   updatePost = (postID: string, data: FormData): Promise<AxiosResponse<IResponse<IPost>>> => {
     return this.put(`/posts/${postID}`, data);
   };
-  deletePost = (postID: string): Promise<AxiosResponse<IResponse<boolean>>> => {
+  deletePost = (postID: string): Promise<AxiosResponse<IResponse<IPost>>> => {
     return this.delete(`/posts/${postID}`);
   };
   likePost = (postID: string): Promise<AxiosResponse<IResponse<boolean>>> => {

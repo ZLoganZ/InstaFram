@@ -1,9 +1,9 @@
-export interface AuthContextType {
+export type AuthContextType = {
   currentUser: IUser;
   isAuthenticated: boolean;
   setUser: React.Dispatch<React.SetStateAction<IUser>>;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
 export interface ErrorResponse extends Error {
   response: {
@@ -15,62 +15,80 @@ export interface ErrorResponse extends Error {
   };
 }
 
-export interface IUpdateUser {
+export type IUpdateUser = {
   name: string;
   bio: string;
   image: File;
   isChangeImage: boolean;
-}
+};
 
-export interface ISavedPost {
+export type ISavedPost = {
   _id: string;
   post: IPost;
   user: IUser;
-}
+};
 
-export interface IPost {
+export type IPost = {
   _id: string;
   content: string;
   image: string;
   location: string;
   tags: string[];
   likes: IUser[];
+  comments: IComment[];
   saves: ISavedPost[];
   creator: IUser;
   createdAt: string;
   updatedAt: string;
-}
+};
 
-export interface INewPost {
+export type IComment = {
+  _id: string;
+  user: IUser;
+  post: IPost;
+  content: string;
+  likes: IUser[];
+  replies: IComment[];
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type INewComment = {
+  content: string;
+  post: string;
+  replyTo?: string;
+};
+
+export type INewPost = {
   creator: string;
   content: string;
   image: File;
   location?: string;
   tags?: string;
-}
+};
 
-export interface IDataComboBox {
+export type IDataComboBox = {
   value: string;
   label: string;
-}
+};
 
-export interface ILocationResponse {
+export type ILocationResponse = {
   name: {
     common: string;
     official: string;
   };
-}
+};
 
-export interface IUpdatePost {
+export type IUpdatePost = {
   postID: string;
   content: string;
   image?: File;
   isChangeImage: boolean;
   location?: string;
   tags?: string;
-}
+};
 
-export interface IUser {
+export type IUser = {
   _id: string;
   name: string;
   email: string;
@@ -82,29 +100,33 @@ export interface IUser {
   following: string[];
   createdAt: Date;
   updatedAt: Date;
-}
+};
 
-export interface IRegister {
+export type IRegister = {
   name: string;
   email: string;
   password: string;
-}
+};
 
-export interface ILogin {
+export type ILogin = {
   email: string;
   password: string;
-}
+};
 
-export interface ILoginResponse {
+export type ILoginResponse = {
   tokens: {
     accessToken: string;
     refreshToken: string;
   };
   user: IUser;
-}
+};
 
-export interface IResponse<T> {
+export type IResponse<T> = {
   message: string;
   status: number;
   metadata: T;
-}
+};
+
+export type RouteParams = {
+  id: string;
+};

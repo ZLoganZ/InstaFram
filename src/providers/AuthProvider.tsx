@@ -1,13 +1,12 @@
 import { createContext, useState } from 'react';
 
 import { authService } from '@/services/AuthService';
-import { AUTHORIZATION } from '@/lib/SettingSystem';
-import { defaultUser } from '@/lib/constants';
+import { HEADER, defaultUser } from '@/lib/constants';
 import { AuthContextType } from '@/types';
 
 const getCurrentUser = async () => {
   try {
-    if (!document.cookie.split(';').some((item) => item.trim().startsWith(`${AUTHORIZATION}=`)))
+    if (!document.cookie.split(';').some((item) => item.trim().startsWith(`${HEADER.AUTHORIZATION}=`)))
       return defaultUser;
 
     const { data } = await authService.getCurrentUser();

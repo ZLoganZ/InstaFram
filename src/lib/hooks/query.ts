@@ -2,6 +2,7 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 import { postService } from '@/services/PostService';
 import { userService } from '@/services/UserService';
+import { commentService } from '@/services/CommentService';
 import { QUERY_KEYS } from '@/lib/constants';
 
 export const useGetPosts = () => {
@@ -35,24 +36,33 @@ export const useGetPosts = () => {
 };
 
 export const useGetTopPosts = (filter: string) => {
-  const { data, isLoading, isError, error, hasNextPage, fetchNextPage, isFetchingNextPage, refetch, isFetching } =
-    useInfiniteQuery({
-      queryKey: [QUERY_KEYS.TOP_POSTS],
-      queryFn: async ({ pageParam }) => {
-        const { data } = await postService.getTopPosts(pageParam, filter);
-        return data.metadata;
-      },
-      initialPageParam: 0,
-      getNextPageParam: (lastPage, _, lastPageParam) => {
-        if (lastPage.length < 10) {
-          return null;
-        }
-        return lastPageParam + 1;
-      },
-      select: (data) => {
-        return data.pages.flatMap((page) => page);
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    refetch,
+    isFetching
+  } = useInfiniteQuery({
+    queryKey: [QUERY_KEYS.TOP_POSTS, filter],
+    queryFn: async ({ pageParam }) => {
+      const { data } = await postService.getTopPosts(pageParam, filter);
+      return data.metadata;
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, _, lastPageParam) => {
+      if (lastPage.length < 10) {
+        return null;
       }
-    });
+      return lastPageParam + 1;
+    },
+    select: (data) => {
+      return data.pages.flatMap((page) => page);
+    }
+  });
   return {
     posts: data!,
     isLoadingPosts: isLoading,
@@ -63,6 +73,25 @@ export const useGetTopPosts = (filter: string) => {
     fetchNextPosts: fetchNextPage,
     isPostsError: isError,
     errorPosts: error
+  };
+};
+
+export const useSearchPosts = (search: string, filter: string) => {
+  const { data, isLoading, isError, error, isFetching, refetch } = useQuery({
+    queryKey: [QUERY_KEYS.SEARCH_POSTS, search, filter],
+    queryFn: async () => {
+      const { data } = await postService.searchPosts(search, filter);
+      return data.metadata;
+    },
+    enabled: !!search
+  });
+  return {
+    searchPosts: data!,
+    refetchSearchPosts: refetch,
+    isLoadingSearchPosts: isLoading,
+    isFetchingSearchPosts: isFetching,
+    isSearchPostsError: isError,
+    errorSearchPosts: error
   };
 };
 
@@ -193,24 +222,35 @@ export const useGetRelatedPosts = (postID: string) => {
     isRelatedPostsError: isError,
     errorRelatedPosts: error
   };
-}
+};
 
-export const useSearchPosts = (search: string, filter: string) => {
-  const { data, isLoading, isError, error, isFetching, refetch } = useQuery({
-    queryKey: [QUERY_KEYS.SEARCH_POSTS, search],
-    queryFn: async () => {
-      const { data } = await postService.searchPosts(search, filter);
-      return data.metadata;
-    },
-    enabled: !!search
-  });
+export const useGetCommentsByPostID = (postID: string) => {
+  const { data, isLoading, isError, error, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID, postID],
+      queryFn: async ({ pageParam }) => {
+        const { data } = await commentService.getCommentsByPostID(postID, pageParam);
+        return data.metadata;
+      },
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, _, lastPageParam) => {
+        if (lastPage.length < 10) {
+          return null;
+        }
+        return lastPageParam + 1;
+      },
+      select: (data) => {
+        return data.pages.flatMap((page) => page);
+      }
+    });
   return {
-    searchPosts: data!,
-    refetchSearchPosts: refetch,
-    isLoadingSearchPosts: isLoading,
-    isFetchingSearchPosts: isFetching,
-    isSearchPostsError: isError,
-    errorSearchPosts: error
+    comments: data!,
+    isLoadingComments: isLoading,
+    isFetchingNextComments: isFetchingNextPage,
+    hasNextComments: hasNextPage,
+    fetchNextComments: fetchNextPage,
+    isCommentsError: isError,
+    errorComments: error
   };
 };
 
@@ -233,17 +273,30 @@ export const useGetUserByID = (userID: string) => {
 };
 
 export const useGetTopCreators = () => {
-  const { data, isLoading, isError, error, isFetching } = useQuery({
-    queryKey: [QUERY_KEYS.POPULAR_USERS],
-    queryFn: async () => {
-      const { data } = await userService.getTopCreators();
-      return data.metadata;
-    }
-  });
+  const { data, isLoading, isError, error, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: [QUERY_KEYS.POPULAR_USERS],
+      queryFn: async ({ pageParam }) => {
+        const { data } = await userService.getTopCreators(pageParam);
+        return data.metadata;
+      },
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, _, lastPageParam) => {
+        if (lastPage.length < 10) {
+          return null;
+        }
+        return lastPageParam + 1;
+      },
+      select: (data) => {
+        return data.pages.flatMap((page) => page);
+      }
+    });
   return {
     topCreators: data!,
     isLoadingTopCreators: isLoading,
-    isFetchingTopCreators: isFetching,
+    isFetchingNextTopCreators: isFetchingNextPage,
+    hasNextTopCreators: hasNextPage,
+    fetchNextTopCreators: fetchNextPage,
     isTopCreatorsError: isError,
     errorTopCreators: error
   };
