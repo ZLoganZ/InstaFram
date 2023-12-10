@@ -1,6 +1,4 @@
-import { useRef } from 'react';
 import { Link } from '@tanstack/react-router';
-import { useWindowVirtualizer } from '@tanstack/react-virtual';
 
 import { getImageURL } from '@/lib/utils';
 import { useAuth } from '@/lib/hooks/useAuth';
@@ -15,15 +13,6 @@ interface IGridPostsList {
 
 const GridPostsList: React.FC<IGridPostsList> = ({ posts, showStats = false, showUser = false }) => {
   const { currentUser } = useAuth();
-
-  const listRef = useRef<HTMLDivElement | null>(null);
-
-  /* const virtualizer = */ useWindowVirtualizer({
-    count: posts.length,
-    estimateSize: () => 320,
-    overscan: 5,
-    scrollMargin: listRef.current?.offsetTop ?? 0
-  });
 
   return (
     <ul className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 min-[1380px]:grid-cols-3 gap-7 max-w-5xl'>
