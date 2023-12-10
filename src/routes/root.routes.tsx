@@ -1,7 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useEffect, useRef, useState } from 'react';
-import { Outlet, RootRoute, useRouter } from '@tanstack/react-router';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Outlet, rootRouteWithContext, useRouter } from '@tanstack/react-router';
+import { ErrorBoundary } from 'react-error-boundary';
+import { QueryCache, QueryClient, QueryClientProvider, QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
@@ -9,38 +10,74 @@ import { AuthProvider } from '@/providers/AuthProvider';
 import { ThemeProvider } from '@/providers/ThemeProvider';
 
 import { Toaster } from '@/components/ui/toaster';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/lib/hooks/useToast';
 
-const queryClient = new QueryClient({ defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } } });
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      maxPages: 3 // Keep 3 pages worth of queries cached
+    }
+  },
+  queryCache: new QueryCache({
+    onError: (err) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useToast().toast({
+        title: 'Error',
+        description: err.message
+      });
+    }
+  })
+});
 
 const RootPage = () => {
   const { state } = useRouter();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <ThemeProvider>
-          <main className='flex h-screen'>
-            <LoadingBar isLoading={state.status === 'pending'} />
-            <Outlet />
-            <Toaster />
-            <TanStackRouterDevtools initialIsOpen={false} />
-            <ReactQueryDevtools initialIsOpen={false} />
-          </main>
-        </ThemeProvider>
-      </AuthProvider>
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            fallbackRender={({ resetErrorBoundary, error }) => (
+              <div className='flex flex-1 items-center justify-center'>
+                <h1 className='h1-bold'>There was an error!</h1>
+                <pre className='base-medium' style={{ color: 'red' }}>
+                  {error.message}
+                </pre>
+                <Button type='button' onClick={() => resetErrorBoundary()}>
+                  Try again
+                </Button>
+              </div>
+            )}>
+            <AuthProvider>
+              <ThemeProvider>
+                <main className='flex h-screen'>
+                  <LoadingBar isLoading={state.status === 'pending'} />
+                  <Outlet />
+                  <Toaster />
+                  <TanStackRouterDevtools initialIsOpen={false} />
+                  <ReactQueryDevtools initialIsOpen={false} />
+                </main>
+              </ThemeProvider>
+            </AuthProvider>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
     </QueryClientProvider>
   );
 };
 
-const LoadingBar = ({ isLoading, delay = 100 }: { isLoading: boolean; delay?: number }) => {
+const LoadingBar = ({ isLoading, delay = 300 }: { isLoading: boolean; delay?: number }) => {
   const [showBar, setShowBar] = useState(false);
-  const delayTimerID = useRef<NodeJS.Timeout>();
+  const timeoutID = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
     // If a page is loading...
     if (isLoading) {
-      // Wait to see if the page takes more than 300ms
-      delayTimerID.current = setTimeout(() => {
+      // Wait to see if the page takes more than the delay time to load
+      timeoutID.current = setTimeout(() => {
         // If still loading after waiting then show the bar
         if (isLoading) {
           setShowBar(true);
@@ -51,7 +88,7 @@ const LoadingBar = ({ isLoading, delay = 100 }: { isLoading: boolean; delay?: nu
     // If a page completed loading...
     else {
       // Clear the delay timer
-      clearTimeout(delayTimerID.current);
+      clearTimeout(timeoutID.current);
       // If the bar is currently shown
       if (showBar) {
         // Continue to show it to at least have the bar hit 100% once.
@@ -60,8 +97,8 @@ const LoadingBar = ({ isLoading, delay = 100 }: { isLoading: boolean; delay?: nu
     }
 
     return () => {
-      if (delayTimerID.current) {
-        clearTimeout(delayTimerID.current);
+      if (timeoutID.current) {
+        clearTimeout(timeoutID.current);
       }
     };
   });
@@ -69,10 +106,10 @@ const LoadingBar = ({ isLoading, delay = 100 }: { isLoading: boolean; delay?: nu
   return (
     <>
       {showBar && (
-        <div className='after:absolute after:top-0 after:left-0 after:z-[100] after:w-[100%] after:h-0.5 after:animate-pulse after:bg-primary'></div>
+        <div className='after:absolute after:top-0 after:left-0 after:z-[100] after:w-[100%] after:h-[3px] after:animate-pulse after:bg-primary' />
       )}
     </>
   );
 };
 
-export const rootRoute = new RootRoute({ component: RootPage });
+export const rootRoute = rootRouteWithContext<{ queryClient: QueryClient }>()({ component: RootPage });

@@ -4,6 +4,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { useLikePost, useSavePost } from '@/lib/hooks/mutation';
 import { cn, getImageURL } from '@/lib/utils';
 import { IPost } from '@/types';
+import { Link } from '@tanstack/react-router';
 
 interface IPostStats {
   post: IPost;
@@ -48,45 +49,54 @@ const PostStats: React.FC<IPostStats> = ({ post, userID, textWhite }) => {
 
   return (
     <div className='flex justify-between items-center'>
-      <div className='flex gap-2 mr-5'>
-        <img
-          src={checkIsLiked(likes, userID) ? '/assets/icons/liked.svg' : '/assets/icons/like.svg'}
-          alt='like'
-          className='w-5 h-5 cursor-pointer'
-          onClick={handleLikePost}
-        />
-        <TooltipProvider delayDuration={100}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <p
-                className={cn(
-                  'small-medium lg:base:medium cursor-pointer hover:underline',
-                  textWhite && 'text-white'
-                )}>
-                {likes.length}
-              </p>
-            </TooltipTrigger>
-            <TooltipContent>
-              <ul className='flex flex-col gap-2'>
-                {post.likes.slice(0, 10).map((like) => (
-                  <li key={like._id} className='flex items-center gap-2.5'>
-                    <img
-                      src={getImageURL(like.image, 'miniAvatar') || '/assets/icons/profile-placeholder.svg'}
-                      alt='avatar'
-                      className='w-8 h-8 rounded-full'
-                    />
-                    <p className='small-regular'>{like.name}</p>
-                  </li>
-                ))}
-                {post.likes.length > 10 && (
-                  <li className='flex items-center'>
-                    <p className='small-regular'>and {post.likes.length - 10} more...</p>
-                  </li>
-                )}
-              </ul>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+      <div className='flex gap-2 mr-2'>
+        <div className='flex gap-1.5'>
+          <img
+            src={checkIsLiked(likes, userID) ? '/assets/icons/liked.svg' : '/assets/icons/like.svg'}
+            alt='like'
+            className='w-5 h-5 cursor-pointer'
+            onClick={handleLikePost}
+          />
+          <TooltipProvider delayDuration={100}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <p
+                  className={cn(
+                    'small-medium lg:base:medium cursor-pointer hover:underline',
+                    textWhite && 'text-white'
+                  )}>
+                  {likes.length}
+                </p>
+              </TooltipTrigger>
+              <TooltipContent>
+                <ul className='flex flex-col gap-2'>
+                  {post.likes.slice(0, 10).map((like) => (
+                    <li key={like._id} className='flex items-center gap-2.5'>
+                      <img
+                        src={getImageURL(like.image, 'miniAvatar') || '/assets/icons/profile-placeholder.svg'}
+                        alt='avatar'
+                        className='w-8 h-8 rounded-full'
+                      />
+                      <p className='small-regular'>{like.name}</p>
+                    </li>
+                  ))}
+                  {post.likes.length > 10 && (
+                    <li className='flex items-center'>
+                      <p className='small-regular'>and {post.likes.length - 10} more...</p>
+                    </li>
+                  )}
+                </ul>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+
+        <Link to='/posts/$postID' params={{ postID: post._id }} className='flex gap-1.5'>
+          <img src='/assets/icons/comment.svg' alt='comment' className='w-5 h-5 cursor-pointer' />
+          <p className={cn('small-medium lg:base:medium', textWhite && 'text-white')}>
+            {post.comments.length}
+          </p>
+        </Link>
       </div>
 
       <img

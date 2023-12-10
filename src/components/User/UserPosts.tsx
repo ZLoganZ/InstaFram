@@ -10,7 +10,6 @@ import { ProfileRoute } from '@/routes/private.routes';
 const UserPosts = (): JSX.Element => {
   const [postsRef, isInPostsView] = useInView({ threshold: 0 });
   const { profileID } = useParams({ from: ProfileRoute.id });
-  const { pathname } = window.location;
   const { posts, hasNextPosts, isFetchingNextPosts, isLoadingPosts, fetchNextPosts } =
     useGetPostsByUserID(profileID);
 
@@ -30,7 +29,7 @@ const UserPosts = (): JSX.Element => {
         <>
           <GridPostsList posts={posts} showStats />
 
-          {hasNextPosts && pathname === `/profile/${profileID}` && (
+          {hasNextPosts && (
             <div ref={postsRef}>
               <Loader />
             </div>

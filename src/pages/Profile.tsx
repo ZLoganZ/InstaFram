@@ -22,7 +22,7 @@ const Profile = () => {
 
   const { user, isLoadingUser } = useGetUserByID(profileID);
 
-  const { followUser, isLoadingFollowUser } = useFollowUser(currentUser._id);
+  const { followUser, isLoadingFollowUser } = useFollowUser();
 
   const isFollowing = currentUser.following.includes(user?._id || '');
 
@@ -120,32 +120,32 @@ const Profile = () => {
           {user._id === currentUser._id && (
             <div className='flex max-w-5xl w-full'>
               <Link
-                to='/profile/$profileID'
-                params={{ profileID: currentUser.alias || currentUser._id }}
                 className={cn(
                   'flex-center gap-3 py-4 w-full xl:w-48 bg-light-2 dark:bg-dark-2 flex-1 xl:flex-initial rounded-l-lg',
                   pathname === `/profile/${profileID}` && '!bg-light-4 dark:!bg-dark-4'
-                )}>
+                )}
+                to='/profile/$profileID'
+                params={{ profileID: currentUser.alias || currentUser._id }}>
                 <img src='/assets/icons/posts.svg' alt='posts' className='h-5 w-5' />
                 Posts
               </Link>
               <Link
-                to='/profile/$profileID/liked'
-                params={{ profileID: currentUser.alias || currentUser._id }}
                 className={cn(
                   'flex-center gap-3 py-4 w-full xl:w-48 bg-light-2 dark:bg-dark-2 flex-1 xl:flex-initial',
                   pathname === `/profile/${profileID}/liked` && '!bg-light-4 dark:!bg-dark-4'
-                )}>
+                )}
+                to='/profile/$profileID/liked'
+                params={{ profileID: currentUser.alias || currentUser._id }}>
                 <img src='/assets/icons/like.svg' alt='liked' className='h-5 w-5' />
                 Liked Posts
               </Link>
               <Link
-                to='/profile/$profileID/saved'
-                params={{ profileID: currentUser.alias || currentUser._id }}
                 className={cn(
                   'flex-center gap-3 py-4 w-full xl:w-48 bg-light-2 dark:bg-dark-2 flex-1 xl:flex-initial rounded-r-lg',
                   pathname === `/profile/${profileID}/saved` && '!bg-light-4 dark:!bg-dark-4'
-                )}>
+                )}
+                to='/profile/$profileID/saved'
+                params={{ profileID: currentUser.alias || currentUser._id }}>
                 <img src='/assets/icons/save.svg' alt='saved' className='h-5 w-5' />
                 Saved Posts
               </Link>

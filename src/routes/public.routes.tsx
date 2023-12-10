@@ -12,13 +12,15 @@ export const AuthRoute = new Route({
 export const SigninRoute = new Route({
   path: '/signin',
   getParentRoute: () => AuthRoute,
-  component: lazyRouteComponent(() => import('@/components/Forms/Auth/SigninForm'))
+  component: lazyRouteComponent(() => import('@/components/Forms/Auth/SigninForm')),
+  wrapInSuspense: true
 });
 
 export const SignupRoute = new Route({
   path: '/signup',
   getParentRoute: () => AuthRoute,
-  component: lazyRouteComponent(() => import('@/components/Forms/Auth/SignupForm'))
+  component: lazyRouteComponent(() => import('@/components/Forms/Auth/SignupForm')),
+  wrapInSuspense: true
 });
 
 export const NotFoundRoute = new Route({

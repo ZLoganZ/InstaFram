@@ -18,7 +18,7 @@ const UserCard: React.FC<IUserCard> = ({ user }) => {
   const { currentUser, setUser } = useAuth();
   const [open, setOpen] = useState(false);
 
-  const { followUser, isLoadingFollowUser } = useFollowUser(currentUser._id);
+  const { followUser, isLoadingFollowUser } = useFollowUser();
 
   const isCurrentUser = currentUser._id === user._id;
   const isFollowing = currentUser.following.includes(user._id);
@@ -26,9 +26,9 @@ const UserCard: React.FC<IUserCard> = ({ user }) => {
   return (
     <div className='flex-center flex-col gap-4 border bg-light-2 dark:bg-dark-2 border-light-4 dark:border-dark-4 rounded-[20px] px-5 py-8'>
       <Link
+        className='flex-center flex-col gap-4'
         to='/profile/$profileID'
-        params={{ profileID: user.alias || user._id }}
-        className='flex-center flex-col gap-4'>
+        params={{ profileID: user.alias || user._id }}>
         <img
           src={getImageURL(user.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
           alt='creator'

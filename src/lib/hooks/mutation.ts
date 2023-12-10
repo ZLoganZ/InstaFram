@@ -74,9 +74,9 @@ export const useCreatePost = () => {
       const { data } = await postService.createPost(parseFormData(payload));
       return data.metadata;
     },
-    onSuccess: (_, newPost) => {
+    onSuccess: (newPost, _) => {
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID, newPost.creator] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID, newPost.creator.alias] });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
     }
   });
@@ -118,10 +118,10 @@ export const useDeletePost = () => {
       const { data } = await postService.deletePost(postID);
       return data.metadata;
     },
-    onSuccess: (post, postID) => {
+    onSuccess: (_, postID) => {
       queryCLient.removeQueries({ queryKey: [QUERY_KEYS.POST, postID] });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID, post.creator] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID] });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
     }
   });
@@ -188,7 +188,7 @@ export const useCommentPost = () => {
     onSuccess: (newComment, { post }) => {
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POST, post] });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID, newComment.user._id] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID, newComment.user.alias] });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
       queryCLient.setQueriesData<InfiniteData<IComment[], number>>(
         { queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID, post] },
@@ -214,14 +214,14 @@ export const useCommentPost = () => {
   };
 };
 
-export const useUpdateUser = (userID: string) => {
+export const useUpdateUser = () => {
   const queryCLient = useQueryClient();
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: async (payload: IUpdateUser) => {
       return (await userService.updateUser(parseFormData(payload))).data.metadata;
     },
-    onSuccess: () => {
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.USER, userID] });
+    onSuccess: (user) => {
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.USER, user.alias] });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POPULAR_USERS] });
     }
   });
@@ -234,15 +234,14 @@ export const useUpdateUser = (userID: string) => {
   };
 };
 
-export const useFollowUser = (currentUserID: string) => {
+export const useFollowUser = () => {
   const queryCLient = useQueryClient();
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: async (userID: string) => {
       return await userService.followUser(userID);
     },
-    onSuccess: (_, userID) => {
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.USER, userID] });
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.USER, currentUserID] });
+    onSuccess: () => {
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.USER] });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POPULAR_USERS] });
     }
   });

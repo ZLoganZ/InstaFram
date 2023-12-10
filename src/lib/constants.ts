@@ -60,6 +60,10 @@ export enum FILTERS {
   YEAR = 'Year'
 }
 
+/**
+ * @description
+ * The default user object
+ */
 export const defaultUser: IUser = {
   _id: '',
   name: '',

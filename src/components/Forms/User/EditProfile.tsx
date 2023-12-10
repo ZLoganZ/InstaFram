@@ -34,7 +34,7 @@ const EditProfile: React.FC<IUpdateProfile> = ({ setOpen }) => {
     }
   });
 
-  const { updateUser, isLoadingUpdateUser } = useUpdateUser(currentUser._id);
+  const { updateUser, isLoadingUpdateUser } = useUpdateUser();
 
   // Handler
   const handleUpdate = async (value: z.infer<typeof updateUserSchema>) => {

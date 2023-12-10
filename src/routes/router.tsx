@@ -1,6 +1,6 @@
 import { Router } from '@tanstack/react-router';
 
-import { rootRoute } from '@/routes/root.routes';
+import { rootRoute, queryClient } from '@/routes/root.routes';
 
 import {
   MainRoute,
@@ -14,7 +14,10 @@ import {
   LikedPostsRoute,
   SavedPostsRoute
 } from '@/routes/private.routes';
+
 import { AuthRoute, SigninRoute, SignupRoute, NotFoundRoute } from '@/routes/public.routes';
+
+import Loader from '@/components/Shared/Loader';
 
 const routeTree = rootRoute.addChildren([
   AuthRoute.addChildren([SigninRoute, SignupRoute]),
@@ -29,7 +32,7 @@ const routeTree = rootRoute.addChildren([
   NotFoundRoute
 ]);
 
-export const router = new Router({ routeTree });
+export const router = new Router({ routeTree, defaultPendingComponent: Loader, context: { queryClient } });
 
 declare module '@tanstack/react-router' {
   interface Register {

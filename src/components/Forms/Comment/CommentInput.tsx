@@ -40,7 +40,7 @@ const CommentInput: React.FC<ICommentInputProps> = ({ currentUser, postID, reply
   return (
     <Form {...form}>
       <form
-        className='w-full max-w-5xl flex-center border rounded-full bg-light-2 dark:bg-dark-2 gap-3 
+        className='w-full max-w-5xl flex-center border rounded-[2rem] bg-light-2 dark:bg-dark-2 gap-3 
         border-light-4 dark:border-dark-4 px-4 py-3 max-xs:flex-col'
         onSubmit={form.handleSubmit(onSubmit)}>
         <FormField

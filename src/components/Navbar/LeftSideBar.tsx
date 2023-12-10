@@ -23,9 +23,9 @@ const LeftSideBar = () => {
         </Link>
 
         <Link
+          className='flex gap-3 items-center'
           to='/profile/$profileID'
-          params={{ profileID: currentUser.alias || currentUser._id }}
-          className='flex gap-3 items-center'>
+          params={{ profileID: currentUser.alias || currentUser._id }}>
           <img
             src={getImageURL(currentUser.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
             alt='profile'

@@ -27,8 +27,7 @@ export const ThemeProvider = ({
   children,
   defaultTheme = 'light',
   storageKey = 'ui-theme',
-  disableTransitionOnChange = false,
-  ...props
+  disableTransitionOnChange = false
 }: ThemeProviderProps) => {
   const [theme, setTheme] = useState<Theme>((localStorage.getItem(storageKey) as Theme) || defaultTheme);
   const isDark = theme === 'dark';
@@ -76,15 +75,9 @@ export const ThemeProvider = ({
 
   const value = {
     theme,
-    setTheme: (theme: Theme) => {
-      setTheme(theme);
-    },
+    setTheme,
     isDark
   };
 
-  return (
-    <ThemeContext.Provider {...props} value={value}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };

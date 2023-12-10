@@ -50,40 +50,28 @@ const TopBar = () => {
                 <Button
                   type='button'
                   variant='ghost'
-                  className='justify-start gap-4 py-6 hover:bg-primary group w-full'
+                  className='justify-start gap-4 py-6 w-full'
                   onClick={() =>
                     navigate({
                       to: '/profile/$profileID',
                       params: { profileID: currentUser.alias || currentUser._id }
                     })
                   }>
-                  <img
-                    src='/assets/icons/user.svg'
-                    alt='logout'
-                    height={20}
-                    width={20}
-                    className='group-hover:invert-white'
-                  />
-                  <p className='small-medium lg:base-medium group-hover:invert-white'>View Profile</p>
+                  <img src='/assets/icons/user.svg' alt='logout' height={20} width={20} />
+                  <p className='small-medium lg:base-medium'>View Profile</p>
                 </Button>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <ModeToggle />
+                <ModeToggle topbar />
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Button
                   type='button'
                   variant='ghost'
-                  className='justify-start gap-4 py-6 hover:bg-primary group w-full'
+                  className='justify-start gap-4 py-6 group w-full'
                   onClick={() => signout()}>
-                  <img
-                    src='/assets/icons/logout.svg'
-                    alt='logout'
-                    height={20}
-                    width={20}
-                    className='group-hover:invert-white'
-                  />
-                  <p className='small-medium lg:base-medium group-hover:invert-white'>Sign out</p>
+                  <img src='/assets/icons/logout.svg' alt='logout' height={20} width={20} />
+                  <p className='small-medium lg:base-medium'>Sign out</p>
                 </Button>
               </DropdownMenuItem>
             </DropdownMenuContent>

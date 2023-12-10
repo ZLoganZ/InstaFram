@@ -57,17 +57,16 @@ const PostDetails = () => {
 
   return (
     <div className='flex flex-col flex-1 gap-10 overflow-scroll py-10 px-5 md:p-14 custom-scrollbar items-center'>
-      <div className='hidden md:flex max-w-5xl w-full'>
-        <Button onClick={() => router.history.back()} className='gap-2' variant='ghost'>
-          <img src='/assets/icons/back.svg' alt='back' width={24} height={24} />
-          <p className='small-medium lg:base-medium'>Back</p>
-        </Button>
-      </div>
-
       {isLoadingPost ? (
         <Loader />
       ) : (
         <>
+          <div className='hidden md:flex max-w-5xl w-full'>
+            <Button onClick={() => router.history.back()} className='gap-2' variant='ghost'>
+              <img src='/assets/icons/back.svg' alt='back' width={24} height={24} />
+              <p className='small-medium lg:base-medium'>Back</p>
+            </Button>
+          </div>
           <div className='bg-light-2 dark:bg-dark-2 w-full max-w-5xl rounded-[30px] flex-col flex xl:flex-row border border-light-4 dark:border-dark-4 xl:rounded-l-[24px]'>
             <img
               src={getImageURL(post.image, 'post')}
@@ -77,9 +76,9 @@ const PostDetails = () => {
             <div className='bg-light-2 dark:bg-dark-2 flex flex-col gap-5 lg:gap-7 flex-1 items-start p-8 rounded-[30px]'>
               <div className='flex-between w-full'>
                 <Link
+                  className='flex items-center gap-3'
                   to='/profile/$profileID'
-                  params={{ profileID: post.creator.alias || post.creator._id }}
-                  className='flex items-center gap-3'>
+                  params={{ profileID: post.creator.alias || post.creator._id }}>
                   <img
                     className='w-8 h-8 lg:h-12 lg:w-12 rounded-full'
                     src={getImageURL(post.creator.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
@@ -141,19 +140,19 @@ const PostDetails = () => {
           />
 
           <CommentInput currentUser={currentUser} postID={postID} replyTo={replyTo} />
+
+          <div className='w-full max-w-5xl'>
+            <h3 className='body-bold md:h3-bold w-full my-10'>More Related Posts</h3>
+            {isLoadingRelatedPosts || !relatedPosts ? (
+              <Loader />
+            ) : relatedPosts.length === 0 ? (
+              <p className='text-[#5C5C7B] mt-10 text-center w-full'>No related posts</p>
+            ) : (
+              <GridPostsList posts={relatedPosts} showStats showUser />
+            )}
+          </div>
         </>
       )}
-
-      <div className='w-full max-w-5xl'>
-        <h3 className='body-bold md:h3-bold w-full my-10'>More Related Posts</h3>
-        {isLoadingRelatedPosts || !relatedPosts ? (
-          <Loader />
-        ) : relatedPosts.length === 0 ? (
-          <p className='text-[#5C5C7B] mt-10 text-center w-full'>No related posts</p>
-        ) : (
-          <GridPostsList posts={relatedPosts} showStats showUser />
-        )}
-      </div>
     </div>
   );
 };
