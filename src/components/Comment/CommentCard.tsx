@@ -20,9 +20,9 @@ const CommentCard: React.FC<ICommentProps> = ({ comment }) => {
               to='/profile/$profileID'
               params={{ profileID: comment.user.alias || comment.user._id }}>
               <img
+                className='cursor-pointer rounded-full'
                 src={getImageURL(comment.user.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
                 alt='user_community_image'
-                className='cursor-pointer rounded-full'
               />
             </Link>
 
@@ -47,9 +47,9 @@ const CommentCard: React.FC<ICommentProps> = ({ comment }) => {
               <p className='mt-2 small-regular text-dark-2 dark:text-light-2'>{comment.content}</p>
               <div className='flex-center flex-col gap-0.5 '>
                 <img
+                  className='cursor-pointer object-contain h-4 w-4 md:h-5 md:w-5'
                   src='/assets/icons/like.svg'
                   alt='like'
-                  className='cursor-pointer object-contain md:h-5 h-4 md:w-5 w-4'
                 />
                 <p className='subtle-semibold lg:small:medium'>{comment.likes.length}</p>
               </div>
@@ -58,14 +58,14 @@ const CommentCard: React.FC<ICommentProps> = ({ comment }) => {
             <div className='mb-2 flex flex-col gap-2'>
               <div className='flex-center w-fit gap-2'>
                 <img
+                  className='cursor-pointer object-contain h-4 w-4 md:h-5 md:w-5'
                   src='/assets/icons/reply.svg'
                   alt='reply'
-                  className='cursor-pointer object-contain md:h-5 h-4 md:w-5 w-4'
                 />
                 <img
+                  className='cursor-pointer object-contain h-4 w-4 md:h-5 md:w-5'
                   src='/assets/icons/send.svg'
                   alt='send'
-                  className='cursor-pointer object-contain md:h-5 h-4 md:w-5 w-4'
                 />
               </div>
 

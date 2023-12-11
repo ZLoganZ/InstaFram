@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams, useRouter } from '@tanstack/react-router';
+import { Link, useNavigate, useRouter } from '@tanstack/react-router';
 
 import { useGetCommentsByPostID, useGetPost, useGetRelatedPosts } from '@/lib/hooks/query';
 import { useDeletePost } from '@/lib/hooks/mutation';
@@ -17,10 +17,10 @@ import PostOptions from '@/components/Post/PostOptions';
 import CommentInput from '@/components/Forms/Comment/CommentInput';
 
 const PostDetails = () => {
-  const { postID } = useParams({ from: PostDetailsRoute.id });
+  const { postID } = PostDetailsRoute.useParams();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const router = useRouter();
+  const { history } = useRouter();
   const { toast } = useToast();
   const { currentUser } = useAuth();
 
@@ -40,7 +40,7 @@ const PostDetails = () => {
           title: 'Success',
           description: 'Post deleted successfully'
         });
-        router.history.back();
+        history.back();
       },
       onError: (error) => {
         toast({
@@ -62,7 +62,7 @@ const PostDetails = () => {
       ) : (
         <>
           <div className='hidden md:flex max-w-5xl w-full'>
-            <Button onClick={() => router.history.back()} className='gap-2' variant='ghost'>
+            <Button onClick={() => history.back()} className='gap-2' variant='ghost'>
               <img src='/assets/icons/back.svg' alt='back' width={24} height={24} />
               <p className='small-medium lg:base-medium'>Back</p>
             </Button>

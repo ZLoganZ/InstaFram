@@ -18,7 +18,7 @@ const LeftSideBar = () => {
     <nav className='hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-light-2 dark:bg-dark-2'>
       <div className='flex flex-col gap-11'>
         <Link to='/' className='flex gap-1 items-center'>
-          <img src='/assets/images/logo2.svg' alt='logo' height={36} />
+          <img src='/assets/images/logo.svg' alt='logo' height={36} />
           <p className='font-mono h2-bold select-none'>InstaFram</p>
         </Link>
 

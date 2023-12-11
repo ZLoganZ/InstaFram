@@ -32,7 +32,11 @@ const routeTree = rootRoute.addChildren([
   NotFoundRoute
 ]);
 
-export const router = new Router({ routeTree, defaultPendingComponent: Loader, context: { queryClient } });
+export const router = new Router({
+  routeTree,
+  defaultPendingComponent: Loader,
+  context: { queryClient, userID: undefined! }
+});
 
 declare module '@tanstack/react-router' {
   interface Register {

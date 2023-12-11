@@ -6,8 +6,7 @@ import { AuthContextType } from '@/types';
 
 const getCurrentUser = async () => {
   try {
-    if (!document.cookie.split(';').some((item) => item.trim().startsWith(`${HEADER.AUTHORIZATION}=`)))
-      return defaultUser;
+    if (!localStorage.getItem(HEADER.ACCESSTOKEN)) return defaultUser;
 
     const { data } = await authService.getCurrentUser();
 

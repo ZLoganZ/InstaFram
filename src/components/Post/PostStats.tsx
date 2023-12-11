@@ -12,7 +12,7 @@ interface IPostStats {
   textWhite?: boolean;
 }
 
-const PostStats: React.FC<IPostStats> = ({ post, userID, textWhite }) => {
+const PostStats: React.FC<IPostStats> = ({ post, userID, textWhite = false }) => {
   const likesList = post.likes.map((like) => like._id);
 
   const { likePost } = useLikePost();
@@ -70,16 +70,24 @@ const PostStats: React.FC<IPostStats> = ({ post, userID, textWhite }) => {
               </TooltipTrigger>
               <TooltipContent>
                 <ul className='flex flex-col gap-2'>
-                  {post.likes.slice(0, 10).map((like) => (
-                    <li key={like._id} className='flex items-center gap-2.5'>
-                      <img
-                        src={getImageURL(like.image, 'miniAvatar') || '/assets/icons/profile-placeholder.svg'}
-                        alt='avatar'
-                        className='w-8 h-8 rounded-full'
-                      />
-                      <p className='small-regular'>{like.name}</p>
+                  {post.likes.length === 0 ? (
+                    <li className='flex items-center'>
+                      <p className='small-regular'>No one has liked this post yet</p>
                     </li>
-                  ))}
+                  ) : (
+                    post.likes.slice(0, 10).map((like) => (
+                      <li key={like._id} className='flex items-center gap-2.5'>
+                        <img
+                          src={
+                            getImageURL(like.image, 'miniAvatar') || '/assets/icons/profile-placeholder.svg'
+                          }
+                          alt='avatar'
+                          className='w-8 h-8 rounded-full'
+                        />
+                        <p className='small-regular'>{like.name}</p>
+                      </li>
+                    ))
+                  )}
                   {post.likes.length > 10 && (
                     <li className='flex items-center'>
                       <p className='small-regular'>and {post.likes.length - 10} more...</p>

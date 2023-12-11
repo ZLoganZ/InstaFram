@@ -38,7 +38,7 @@ const PostForm: React.FC<IPostForm> = ({ post, action, setOpen }) => {
   });
 
   const navigate = useNavigate();
-  const router = useRouter();
+  const { history } = useRouter();
   const { toast } = useToast();
   const { currentUser } = useAuth();
   const { createPost } = useCreatePost();
@@ -192,7 +192,7 @@ const PostForm: React.FC<IPostForm> = ({ post, action, setOpen }) => {
             type='button'
             variant='destructive'
             onClick={() => {
-              action === 'create' || !setOpen ? router.history.back() : setOpen(false);
+              action === 'create' || !setOpen ? history.back() : setOpen(false);
             }}>
             Cancel
           </Button>

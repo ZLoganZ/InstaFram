@@ -1,5 +1,3 @@
-import { useParams } from '@tanstack/react-router';
-
 import Loader from '@/components/Shared/Loader';
 import PostForm from '@/components/Forms/Post/PostForm';
 import { useGetPost } from '@/lib/hooks/query';
@@ -10,7 +8,7 @@ interface IEditPost {
 }
 
 const EditPost: React.FC<IEditPost> = ({ setOpen }) => {
-  const { postID } = useParams({ from: PostDetailsRoute.id });
+  const { postID } = PostDetailsRoute.useParams();
   const { post, isLoadingPost, isFetchingPost } = useGetPost(postID);
 
   return (

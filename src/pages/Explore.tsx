@@ -1,4 +1,4 @@
-import { useSearch, useNavigate } from '@tanstack/react-router';
+import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -22,12 +22,10 @@ import { FILTERS } from '@/lib/constants';
 
 const Explore = () => {
   const [ref, inView] = useInView({ threshold: 0 });
-  const searchParams = useSearch({ from: ExploreRoute.id });
+  const { filter, search } = ExploreRoute.useSearch();
   const navigate = useNavigate();
 
-  const filter = useMemo(() => searchParams.filter ?? FILTERS.ALL, [searchParams.filter]);
-
-  const [searchValue, setSearchValue] = useState(searchParams.search ?? '');
+  const [searchValue, setSearchValue] = useState(search ?? '');
 
   const searchDebounce = useDebounce(searchValue, 500);
   const searchRef = useRef(searchDebounce);

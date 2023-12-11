@@ -26,7 +26,7 @@ const TopBar = () => {
     <section className='sticky top-0 z-50 md:hidden bg-light-2 dark:bg-dark-2 w-full'>
       <div className='flex-between py-4 px-5'>
         <Link to='/' className='flex gap-1 items-center'>
-          <img src='/assets/images/logo2.svg' alt='logo' height={36} />
+          <img src='/assets/images/logo.svg' alt='logo' height={36} />
           <p className='font-mono h2-bold select-none'>InstaFram</p>
         </Link>
         <div className='flex gap-4'>

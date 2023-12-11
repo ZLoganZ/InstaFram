@@ -1,7 +1,10 @@
 import { z } from 'zod';
-import { Route, lazyRouteComponent } from '@tanstack/react-router';
+import { Route, lazyRouteComponent, redirect } from '@tanstack/react-router';
+
+import LoaderLogo from '@/components/Shared/LoaderLogo';
 
 import { rootRoute } from '@/routes/root.routes';
+
 import {
   getCommentsByPostIDQueryOptions,
   getLikedPostsByUserIDQueryOptions,
@@ -24,6 +27,16 @@ export const MainRoute = new Route({
   id: 'main',
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import('@/layouts/MainLayout')),
+  pendingComponent: LoaderLogo,
+  beforeLoad: async ({ context, location }) => {
+    if (!context.userID) {
+      throw redirect({
+        to: '/signin',
+        search: { redirect: location.href },
+        replace: true
+      });
+    }
+  },
   wrapInSuspense: true
 });
 
@@ -104,6 +117,15 @@ export const LikedPostsRoute = new Route({
   path: 'liked',
   getParentRoute: () => ProfileRoute,
   component: lazyRouteComponent(() => import('@/components/User/LikedPosts')),
+  beforeLoad: async ({ context, params }) => {
+    if (params.profileID !== context.userID) {
+      throw redirect({
+        to: '/profile/$profileID',
+        params: { profileID: params.profileID },
+        replace: true
+      });
+    }
+  },
   loader: ({ context, params }) => {
     context.queryClient.prefetchInfiniteQuery(getLikedPostsByUserIDQueryOptions(params.profileID));
   },
@@ -114,6 +136,15 @@ export const SavedPostsRoute = new Route({
   path: 'saved',
   getParentRoute: () => ProfileRoute,
   component: lazyRouteComponent(() => import('@/components/User/SavedPosts')),
+  beforeLoad: async ({ context, params }) => {
+    if (params.profileID !== context.userID) {
+      throw redirect({
+        to: '/profile/$profileID',
+        params: { profileID: params.profileID },
+        replace: true
+      });
+    }
+  },
   loader: ({ context, params }) => {
     context.queryClient.prefetchInfiniteQuery(getSavedPostsByUserIDQueryOptions(params.profileID));
   },

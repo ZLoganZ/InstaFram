@@ -1,33 +1,22 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useEffect, useRef, useState } from 'react';
-import { Outlet, rootRouteWithContext, useRouter } from '@tanstack/react-router';
 import { ErrorBoundary } from 'react-error-boundary';
+import { Outlet, rootRouteWithContext, useRouter } from '@tanstack/react-router';
 import { QueryCache, QueryClient, QueryClientProvider, QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
-
-import { AuthProvider } from '@/providers/AuthProvider';
-import { ThemeProvider } from '@/providers/ThemeProvider';
 
 import { Toaster } from '@/components/ui/toaster';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/lib/hooks/useToast';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
-      maxPages: 3 // Keep 3 pages worth of queries cached
+      staleTime: 1000 * 60 * 5,
+      maxPages: 3
     }
   },
   queryCache: new QueryCache({
-    onError: (err) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      useToast().toast({
-        title: 'Error',
-        description: err.message
-      });
-    }
+    onError: (_) => {}
   })
 });
 
@@ -51,17 +40,12 @@ const RootPage = () => {
                 </Button>
               </div>
             )}>
-            <AuthProvider>
-              <ThemeProvider>
-                <main className='flex h-screen'>
-                  <LoadingBar isLoading={state.status === 'pending'} />
-                  <Outlet />
-                  <Toaster />
-                  <TanStackRouterDevtools initialIsOpen={false} />
-                  <ReactQueryDevtools initialIsOpen={false} />
-                </main>
-              </ThemeProvider>
-            </AuthProvider>
+            <main className='flex h-screen'>
+              <LoadingBar isLoading={state.status === 'pending'} />
+              <Outlet />
+              <Toaster />
+              <ReactQueryDevtools initialIsOpen={false} />
+            </main>
           </ErrorBoundary>
         )}
       </QueryErrorResetBoundary>
@@ -74,24 +58,15 @@ const LoadingBar = ({ isLoading, delay = 300 }: { isLoading: boolean; delay?: nu
   const timeoutID = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    // If a page is loading...
     if (isLoading) {
-      // Wait to see if the page takes more than the delay time to load
       timeoutID.current = setTimeout(() => {
-        // If still loading after waiting then show the bar
         if (isLoading) {
           setShowBar(true);
         }
       }, delay);
-    }
-
-    // If a page completed loading...
-    else {
-      // Clear the delay timer
+    } else {
       clearTimeout(timeoutID.current);
-      // If the bar is currently shown
       if (showBar) {
-        // Continue to show it to at least have the bar hit 100% once.
         setTimeout(() => setShowBar(false), 1000 - delay);
       }
     }
@@ -112,4 +87,6 @@ const LoadingBar = ({ isLoading, delay = 300 }: { isLoading: boolean; delay?: nu
   );
 };
 
-export const rootRoute = rootRouteWithContext<{ queryClient: QueryClient }>()({ component: RootPage });
+export const rootRoute = rootRouteWithContext<{ queryClient: QueryClient; userID: string }>()({
+  component: RootPage
+});

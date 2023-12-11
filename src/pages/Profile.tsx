@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, Outlet, useParams, useRouterState } from '@tanstack/react-router';
+import { Link, Outlet, useRouterState } from '@tanstack/react-router';
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
@@ -13,7 +13,7 @@ import { useAuth } from '@/lib/hooks/useAuth';
 import { cn, getImageURL } from '@/lib/utils';
 
 const Profile = () => {
-  const { profileID } = useParams({ from: ProfileRoute.id });
+  const { profileID } = ProfileRoute.useParams();
   const { currentUser, setUser } = useAuth();
   const routerState = useRouterState();
   const [open, setOpen] = useState(false);

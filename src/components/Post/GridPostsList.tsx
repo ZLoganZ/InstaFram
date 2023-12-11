@@ -15,9 +15,9 @@ const GridPostsList: React.FC<IGridPostsList> = ({ posts, showStats = false, sho
   const { currentUser } = useAuth();
 
   return (
-    <ul className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 min-[1380px]:grid-cols-3 gap-7 max-w-5xl'>
+    <ul className='w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-7 max-w-5xl'>
       {posts.map((post) => (
-        <li key={post._id} className='relative min-w-[20rem] h-80'>
+        <li key={post._id} className='relative min-w-[18rem] h-72'>
           <Link
             className='flex rounded-[24px] border border-light-4 dark:border-dark-4 overflow-hidden cursor-pointer w-full h-full'
             to='/posts/$postID'

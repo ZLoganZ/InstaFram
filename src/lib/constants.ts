@@ -79,9 +79,8 @@ export const defaultUser: IUser = {
 };
 
 export enum HEADER {
-  CLIENT_ID = 'x-client-id',
-  AUTHORIZATION = 'accessToken',
-  API_KEY = 'x-api-key',
-  REFRESHTOKEN = 'refreshToken',
-  GITHUB_TOKEN = 'x-github-token'
+  CLIENT_ID = 'client-id',
+  ACCESSTOKEN = 'access-token',
+  REFRESHTOKEN = 'refresh-token',
+  GITHUB_TOKEN = 'github-token'
 }

@@ -1,4 +1,8 @@
+import qs from 'qs';
+import { useRouterState } from '@tanstack/react-router';
 import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { SigninRoute } from '@/routes/public.routes';
 
 import { authService } from '@/services/AuthService';
 import { postService } from '@/services/PostService';
@@ -9,6 +13,7 @@ import { HEADER, QUERY_KEYS } from '@/lib/constants';
 import { parseFormData } from '@/lib/utils';
 
 export const useSignin = () => {
+  const { redirect } = SigninRoute.useSearch();
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: async (payload: ILogin) => {
       const { data } = await authService.login(payload);
@@ -16,7 +21,9 @@ export const useSignin = () => {
     },
     onSuccess: (data) => {
       localStorage.setItem(HEADER.CLIENT_ID, data.user._id);
-      window.location.replace('/');
+      localStorage.setItem(HEADER.ACCESSTOKEN, data.tokens.accessToken);
+      localStorage.setItem(HEADER.REFRESHTOKEN, data.tokens.refreshToken);
+      window.location.replace(redirect || '/');
     }
   });
   return {
@@ -36,6 +43,8 @@ export const useSignup = () => {
     },
     onSuccess: (data) => {
       localStorage.setItem(HEADER.CLIENT_ID, data.user._id);
+      localStorage.setItem(HEADER.ACCESSTOKEN, data.tokens.accessToken);
+      localStorage.setItem(HEADER.REFRESHTOKEN, data.tokens.refreshToken);
       window.location.replace('/');
     }
   });
@@ -49,13 +58,27 @@ export const useSignup = () => {
 };
 
 export const useSignout = () => {
+  const { location } = useRouterState();
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: async () => {
       return await authService.logout();
     },
     onSuccess: () => {
       localStorage.removeItem(HEADER.CLIENT_ID);
-      window.location.replace('/signin');
+      localStorage.removeItem(HEADER.ACCESSTOKEN);
+      localStorage.removeItem(HEADER.REFRESHTOKEN);
+
+      const { pathname, search, hash } = location;
+      const isRoot = pathname === '/';
+
+      const url = new URL('/signin', window.location.origin);
+      if (!isRoot) {
+        url.search = qs.stringify({
+          redirect: `${pathname}${qs.stringify(search, { addQueryPrefix: true })}${hash}`
+        });
+      }
+
+      window.location.replace(url);
     }
   });
   return {

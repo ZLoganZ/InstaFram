@@ -5,13 +5,13 @@ import { HEADER } from '@/lib/constants';
 const DOMAIN_NAME = import.meta.env.VITE_SERVER_URL as string;
 
 const headers = {
-  Authorization: localStorage.getItem(HEADER.AUTHORIZATION),
-  'x-api-key': localStorage.getItem(HEADER.API_KEY),
-  'x-client-id': localStorage.getItem(HEADER.CLIENT_ID)
+  'access-token': localStorage.getItem(HEADER.ACCESSTOKEN),
+  'refresh-token': localStorage.getItem(HEADER.REFRESHTOKEN),
+  'client-id': localStorage.getItem(HEADER.CLIENT_ID)
 };
 
 const githubHeaders = {
-  'x-github-token': localStorage.getItem(HEADER.GITHUB_TOKEN),
+  'github-token': localStorage.getItem(HEADER.GITHUB_TOKEN),
   ...headers
 };
 

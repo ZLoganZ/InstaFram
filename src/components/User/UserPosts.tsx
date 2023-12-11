@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useParams } from '@tanstack/react-router';
 import { useInView } from 'react-intersection-observer';
 
 import Loader from '@/components/Shared/Loader';
@@ -9,7 +8,7 @@ import { ProfileRoute } from '@/routes/private.routes';
 
 const UserPosts = (): JSX.Element => {
   const [postsRef, isInPostsView] = useInView({ threshold: 0 });
-  const { profileID } = useParams({ from: ProfileRoute.id });
+  const { profileID } = ProfileRoute.useParams();
   const { posts, hasNextPosts, isFetchingNextPosts, isLoadingPosts, fetchNextPosts } =
     useGetPostsByUserID(profileID);
 
