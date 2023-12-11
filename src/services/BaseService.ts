@@ -20,7 +20,7 @@ class BaseService {
     const requestHeaders = customHeaders ? { ...headers, ...customHeaders } : headers;
     const requestConfig = { headers: requestHeaders, data };
     const requestUrl = `${DOMAIN_NAME}/api/v1${url}`;
-    return axios.request({ method, url: requestUrl, ...requestConfig, withCredentials: true });
+    return axios.request({ method, url: requestUrl, ...requestConfig });
   }
 
   put(url: string, model?: object | string) {
