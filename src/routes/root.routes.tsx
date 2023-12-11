@@ -4,6 +4,8 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { Outlet, rootRouteWithContext, useRouter } from '@tanstack/react-router';
 import { QueryCache, QueryClient, QueryClientProvider, QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { SpeedInsights } from '@vercel/speed-insights/react';
+import { Analytics } from '@vercel/analytics/react';
 
 import { Toaster } from '@/components/ui/toaster';
 import { Button } from '@/components/ui/button';
@@ -44,6 +46,8 @@ const RootPage = () => {
               <LoadingBar isLoading={state.status === 'pending'} />
               <Outlet />
               <Toaster />
+              <Analytics />
+              <SpeedInsights />
               <ReactQueryDevtools initialIsOpen={false} />
             </main>
           </ErrorBoundary>
