@@ -46,7 +46,7 @@ const TopBar = () => {
                 {currentUser.name} <p className='text-[#7878A3]'>@{currentUser.alias}</p>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem className='focus:bg-transparent'>
                 <Button
                   type='button'
                   variant='ghost'
@@ -61,10 +61,10 @@ const TopBar = () => {
                   <p className='small-medium lg:base-medium'>View Profile</p>
                 </Button>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem className='focus:bg-transparent'>
                 <ModeToggle topbar />
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem className='focus:bg-transparent'>
                 <Button
                   type='button'
                   variant='ghost'
