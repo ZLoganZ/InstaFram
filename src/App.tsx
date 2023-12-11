@@ -11,7 +11,7 @@ const App = () => {
   return (
     <AuthProvider>
       <ThemeProvider>
-        <RouterProvider router={router} context={{ userID: currentUser._id }} />
+        <RouterProvider router={router} context={{ userID: currentUser._id, userAlias: currentUser.alias }} />
       </ThemeProvider>
     </AuthProvider>
   );

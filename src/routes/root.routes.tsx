@@ -87,6 +87,10 @@ const LoadingBar = ({ isLoading, delay = 300 }: { isLoading: boolean; delay?: nu
   );
 };
 
-export const rootRoute = rootRouteWithContext<{ queryClient: QueryClient; userID: string }>()({
+export const rootRoute = rootRouteWithContext<{
+  queryClient: QueryClient;
+  userID: string;
+  userAlias: string;
+}>()({
   component: RootPage
 });

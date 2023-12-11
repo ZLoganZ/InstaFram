@@ -35,7 +35,7 @@ const routeTree = rootRoute.addChildren([
 export const router = new Router({
   routeTree,
   defaultPendingComponent: Loader,
-  context: { queryClient, userID: undefined! }
+  context: { queryClient, userID: undefined!, userAlias: undefined! }
 });
 
 declare module '@tanstack/react-router' {
