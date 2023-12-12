@@ -16,9 +16,10 @@ export const AuthRoute = new Route({
   pendingComponent: LoaderLogo,
   beforeLoad: async ({ context }) => {
     if (context.userID) {
-      throw redirect({
+      redirect({
         to: '/',
-        replace: true
+        replace: true,
+        throw: true
       });
     }
   },

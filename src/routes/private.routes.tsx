@@ -30,10 +30,11 @@ export const MainRoute = new Route({
   pendingComponent: LoaderLogo,
   beforeLoad: async ({ context, location }) => {
     if (!context.userID) {
-      throw redirect({
+      redirect({
         to: '/signin',
         search: { redirect: location.href },
-        replace: true
+        replace: true,
+        throw: true
       });
     }
   },
@@ -119,10 +120,11 @@ export const LikedPostsRoute = new Route({
   component: lazyRouteComponent(() => import('@/components/User/LikedPosts')),
   beforeLoad: async ({ context, params }) => {
     if (params.profileID !== context.userID && params.profileID !== context.userAlias) {
-      throw redirect({
+      redirect({
         to: '/profile/$profileID',
         params: { profileID: params.profileID },
-        replace: true
+        replace: true,
+        throw: true
       });
     }
   },
@@ -138,10 +140,11 @@ export const SavedPostsRoute = new Route({
   component: lazyRouteComponent(() => import('@/components/User/SavedPosts')),
   beforeLoad: async ({ context, params }) => {
     if (params.profileID !== context.userID && params.profileID !== context.userAlias) {
-      throw redirect({
+      redirect({
         to: '/profile/$profileID',
         params: { profileID: params.profileID },
-        replace: true
+        replace: true,
+        throw: true
       });
     }
   },
