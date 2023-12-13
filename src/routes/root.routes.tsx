@@ -24,7 +24,7 @@ export const queryClient = new QueryClient({
     queries: {
       staleTime: 1000 * 60 * 5,
       maxPages: 3,
-      retry: 1
+      retry: false
     }
   }
 });
