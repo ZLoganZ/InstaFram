@@ -131,7 +131,7 @@ const PostDetails = () => {
               </div>
 
               <div className='w-full'>
-                <PostStats post={post} userID={currentUser._id} />
+                <PostStats post={post} />
               </div>
             </div>
           </div>

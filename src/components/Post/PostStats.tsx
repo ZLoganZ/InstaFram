@@ -1,51 +1,62 @@
-import { useState } from 'react';
+import { Link } from '@tanstack/react-router';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useLikePost, useSavePost } from '@/lib/hooks/mutation';
 import { cn, getImageURL } from '@/lib/utils';
+import { useAuth } from '@/lib/hooks/useAuth';
 import { IPost } from '@/types';
-import { Link } from '@tanstack/react-router';
 
 interface IPostStats {
   post: IPost;
-  userID: string;
   textWhite?: boolean;
 }
 
-const PostStats: React.FC<IPostStats> = ({ post, userID, textWhite = false }) => {
-  const likesList = post.likes.map((like) => like._id);
-
+const PostStats: React.FC<IPostStats> = ({ post, textWhite = false }) => {
   const { likePost } = useLikePost();
   const { savePost } = useSavePost();
 
-  const [likes, setLikes] = useState(likesList);
-  const [isSaved, setIsSaved] = useState(post.saves.some((save) => save.user._id === userID));
+  const { currentUser } = useAuth();
 
-  const handleLikePost = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const [likes, setLikes] = useState(post.likes.map((like) => like._id));
+  const [isSaved, setIsSaved] = useState(post.saves.some((save) => save.user._id === currentUser._id));
 
-    const hasLiked = likes.includes(userID);
+  useEffect(() => {
+    setLikes(post.likes.map((like) => like._id));
+    setIsSaved(post.saves.some((save) => save.user._id === currentUser._id));
+  }, [post]);
 
-    if (hasLiked) {
-      setLikes(likes.filter((like) => like !== userID));
-    } else {
-      setLikes([...likes, userID]);
-    }
+  const handleLikePost = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
 
-    likePost(post._id);
-  };
+      const hasLiked = likes.includes(currentUser._id);
 
-  const handleSavePost = (e: React.MouseEvent) => {
-    e.stopPropagation();
+      if (hasLiked) {
+        setLikes(likes.filter((like) => like !== currentUser._id));
+      } else {
+        setLikes([...likes, currentUser._id]);
+      }
 
-    setIsSaved(!isSaved);
+      likePost(post._id);
+    },
+    [likes, currentUser._id, likePost, post._id]
+  );
 
-    savePost(post._id);
-  };
+  const handleSavePost = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
 
-  const checkIsLiked = (likesList: string[], userID: string) => {
-    return likesList.includes(userID);
-  };
+      setIsSaved(!isSaved);
+
+      savePost(post._id);
+    },
+    [isSaved, savePost, post._id]
+  );
+
+  const checkIsLiked = useMemo(() => {
+    return likes.includes(currentUser._id);
+  }, [likes, currentUser._id]);
 
   return (
     <div className='flex justify-between items-center'>
@@ -53,7 +64,7 @@ const PostStats: React.FC<IPostStats> = ({ post, userID, textWhite = false }) =>
         <div className='flex gap-1.5'>
           <img
             className='w-5 h-5 cursor-pointer hover:scale-110'
-            src={checkIsLiked(likes, userID) ? '/assets/icons/liked.svg' : '/assets/icons/like.svg'}
+            src={checkIsLiked ? '/assets/icons/liked.svg' : '/assets/icons/like.svg'}
             alt='like'
             onClick={handleLikePost}
           />

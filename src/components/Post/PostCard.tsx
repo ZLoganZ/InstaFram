@@ -1,7 +1,6 @@
 import { Link, useNavigate } from '@tanstack/react-router';
 
 import PostStats from '@/components/Post/PostStats';
-import { useAuth } from '@/lib/hooks/useAuth';
 import { FILTERS } from '@/lib/constants';
 import { getDateTimeToNow, getImageURL } from '@/lib/utils';
 import { IPost } from '@/types';
@@ -11,7 +10,6 @@ interface IPostCard {
 }
 
 const PostCard: React.FC<IPostCard> = ({ post }) => {
-  const { currentUser } = useAuth();
   const navigate = useNavigate();
 
   return (
@@ -65,7 +63,7 @@ const PostCard: React.FC<IPostCard> = ({ post }) => {
           </Link>
         )}
       </>
-      <PostStats post={post} userID={currentUser._id} />
+      <PostStats post={post} />
     </div>
   );
 };
