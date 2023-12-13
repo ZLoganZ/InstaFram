@@ -2,7 +2,7 @@
 import { lazy, useEffect, useRef, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Outlet, rootRouteWithContext, useRouter } from '@tanstack/react-router';
-import { QueryCache, QueryClient, QueryClientProvider, QueryErrorResetBoundary } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, useQueryErrorResetBoundary } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
@@ -25,43 +25,37 @@ export const queryClient = new QueryClient({
       staleTime: 1000 * 60 * 5,
       maxPages: 3
     }
-  },
-  queryCache: new QueryCache({
-    onError: (_) => {}
-  })
+  }
 });
 
 const RootPage = () => {
   const { state } = useRouter();
+  const { reset } = useQueryErrorResetBoundary();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <QueryErrorResetBoundary>
-        {({ reset }) => (
-          <ErrorBoundary
-            onReset={reset}
-            fallbackRender={({ resetErrorBoundary, error }) => (
-              <div className='flex flex-1 items-center justify-center'>
-                <h1 className='h1-bold'>There was an error!</h1>
-                <pre className='base-medium' style={{ color: 'red' }}>
-                  {error.message}
-                </pre>
-                <Button type='button' onClick={() => resetErrorBoundary()}>
-                  Try again
-                </Button>
-              </div>
-            )}>
-            <main className='flex h-screen'>
-              <LoadingBar isLoading={state.status === 'pending'} />
-              <Outlet />
-              <Toaster />
-              <SpeedInsights />
-              <ReactQueryDevtools initialIsOpen={false} />
-              <TanStackRouterDevtools initialIsOpen={false} />
-            </main>
-          </ErrorBoundary>
-        )}
-      </QueryErrorResetBoundary>
+      <ErrorBoundary
+        onReset={reset}
+        fallbackRender={({ resetErrorBoundary, error }) => (
+          <div className='flex flex-1 items-center justify-center'>
+            <h1 className='h1-bold'>There was an error!</h1>
+            <pre className='base-medium' style={{ color: 'red' }}>
+              {error.message}
+            </pre>
+            <Button type='button' onClick={() => resetErrorBoundary()}>
+              Try again
+            </Button>
+          </div>
+        )}>
+        <main className='flex h-screen'>
+          <LoadingBar isLoading={state.status === 'pending'} />
+          <Outlet />
+          <Toaster />
+          <SpeedInsights />
+          <ReactQueryDevtools initialIsOpen={false} />
+          <TanStackRouterDevtools initialIsOpen={false} />
+        </main>
+      </ErrorBoundary>
     </QueryClientProvider>
   );
 };

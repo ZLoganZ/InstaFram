@@ -3,9 +3,11 @@ import { twMerge } from 'tailwind-merge';
 import { format, isToday, isThisWeek, isThisYear } from 'date-fns';
 import { Cloudinary } from '@cloudinary/url-gen';
 import { fill } from '@cloudinary/url-gen/actions/resize';
-import { autoGravity } from '@cloudinary/url-gen/qualifiers/gravity';
-import { focusOn } from '@cloudinary/url-gen/qualifiers/gravity';
+import { autoGravity, focusOn } from '@cloudinary/url-gen/qualifiers/gravity';
 import { FocusOn } from '@cloudinary/url-gen/qualifiers/focusOn';
+import { quality, format as formatCld } from '@cloudinary/url-gen/actions/delivery';
+import { autoBest } from '@cloudinary/url-gen/qualifiers/quality';
+import { auto } from '@cloudinary/url-gen/qualifiers/format';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -139,19 +141,34 @@ export const getImageURL = (image?: string, option: ImageOptions = 'default') =>
 
   switch (option) {
     case 'avatar':
-      myImage.resize(fill().height(150).width(150).gravity(focusOn(FocusOn.faces())));
+      myImage
+        .resize(fill().height(150).width(150).gravity(focusOn(FocusOn.faces())))
+        .delivery(quality(autoBest()))
+        .delivery(formatCld(auto()));
       break;
     case 'post':
-      myImage.resize(fill().height(600).gravity(autoGravity()));
+      myImage
+        .resize(fill().height(600).gravity(autoGravity()))
+        .delivery(quality(autoBest()))
+        .delivery(formatCld(auto()));
       break;
     case 'miniAvatar':
-      myImage.resize(fill().height(50).width(50).gravity(focusOn(FocusOn.faces())));
+      myImage
+        .resize(fill().height(50).width(50).gravity(focusOn(FocusOn.faces())))
+        .delivery(quality(autoBest()))
+        .delivery(formatCld(auto()));
       break;
     case 'story':
-      myImage.resize(fill().height(300).gravity(autoGravity()));
+      myImage
+        .resize(fill().height(300).gravity(autoGravity()))
+        .delivery(quality(autoBest()))
+        .delivery(formatCld(auto()));
       break;
     case 'storyAvatar':
-      myImage.resize(fill().height(80).width(80).gravity(focusOn(FocusOn.faces())));
+      myImage
+        .resize(fill().height(80).width(80).gravity(focusOn(FocusOn.faces())))
+        .delivery(quality(autoBest()))
+        .delivery(formatCld(auto()));
       break;
     default:
       break;

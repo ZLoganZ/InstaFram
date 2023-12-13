@@ -16,7 +16,7 @@ import {
   getTopCreatorsQueryOptions,
   getTopPostsQueryOptions,
   getUserByIDQueryOptions
-} from '@/lib/hooks/query';
+} from '@/lib/queryOptions';
 
 const searchQuerySchema = z.object({
   search: z.string().optional(),
@@ -45,9 +45,9 @@ export const HomeRoute = new Route({
   path: '/',
   getParentRoute: () => MainRoute,
   component: lazyRouteComponent(() => import('@/pages/Home')),
-  loader: ({ context }) => {
-    context.queryClient.prefetchInfiniteQuery(getPostsQueryOptions());
-    context.queryClient.prefetchInfiniteQuery(getTopCreatorsQueryOptions());
+  loader: ({ context: { queryClient } }) => {
+    queryClient.prefetchInfiniteQuery(getPostsQueryOptions());
+    queryClient.prefetchInfiniteQuery(getTopCreatorsQueryOptions());
   },
   wrapInSuspense: true
 });
@@ -57,8 +57,8 @@ export const ExploreRoute = new Route({
   getParentRoute: () => MainRoute,
   validateSearch: (search) => searchQuerySchema.parse(search),
   component: lazyRouteComponent(() => import('@/pages/Explore')),
-  loader: ({ context }) => {
-    context.queryClient.prefetchInfiniteQuery(getTopPostsQueryOptions('All'));
+  loader: ({ context: { queryClient } }) => {
+    queryClient.prefetchInfiniteQuery(getTopPostsQueryOptions('All'));
   },
   wrapInSuspense: true
 });
@@ -67,8 +67,8 @@ export const PeopleRoute = new Route({
   path: '/people',
   getParentRoute: () => MainRoute,
   component: lazyRouteComponent(() => import('@/pages/People')),
-  loader: ({ context }) => {
-    context.queryClient.prefetchInfiniteQuery(getTopCreatorsQueryOptions());
+  loader: ({ context: { queryClient } }) => {
+    queryClient.prefetchInfiniteQuery(getTopCreatorsQueryOptions());
   },
   wrapInSuspense: true
 });
@@ -85,10 +85,10 @@ export const PostDetailsRoute = new Route({
   getParentRoute: () => MainRoute,
   parseParams: (params) => ({ postID: z.string().parse(params.postID) }),
   component: lazyRouteComponent(() => import('@/pages/PostDetails')),
-  loader: ({ context, params }) => {
-    context.queryClient.prefetchQuery(getPostQueryOptions(params.postID));
-    context.queryClient.prefetchInfiniteQuery(getCommentsByPostIDQueryOptions(params.postID));
-    context.queryClient.prefetchQuery(getRelatedPostsQueryOptions(params.postID));
+  loader: ({ context: { queryClient }, params }) => {
+    queryClient.prefetchQuery(getPostQueryOptions(params.postID));
+    queryClient.prefetchInfiniteQuery(getCommentsByPostIDQueryOptions(params.postID));
+    queryClient.prefetchQuery(getRelatedPostsQueryOptions(params.postID));
   },
   wrapInSuspense: true
 });
@@ -98,8 +98,8 @@ export const ProfileRoute = new Route({
   getParentRoute: () => MainRoute,
   parseParams: (params) => ({ profileID: z.string().parse(params.profileID) }),
   component: lazyRouteComponent(() => import('@/pages/Profile')),
-  loader: ({ context, params }) => {
-    context.queryClient.prefetchQuery(getUserByIDQueryOptions(params.profileID));
+  loader: ({ context: { queryClient }, params }) => {
+    queryClient.prefetchQuery(getUserByIDQueryOptions(params.profileID));
   },
   wrapInSuspense: true
 });
@@ -108,8 +108,8 @@ export const UserPostsRoute = new Route({
   path: '/',
   getParentRoute: () => ProfileRoute,
   component: lazyRouteComponent(() => import('@/components/User/UserPosts')),
-  loader: ({ context, params }) => {
-    context.queryClient.prefetchInfiniteQuery(getPostsByUserIDQueryOptions(params.profileID));
+  loader: ({ context: { queryClient }, params }) => {
+    queryClient.prefetchInfiniteQuery(getPostsByUserIDQueryOptions(params.profileID));
   },
   wrapInSuspense: true
 });
@@ -128,8 +128,8 @@ export const LikedPostsRoute = new Route({
       });
     }
   },
-  loader: ({ context, params }) => {
-    context.queryClient.prefetchInfiniteQuery(getLikedPostsByUserIDQueryOptions(params.profileID));
+  loader: ({ context: { queryClient }, params }) => {
+    queryClient.prefetchInfiniteQuery(getLikedPostsByUserIDQueryOptions(params.profileID));
   },
   wrapInSuspense: true
 });
@@ -148,8 +148,8 @@ export const SavedPostsRoute = new Route({
       });
     }
   },
-  loader: ({ context, params }) => {
-    context.queryClient.prefetchInfiniteQuery(getSavedPostsByUserIDQueryOptions(params.profileID));
+  loader: ({ context: { queryClient }, params }) => {
+    queryClient.prefetchInfiniteQuery(getSavedPostsByUserIDQueryOptions(params.profileID));
   },
   wrapInSuspense: true
 });
