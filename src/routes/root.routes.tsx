@@ -1,15 +1,23 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useEffect, useRef, useState } from 'react';
+import { lazy, useEffect, useRef, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Outlet, rootRouteWithContext, useRouter } from '@tanstack/react-router';
 import { QueryCache, QueryClient, QueryClientProvider, QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import { Toaster } from '@/components/ui/toaster';
 import { Button } from '@/components/ui/button';
 import { Verified } from '@/types';
+
+const TanStackRouterDevtools =
+  process.env.NODE_ENV === 'production'
+    ? () => null
+    : lazy(() =>
+        import('@tanstack/router-devtools').then((res) => ({
+          default: res.TanStackRouterDevtools
+        }))
+      );
 
 export const queryClient = new QueryClient({
   defaultOptions: {
