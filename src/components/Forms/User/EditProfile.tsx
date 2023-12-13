@@ -1,5 +1,6 @@
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from '@tanstack/react-router';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -23,6 +24,7 @@ const EditProfile: React.FC<IUpdateProfile> = ({ setOpen }) => {
   const tempFile = new File([], '');
 
   const { toast } = useToast();
+  const navigate = useNavigate();
   const { currentUser, setUser } = useAuth();
   const form = useForm<z.infer<typeof UpdateUserSchema>>({
     resolver: zodResolver(UpdateUserSchema),
@@ -57,6 +59,13 @@ const EditProfile: React.FC<IUpdateProfile> = ({ setOpen }) => {
           toast({
             title: 'Success',
             description: 'Profile updated successfully!'
+          });
+          navigate({
+            to: '/profile/$profileID',
+            params: {
+              profileID: data.alias || data._id
+            },
+            replace: true
           });
         },
         onError: (error) => {
