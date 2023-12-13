@@ -26,7 +26,9 @@ const BottomBar = () => {
               alt={link.label}
               className={cn('h-5 w-5 group-hover:invert-white', isActive && 'invert-white')}
             />
-            <p className='tiny-medium text-dark-2 dark:text-light-2'>{link.label}</p>
+            <p className={cn('tiny-medium text-dark-2 dark:text-light-2', isActive && 'invert-white')}>
+              {link.label}
+            </p>
           </Link>
         );
       })}
