@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useRouter } from '@tanstack/react-router';
 
+import NotFound from '@/pages/NotFound';
+
 import { useGetCommentsByPostID, useGetPost, useGetRelatedPosts } from '@/lib/hooks/query';
 import { useDeletePost } from '@/lib/hooks/mutation';
 import { useAuth } from '@/lib/hooks/useAuth';
@@ -24,7 +26,7 @@ const PostDetails = () => {
   const { toast } = useToast();
   const { currentUser } = useAuth();
 
-  const { post, isLoadingPost } = useGetPost(postID);
+  const { post, isLoadingPost, errorPost } = useGetPost(postID);
   const { relatedPosts, isLoadingRelatedPosts } = useGetRelatedPosts(postID);
 
   const { comments, isLoadingComments } = useGetCommentsByPostID(postID);
@@ -57,7 +59,9 @@ const PostDetails = () => {
 
   return (
     <div className='flex flex-col flex-1 gap-10 overflow-scroll py-10 px-5 md:p-14 custom-scrollbar items-center'>
-      {isLoadingPost ? (
+      {errorPost ? (
+        <NotFound />
+      ) : isLoadingPost ? (
         <Loader />
       ) : (
         <>

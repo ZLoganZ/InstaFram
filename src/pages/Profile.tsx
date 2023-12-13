@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useRouterState } from '@tanstack/react-router';
 
+import NotFound from '@/pages/NotFound';
+
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import Loader from '@/components/Shared/Loader';
@@ -20,7 +22,7 @@ const Profile = () => {
 
   const { pathname } = routerState.location;
 
-  const { user, isLoadingUser } = useGetUserByID(profileID);
+  const { user, isLoadingUser, errorUser } = useGetUserByID(profileID);
 
   const { followUser, isLoadingFollowUser } = useFollowUser();
 
@@ -41,13 +43,13 @@ const Profile = () => {
   };
 
   return (
-    <>
-      {isLoadingUser ? (
-        <div className='flex-center w-full h-full'>
-          <Loader />
-        </div>
+    <div className='flex flex-col items-center flex-1 gap-10 overflow-scroll py-10 px-5 md:p-14 custom-scrollbar'>
+      {errorUser ? (
+        <NotFound />
+      ) : isLoadingUser ? (
+        <Loader />
       ) : (
-        <div className='flex flex-col items-center flex-1 gap-10 overflow-scroll py-10 px-5 md:p-14 custom-scrollbar'>
+        <>
           <div className='flex items-center md:mb-8 xl:items-start gap-8 flex-col xl:flex-row relative max-w-5xl w-full'>
             <div className='flex xl:flex-row flex-col max-xl:items-center flex-1 gap-7'>
               <img
@@ -153,9 +155,9 @@ const Profile = () => {
           )}
 
           <Outlet />
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
 };
 

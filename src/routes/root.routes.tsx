@@ -23,7 +23,8 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5,
-      maxPages: 3
+      maxPages: 3,
+      retry: 1
     }
   }
 });
