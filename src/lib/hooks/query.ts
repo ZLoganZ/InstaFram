@@ -77,19 +77,31 @@ export const useGetTopPosts = (filter: string) => {
 };
 
 export const useSearchPosts = (search: string, filter: string) => {
-  const { data, isLoading, isError, error, isFetching, refetch } = useQuery({
-    queryKey: [QUERY_KEYS.SEARCH_POSTS, search, filter],
-    queryFn: async () => {
-      const { data } = await postService.searchPosts(search, filter);
-      return data.metadata;
-    },
-    enabled: !!search
-  });
+  const { data, isLoading, isError, error, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: [QUERY_KEYS.SEARCH_POSTS, search, filter],
+      queryFn: async ({ pageParam }) => {
+        const { data } = await postService.searchPosts(pageParam, search, filter);
+        return data.metadata;
+      },
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, _, lastPageParam) => {
+        if (lastPage.length < 10) {
+          return null;
+        }
+        return lastPageParam + 1;
+      },
+      select: (data) => {
+        return data.pages.flatMap((page) => page);
+      },
+      enabled: !!search
+    });
   return {
     searchPosts: data!,
-    refetchSearchPosts: refetch,
     isLoadingSearchPosts: isLoading,
-    isFetchingSearchPosts: isFetching,
+    isFetchingNextSearchPosts: isFetchingNextPage,
+    hasNextSearchPosts: hasNextPage,
+    fetchNextSearchPosts: fetchNextPage,
     isSearchPostsError: isError,
     errorSearchPosts: error
   };
@@ -439,11 +451,21 @@ export const getCommentsByPostIDQueryOptions = (postID: string) =>
   });
 
 export const getSearchPostsQueryOptions = (search: string, filter: string) =>
-  queryOptions({
+  infiniteQueryOptions({
     queryKey: [QUERY_KEYS.SEARCH_POSTS, search, filter],
-    queryFn: async () => {
-      const { data } = await postService.searchPosts(search, filter);
+    queryFn: async ({ pageParam }) => {
+      const { data } = await postService.searchPosts(pageParam, search, filter);
       return data.metadata;
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, _, lastPageParam) => {
+      if (lastPage.length < 10) {
+        return null;
+      }
+      return lastPageParam + 1;
+    },
+    select: (data) => {
+      return data.pages.flatMap((page) => page);
     },
     enabled: !!search
   });

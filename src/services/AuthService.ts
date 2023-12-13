@@ -11,8 +11,14 @@ class AuthService extends BaseService {
   checkEmail = (email: string): Promise<AxiosResponse<IResponse<boolean>>> => {
     return this.post(`/auth/checkEmail`, { email });
   };
-  verifyEmail = (email: string, code: string): Promise<AxiosResponse<IResponse<boolean>>> => {
-    return this.post(`/auth/verifyEmail`, { email, code });
+  checkEmailForgotPassword = (email: string): Promise<AxiosResponse<IResponse<boolean>>> => {
+    return this.post(`/auth/checkEmailForgotPassword`, { email });
+  };
+  verifyCode = (email: string, code: string): Promise<AxiosResponse<IResponse<boolean>>> => {
+    return this.post(`/auth/verifyCode`, { email, code });
+  };
+  resetPassword = (email: string, password: string): Promise<AxiosResponse<IResponse<boolean>>> => {
+    return this.post(`/auth/resetPassword`, { email, password });
   };
   login = (payload: ILogin): Promise<AxiosResponse<IResponse<ILoginResponse>>> => {
     return this.post(`/auth/login`, payload);

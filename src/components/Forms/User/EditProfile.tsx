@@ -12,7 +12,7 @@ import ProfileUpload from '@/components/Upload/ProfileUpload';
 import { useUpdateUser } from '@/lib/hooks/mutation';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { useToast } from '@/lib/hooks/useToast';
-import { updateUserSchema } from '@/lib/schema';
+import { UpdateUserSchema } from '@/lib/schema';
 import { ErrorResponse } from '@/types';
 
 interface IUpdateProfile {
@@ -24,8 +24,8 @@ const EditProfile: React.FC<IUpdateProfile> = ({ setOpen }) => {
 
   const { toast } = useToast();
   const { currentUser, setUser } = useAuth();
-  const form = useForm<z.infer<typeof updateUserSchema>>({
-    resolver: zodResolver(updateUserSchema),
+  const form = useForm<z.infer<typeof UpdateUserSchema>>({
+    resolver: zodResolver(UpdateUserSchema),
     defaultValues: {
       name: currentUser.name,
       bio: currentUser.bio,
@@ -37,7 +37,7 @@ const EditProfile: React.FC<IUpdateProfile> = ({ setOpen }) => {
   const { updateUser, isLoadingUpdateUser } = useUpdateUser();
 
   // Handler
-  const handleUpdate = async (value: z.infer<typeof updateUserSchema>) => {
+  const handleUpdate = async (value: z.infer<typeof UpdateUserSchema>) => {
     let isChangeImage = false;
     if (value.image !== tempFile) {
       isChangeImage = true;

@@ -84,6 +84,12 @@ const SigninForm = () => {
             )}
           />
 
+          <Link
+            to='/forgot'
+            className='text-primary text-center subtle-medium md:small-medium hover:underline'>
+            Forgot your password?
+          </Link>
+
           <Button type='submit' disabled={isLoadingSignin}>
             {isLoadingSignin ? (
               <div className='flex-center gap-2'>
@@ -94,13 +100,14 @@ const SigninForm = () => {
               'Sign in'
             )}
           </Button>
+
+          <p className='text-dark-2 dark:text-light-2 small-regular md:base-regular text-center mt-2'>
+            Don&apos;t have an account yet?&nbsp;
+            <Link to='/signup' className='text-primary small-semibold md:base-semibold hover:underline'>
+              Sign up
+            </Link>
+          </p>
         </form>
-        <p className='text-dark-2 dark:text-light-2 small-regular md:base-regular mt-5'>
-          Don&apos;t have an account yet?&nbsp;
-          <Link to='/signup' className='text-primary small-semibold md:base-semibold hover:underline'>
-            Sign up
-          </Link>
-        </p>
       </div>
     </Form>
   );

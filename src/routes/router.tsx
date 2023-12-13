@@ -15,12 +15,19 @@ import {
   SavedPostsRoute
 } from '@/routes/private.routes';
 
-import { AuthRoute, SigninRoute, SignupRoute, NotFoundRoute } from '@/routes/public.routes';
+import {
+  AuthRoute,
+  SigninRoute,
+  SignupRoute,
+  NotFoundRoute,
+  ForgotPasswordRoute,
+  ResetPasswordRoute
+} from '@/routes/public.routes';
 
 import Loader from '@/components/Shared/Loader';
 
 const routeTree = rootRoute.addChildren([
-  AuthRoute.addChildren([SigninRoute, SignupRoute]),
+  AuthRoute.addChildren([SigninRoute, SignupRoute, ForgotPasswordRoute, ResetPasswordRoute]),
   MainRoute.addChildren([
     HomeRoute,
     ExploreRoute,
@@ -35,7 +42,7 @@ const routeTree = rootRoute.addChildren([
 export const router = new Router({
   routeTree,
   defaultPendingComponent: Loader,
-  context: { queryClient, userID: undefined!, userAlias: undefined! }
+  context: { queryClient, userID: undefined!, userAlias: undefined!, verified: undefined! }
 });
 
 declare module '@tanstack/react-router' {

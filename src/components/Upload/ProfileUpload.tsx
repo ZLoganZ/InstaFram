@@ -5,12 +5,12 @@ import { UseFormReturn } from 'react-hook-form';
 
 import { Button } from '@/components/ui/button';
 import { getImageURL } from '@/lib/utils';
-import { updateUserSchema } from '@/lib/schema';
+import { UpdateUserSchema } from '@/lib/schema';
 
 interface IProfileUpload {
   fieldChange: (files: File) => void;
   mediaURL: string;
-  form: UseFormReturn<z.infer<typeof updateUserSchema>>;
+  form: UseFormReturn<z.infer<typeof UpdateUserSchema>>;
 }
 
 const ProfileUpload: React.FC<IProfileUpload> = ({ fieldChange, mediaURL, form }) => {

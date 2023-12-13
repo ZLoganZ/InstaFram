@@ -47,7 +47,7 @@ const CommentCard: React.FC<ICommentProps> = ({ comment }) => {
               <p className='mt-2 small-regular text-dark-2 dark:text-light-2'>{comment.content}</p>
               <div className='flex-center flex-col gap-0.5 '>
                 <img
-                  className='cursor-pointer object-contain h-4 w-4 md:h-5 md:w-5'
+                  className='cursor-pointer object-contain h-4 w-4 md:h-5 md:w-5 hover:scale-110'
                   src='/assets/icons/like.svg'
                   alt='like'
                 />

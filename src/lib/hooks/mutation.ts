@@ -57,6 +57,70 @@ export const useSignup = () => {
   };
 };
 
+export const useCheckEmail = () => {
+  const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
+    mutationFn: async (email: string) => {
+      const { data } = await authService.checkEmail(email);
+      return data.metadata;
+    }
+  });
+  return {
+    checkEmail: mutateAsync,
+    isLoadingCheckEmail: isPending,
+    isCheckEmailSuccess: isSuccess,
+    isCheckEmailError: isError,
+    errorCheckEmail: error
+  };
+};
+
+export const useCheckEmailForgotPassword = () => {
+  const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
+    mutationFn: async (email: string) => {
+      const { data } = await authService.checkEmailForgotPassword(email);
+      return data.metadata;
+    }
+  });
+  return {
+    checkEmailForgotPassword: mutateAsync,
+    isLoadingCheckEmailForgotPassword: isPending,
+    isCheckEmailForgotPasswordSuccess: isSuccess,
+    isCheckEmailForgotPasswordError: isError,
+    errorCheckEmailForgotPassword: error
+  };
+};
+
+export const useVerifyCode = () => {
+  const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
+    mutationFn: async (payload: { email: string; code: string }) => {
+      const { data } = await authService.verifyCode(payload.email, payload.code);
+      return data.metadata;
+    }
+  });
+  return {
+    verifyCode: mutateAsync,
+    isLoadingVerifyCode: isPending,
+    isVerifyCodeSuccess: isSuccess,
+    isVerifyCodeError: isError,
+    errorVerifyCode: error
+  };
+};
+
+export const useResetPassword = () => {
+  const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
+    mutationFn: async (payload: { email: string; password: string }) => {
+      const { data } = await authService.resetPassword(payload.email, payload.password);
+      return data.metadata;
+    }
+  });
+  return {
+    resetPassword: mutateAsync,
+    isLoadingResetPassword: isPending,
+    isResetPasswordSuccess: isSuccess,
+    isResetPasswordError: isError,
+    errorResetPassword: error
+  };
+};
+
 export const useSignout = () => {
   const { location } = useRouterState();
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({

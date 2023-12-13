@@ -28,7 +28,7 @@ class PostService extends BaseService {
   };
   getRelatedPosts = (postID: string): Promise<AxiosResponse<IResponse<IPost[]>>> => {
     return this.get(`/posts/${postID}/related`);
-  }
+  };
   createPost = (data: FormData): Promise<AxiosResponse<IResponse<IPost>>> => {
     return this.post(`/posts`, data);
   };
@@ -44,8 +44,12 @@ class PostService extends BaseService {
   savePost = (postID: string): Promise<AxiosResponse<IResponse<boolean>>> => {
     return this.post(`/posts/${postID}/save`);
   };
-  searchPosts = (search: string, filter: string): Promise<AxiosResponse<IResponse<IPost[]>>> => {
-    return this.get(`/posts/search?search=${search}&filter=${filter}`);
+  searchPosts = (
+    pageParam: number,
+    search: string,
+    filter: string
+  ): Promise<AxiosResponse<IResponse<IPost[]>>> => {
+    return this.get(`/posts/search?search=${search}&filter=${filter}&page=${pageParam}`);
   };
 }
 

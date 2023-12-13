@@ -52,9 +52,9 @@ const PostStats: React.FC<IPostStats> = ({ post, userID, textWhite = false }) =>
       <div className='flex gap-2 mr-2'>
         <div className='flex gap-1.5'>
           <img
+            className='w-5 h-5 cursor-pointer hover:scale-110'
             src={checkIsLiked(likes, userID) ? '/assets/icons/liked.svg' : '/assets/icons/like.svg'}
             alt='like'
-            className='w-5 h-5 cursor-pointer'
             onClick={handleLikePost}
           />
           <TooltipProvider delayDuration={100}>

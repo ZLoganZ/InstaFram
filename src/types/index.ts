@@ -1,3 +1,8 @@
+export type Verified = {
+  isVerified: boolean;
+  setIsVerified: (isVerified: boolean) => void;
+};
+
 export type AuthContextType = {
   currentUser: IUser;
   isAuthenticated: boolean;

@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { commentSchema } from '@/lib/schema';
+import { CommentSchema } from '@/lib/schema';
 import { getImageURL } from '@/lib/utils';
 import { useCommentPost } from '@/lib/hooks/mutation';
 import { IUser } from '@/types';
@@ -17,8 +17,8 @@ interface ICommentInputProps {
 }
 
 const CommentInput: React.FC<ICommentInputProps> = ({ currentUser, postID, replyTo }) => {
-  const form = useForm<z.infer<typeof commentSchema>>({
-    resolver: zodResolver(commentSchema),
+  const form = useForm<z.infer<typeof CommentSchema>>({
+    resolver: zodResolver(CommentSchema),
     defaultValues: {
       content: ''
     }
@@ -26,7 +26,7 @@ const CommentInput: React.FC<ICommentInputProps> = ({ currentUser, postID, reply
 
   const { commentPost, isLoadingCommentPost } = useCommentPost();
 
-  const onSubmit = async (values: z.infer<typeof commentSchema>) => {
+  const onSubmit = async (values: z.infer<typeof CommentSchema>) => {
     await commentPost(
       { ...values, post: postID, replyTo },
       {

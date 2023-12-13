@@ -22,17 +22,24 @@ import { FILTERS } from '@/lib/constants';
 
 const Explore = () => {
   const [ref, inView] = useInView({ threshold: 0 });
+  const [searchRef, searchInView] = useInView({ threshold: 0 });
   const { filter, search } = ExploreRoute.useSearch();
   const navigate = useNavigate();
 
   const [searchValue, setSearchValue] = useState(search ?? '');
 
   const searchDebounce = useDebounce(searchValue, 500);
-  const searchRef = useRef(searchDebounce);
+  const searchInputRef = useRef(searchDebounce);
 
   const { posts, isLoadingPosts, hasNextPosts, fetchNextPosts, isFetchingNextPosts } = useGetTopPosts(filter);
 
-  const { searchPosts, isLoadingSearchPosts } = useSearchPosts(searchDebounce, filter);
+  const {
+    searchPosts,
+    isLoadingSearchPosts,
+    hasNextSearchPosts,
+    fetchNextSearchPosts,
+    isFetchingNextSearchPosts
+  } = useSearchPosts(searchDebounce, filter);
 
   const showSearchResults = useMemo(() => searchDebounce !== '', [searchDebounce]);
   const showNoPost = useMemo(() => !showSearchResults && posts?.length === 0, [hasNextPosts, posts]);
@@ -42,9 +49,9 @@ const Explore = () => {
   }, []);
 
   useEffect(() => {
-    if (searchDebounce !== '' && searchDebounce !== searchRef.current) {
+    if (searchDebounce !== '' && searchDebounce !== searchInputRef.current) {
       navigate({ search: (pre) => ({ ...pre, search: searchDebounce }), replace: true });
-      searchRef.current = searchDebounce;
+      searchInputRef.current = searchDebounce;
     } else if (searchDebounce === '') {
       navigate({ search: (pre) => ({ ...pre, search: undefined }), replace: true });
     }
@@ -55,6 +62,12 @@ const Explore = () => {
       fetchNextPosts();
     }
   }, [inView]);
+
+  useEffect(() => {
+    if (searchInView && hasNextSearchPosts && showSearchResults && !isFetchingNextSearchPosts) {
+      fetchNextSearchPosts();
+    }
+  }, [searchInView]);
 
   return (
     <div className='flex flex-col flex-1 items-center overflow-scroll py-10 px-5 md:p-14 custom-scrollbar'>
@@ -114,6 +127,12 @@ const Explore = () => {
 
       {hasNextPosts && !showSearchResults && (
         <div ref={ref} className='mt-6'>
+          <Loader />
+        </div>
+      )}
+
+      {hasNextSearchPosts && showSearchResults && (
+        <div ref={searchRef} className='mt-6'>
           <Loader />
         </div>
       )}
