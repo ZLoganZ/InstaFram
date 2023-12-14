@@ -49,10 +49,10 @@ const Explore = () => {
 
   useEffect(() => {
     if (searchDebounce !== '' && searchDebounce !== searchInputRef.current) {
-      navigate({ search: (pre) => ({ ...pre, search: searchDebounce }), replace: true });
+      navigate({ search: (pre) => ({ ...pre, search: searchDebounce }), replace: true, resetScroll: false });
       searchInputRef.current = searchDebounce;
     } else if (searchDebounce === '') {
-      navigate({ search: (pre) => ({ ...pre, search: undefined }), replace: true });
+      navigate({ search: (pre) => ({ ...pre, search: undefined }), replace: true, resetScroll: false });
     }
   }, [searchDebounce]);
 
@@ -103,7 +103,9 @@ const Explore = () => {
             {Object.values(FILTERS).map((filterValue) => (
               <DropdownMenuCheckboxItem
                 key={filterValue}
-                onClick={() => navigate({ search: (pre) => ({ ...pre, filter: filterValue }) })}
+                onClick={() =>
+                  navigate({ search: (pre) => ({ ...pre, filter: filterValue }), resetScroll: false })
+                }
                 checked={filter === filterValue}>
                 {filterValue}
               </DropdownMenuCheckboxItem>

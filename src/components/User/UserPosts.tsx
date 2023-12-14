@@ -6,7 +6,7 @@ import Loader from '@/components/Shared/Loader';
 import GridPostsList from '@/components/Post/GridPostsList';
 import { useGetPostsByUserID } from '@/lib/hooks/query';
 
-const UserPosts = (): JSX.Element => {
+const UserPosts = () => {
   const [postsRef, isInPostsView] = useInView({ threshold: 0 });
   const { profileID } = new RouteApi({ id: '/main/profile/$profileID/' }).useParams();
   const { posts, hasNextPosts, isFetchingNextPosts, isLoadingPosts, fetchNextPosts } =
