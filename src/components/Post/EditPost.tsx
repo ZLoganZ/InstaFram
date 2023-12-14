@@ -1,14 +1,15 @@
+import { RouteApi } from '@tanstack/react-router';
+
 import Loader from '@/components/Shared/Loader';
 import PostForm from '@/components/Forms/Post/PostForm';
 import { useGetPost } from '@/lib/hooks/query';
-import { PostDetailsRoute } from '@/routes/private.routes';
 
 interface IEditPost {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EditPost: React.FC<IEditPost> = ({ setOpen }) => {
-  const { postID } = PostDetailsRoute.useParams();
+  const { postID } = new RouteApi({ id: '/main/posts/$postID' }).useParams();
   const { post, isLoadingPost, isFetchingPost } = useGetPost(postID);
 
   return (

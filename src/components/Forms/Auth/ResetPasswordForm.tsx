@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Link, useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate, RouteApi } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -7,14 +7,13 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import Loader from '@/components/Shared/Loader';
-import { ResetPasswordRoute } from '@/routes/public.routes';
 import { useResetPassword } from '@/lib/hooks/mutation';
 import { useToast } from '@/lib/hooks/useToast';
 import { ResetPasswordSchema } from '@/lib/schema';
 import { ErrorResponse } from '@/types';
 
 const ResetPasswordForm = () => {
-  const { email } = ResetPasswordRoute.useSearch();
+  const { email } = new RouteApi({ id: '/auth/reset' }).useSearch();
   const form = useForm<z.infer<typeof ResetPasswordSchema>>({
     resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {

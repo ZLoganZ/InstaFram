@@ -1,4 +1,4 @@
-import { useNavigate } from '@tanstack/react-router';
+import { useNavigate, RouteApi } from '@tanstack/react-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -15,7 +15,6 @@ import { Label } from '@/components/ui/label';
 import SearchResults from '@/components/Post/SearchResults';
 import Loader from '@/components/Shared/Loader';
 import GridPostsList from '@/components/Post/GridPostsList';
-import { ExploreRoute } from '@/routes/private.routes';
 import { useGetTopPosts, useSearchPosts } from '@/lib/hooks/query';
 import { useDebounce } from '@/lib/hooks/useDebounce';
 import { FILTERS } from '@/lib/constants';
@@ -23,7 +22,7 @@ import { FILTERS } from '@/lib/constants';
 const Explore = () => {
   const [ref, inView] = useInView({ threshold: 0 });
   const [searchRef, searchInView] = useInView({ threshold: 0 });
-  const { filter, search } = ExploreRoute.useSearch();
+  const { filter, search } = new RouteApi({ id: '/main/explore' }).useSearch();
   const navigate = useNavigate();
 
   const [searchValue, setSearchValue] = useState(search ?? '');

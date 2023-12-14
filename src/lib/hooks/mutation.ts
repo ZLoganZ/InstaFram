@@ -1,8 +1,6 @@
 import qs from 'qs';
-import { useRouterState } from '@tanstack/react-router';
+import { useRouterState, RouteApi } from '@tanstack/react-router';
 import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
-
-import { SigninRoute } from '@/routes/public.routes';
 
 import { authService } from '@/services/AuthService';
 import { postService } from '@/services/PostService';
@@ -13,7 +11,7 @@ import { HEADER, QUERY_KEYS } from '@/lib/constants';
 import { parseFormData } from '@/lib/utils';
 
 export const useSignin = () => {
-  const { redirect } = SigninRoute.useSearch();
+  const { redirect } = new RouteApi({ id: '/auth/signin' }).useSearch();
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: async (payload: ILogin) => {
       const { data } = await authService.login(payload);

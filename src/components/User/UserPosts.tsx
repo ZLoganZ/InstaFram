@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { RouteApi } from '@tanstack/react-router';
 
 import Loader from '@/components/Shared/Loader';
 import GridPostsList from '@/components/Post/GridPostsList';
 import { useGetPostsByUserID } from '@/lib/hooks/query';
-import { ProfileRoute } from '@/routes/private.routes';
 
 const UserPosts = (): JSX.Element => {
   const [postsRef, isInPostsView] = useInView({ threshold: 0 });
-  const { profileID } = ProfileRoute.useParams();
+  const { profileID } = new RouteApi({ id: '/main/profile/$profileID/' }).useParams();
   const { posts, hasNextPosts, isFetchingNextPosts, isLoadingPosts, fetchNextPosts } =
     useGetPostsByUserID(profileID);
 

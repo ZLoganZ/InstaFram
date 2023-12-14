@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { useState } from 'react';
-import { Link, useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate, RouteApi } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import Loader from '@/components/Shared/Loader';
-import { ForgotPasswordRoute } from '@/routes/public.routes';
 import { useCheckEmailForgotPassword, useVerifyCode } from '@/lib/hooks/mutation';
 import { ForgotPasswordSchema } from '@/lib/schema';
 import { ErrorResponse } from '@/types';
@@ -23,7 +22,7 @@ const ForgotPasswordForm = () => {
   });
 
   const navigate = useNavigate();
-  const { verified } = ForgotPasswordRoute.useRouteContext();
+  const { verified } = new RouteApi({ id: '/auth/forgot' }).useRouteContext();
 
   const { setIsVerified } = verified;
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, Outlet, useRouterState } from '@tanstack/react-router';
+import { Link, Outlet, useRouterState, RouteApi } from '@tanstack/react-router';
 
 import NotFound from '@/pages/NotFound';
 
@@ -8,14 +8,13 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import Loader from '@/components/Shared/Loader';
 import StatBlock from '@/components/User/StatBlock';
 import EditProfile from '@/components/Forms/User/EditProfile';
-import { ProfileRoute } from '@/routes/private.routes';
 import { useGetUserByID } from '@/lib/hooks/query';
 import { useFollowUser } from '@/lib/hooks/mutation';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { cn, getImageURL } from '@/lib/utils';
 
 const Profile = () => {
-  const { profileID } = ProfileRoute.useParams();
+  const { profileID } = new RouteApi({ id: '/main/profile/$profileID' }).useParams();
   const { currentUser, setUser } = useAuth();
   const routerState = useRouterState();
   const [open, setOpen] = useState(false);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate, useRouter } from '@tanstack/react-router';
+import { Link, useNavigate, useRouter, RouteApi } from '@tanstack/react-router';
 
 import NotFound from '@/pages/NotFound';
 
@@ -9,7 +9,6 @@ import { useAuth } from '@/lib/hooks/useAuth';
 import { useToast } from '@/lib/hooks/useToast';
 import { FILTERS } from '@/lib/constants';
 import { getDateTimeToNow, getImageURL } from '@/lib/utils';
-import { PostDetailsRoute } from '@/routes/private.routes';
 import { Button } from '@/components/ui/button';
 import Loader from '@/components/Shared/Loader';
 import CommentsList from '@/components/Comment/CommentsList';
@@ -19,7 +18,7 @@ import PostOptions from '@/components/Post/PostOptions';
 import CommentInput from '@/components/Forms/Comment/CommentInput';
 
 const PostDetails = () => {
-  const { postID } = PostDetailsRoute.useParams();
+  const { postID } = new RouteApi({ id: '/main/posts/$postID' }).useParams();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { history } = useRouter();
