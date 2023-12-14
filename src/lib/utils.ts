@@ -6,7 +6,7 @@ import { fill } from '@cloudinary/url-gen/actions/resize';
 import { autoGravity, focusOn } from '@cloudinary/url-gen/qualifiers/gravity';
 import { FocusOn } from '@cloudinary/url-gen/qualifiers/focusOn';
 import { quality, format as formatCld } from '@cloudinary/url-gen/actions/delivery';
-import { autoBest } from '@cloudinary/url-gen/qualifiers/quality';
+import { auto as qualityAuto } from '@cloudinary/url-gen/qualifiers/quality';
 import { auto } from '@cloudinary/url-gen/qualifiers/format';
 
 export function cn(...inputs: ClassValue[]) {
@@ -143,31 +143,31 @@ export const getImageURL = (image?: string, option: ImageOptions = 'default') =>
     case 'avatar':
       myImage
         .resize(fill().height(150).width(150).gravity(focusOn(FocusOn.faces())))
-        .delivery(quality(autoBest()))
+        .delivery(quality(qualityAuto()))
         .delivery(formatCld(auto()));
       break;
     case 'post':
       myImage
         .resize(fill().height(600).gravity(autoGravity()))
-        .delivery(quality(autoBest()))
+        .delivery(quality(qualityAuto()))
         .delivery(formatCld(auto()));
       break;
     case 'miniAvatar':
       myImage
         .resize(fill().height(50).width(50).gravity(focusOn(FocusOn.faces())))
-        .delivery(quality(autoBest()))
+        .delivery(quality(qualityAuto()))
         .delivery(formatCld(auto()));
       break;
     case 'story':
       myImage
         .resize(fill().height(300).gravity(autoGravity()))
-        .delivery(quality(autoBest()))
+        .delivery(quality(qualityAuto()))
         .delivery(formatCld(auto()));
       break;
     case 'storyAvatar':
       myImage
         .resize(fill().height(80).width(80).gravity(focusOn(FocusOn.faces())))
-        .delivery(quality(autoBest()))
+        .delivery(quality(qualityAuto()))
         .delivery(formatCld(auto()));
       break;
     default:
