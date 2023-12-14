@@ -32,7 +32,7 @@ export const MainRoute = new Route({
     if (!context.userID) {
       redirect({
         to: '/signin',
-        search: { redirect: location.href },
+        search: { redirect: location.href === '/' ? undefined : location.href },
         replace: true,
         throw: true
       });

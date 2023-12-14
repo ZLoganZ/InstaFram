@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy, useEffect, useRef, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Outlet, rootRouteWithContext, useRouter } from '@tanstack/react-router';
+import { Outlet, rootRouteWithContext, useRouter, ScrollRestoration } from '@tanstack/react-router';
 import { QueryClient, QueryClientProvider, useQueryErrorResetBoundary } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SpeedInsights } from '@vercel/speed-insights/react';
@@ -53,6 +53,7 @@ const RootPage = () => {
           <Outlet />
           <Toaster />
           <SpeedInsights />
+          <ScrollRestoration />
           <ReactQueryDevtools initialIsOpen={false} />
           <TanStackRouterDevtools initialIsOpen={false} />
         </main>
