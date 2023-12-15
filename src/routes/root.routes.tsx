@@ -38,7 +38,7 @@ const RootPage = () => {
       <ErrorBoundary
         onReset={reset}
         fallbackRender={({ resetErrorBoundary, error }) => (
-          <div className='flex flex-1 items-center justify-center'>
+          <div className='flex flex-col flex-1 items-center justify-center'>
             <h1 className='h1-bold'>There was an error!</h1>
             <pre className='base-medium' style={{ color: 'red' }}>
               {error.message}
@@ -101,6 +101,4 @@ export const rootRoute = rootRouteWithContext<{
   userID: string;
   userAlias: string;
   verified: Verified;
-}>()({
-  component: RootPage
-});
+}>()({ component: RootPage });

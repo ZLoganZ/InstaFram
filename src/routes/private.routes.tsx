@@ -1,9 +1,9 @@
 import { z } from 'zod';
 import { Route, lazyRouteComponent, redirect } from '@tanstack/react-router';
 
-import LoaderLogo from '@/components/Shared/LoaderLogo';
-
 import { rootRoute } from '@/routes/root.routes';
+
+import LoaderLogo from '@/components/Shared/LoaderLogo';
 
 import {
   getCommentsByPostIDQueryOptions,
@@ -128,8 +128,8 @@ export const LikedPostsRoute = new Route({
       });
     }
   },
-  loader: ({ context: { queryClient }, params }) => {
-    queryClient.prefetchInfiniteQuery(getLikedPostsByUserIDQueryOptions(params.profileID));
+  loader: ({ context: { queryClient, userID } }) => {
+    queryClient.prefetchInfiniteQuery(getLikedPostsByUserIDQueryOptions(userID));
   },
   wrapInSuspense: true
 });
@@ -148,8 +148,8 @@ export const SavedPostsRoute = new Route({
       });
     }
   },
-  loader: ({ context: { queryClient }, params }) => {
-    queryClient.prefetchInfiniteQuery(getSavedPostsByUserIDQueryOptions(params.profileID));
+  loader: ({ context: { queryClient, userID } }) => {
+    queryClient.prefetchInfiniteQuery(getSavedPostsByUserIDQueryOptions(userID));
   },
   wrapInSuspense: true
 });

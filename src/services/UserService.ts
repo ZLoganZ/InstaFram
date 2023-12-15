@@ -8,14 +8,11 @@ class UserService extends BaseService {
     super();
   }
 
-  updateUser = (userUpdate: FormData): Promise<AxiosResponse<IResponse<IUser>>> => {
-    return this.put(`/users/update`, userUpdate);
-  };
   getFollowers = (userID: string): Promise<AxiosResponse<IResponse<IUser[]>>> => {
-    return this.get(`/users/followers/${userID}`);
+    return this.get(`/users/${userID}/followers`);
   };
   getFollowing = (userID: string): Promise<AxiosResponse<IResponse<IUser[]>>> => {
-    return this.get(`/users/following/${userID}`);
+    return this.get(`/users/${userID}/following`);
   };
   getUserByID = (userID: string): Promise<AxiosResponse<IResponse<IUser>>> => {
     return this.get(`/users/${userID}`);
@@ -24,7 +21,10 @@ class UserService extends BaseService {
     return this.get(`/users/top-creators?page=${page}`);
   };
   followUser = (userID: string): Promise<AxiosResponse<IResponse<boolean>>> => {
-    return this.post(`/users/follow/${userID}`);
+    return this.post(`/users/${userID}/follow`);
+  };
+  updateUser = (userUpdate: FormData): Promise<AxiosResponse<IResponse<IUser>>> => {
+    return this.put(`/users/edit`, userUpdate);
   };
 }
 
