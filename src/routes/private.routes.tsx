@@ -13,6 +13,7 @@ import {
   getPostsQueryOptions,
   getRelatedPostsQueryOptions,
   getSavedPostsByUserIDQueryOptions,
+  getSearchPostsQueryOptions,
   getTopCreatorsQueryOptions,
   getTopPostsQueryOptions,
   getUserByIDQueryOptions
@@ -57,8 +58,9 @@ export const ExploreRoute = new Route({
   getParentRoute: () => MainRoute,
   validateSearch: (search) => searchQuerySchema.parse(search),
   component: lazyRouteComponent(() => import('@/pages/Explore')),
-  loader: ({ context: { queryClient } }) => {
-    queryClient.prefetchInfiniteQuery(getTopPostsQueryOptions('All'));
+  loader: ({ context: { queryClient }, search: { search, filter } }) => {
+    queryClient.prefetchInfiniteQuery(getTopPostsQueryOptions(filter));
+    queryClient.prefetchInfiniteQuery(getSearchPostsQueryOptions(search!, filter));
   },
   wrapInSuspense: true
 });
