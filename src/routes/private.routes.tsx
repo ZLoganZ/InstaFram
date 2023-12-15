@@ -83,7 +83,7 @@ export const CreatePostRoute = new Route({
 });
 
 export const PostDetailsRoute = new Route({
-  path: '/posts/$postID',
+  path: '/post/$postID',
   getParentRoute: () => MainRoute,
   parseParams: (params) => ({ postID: z.string().parse(params.postID) }),
   component: lazyRouteComponent(() => import('@/pages/PostDetails')),

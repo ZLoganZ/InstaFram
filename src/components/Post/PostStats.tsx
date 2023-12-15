@@ -110,7 +110,7 @@ const PostStats: React.FC<IPostStats> = ({ post, textWhite = false }) => {
           </TooltipProvider>
         </div>
 
-        <Link to='/posts/$postID' params={{ postID: post._id }} className='flex gap-1.5'>
+        <Link to='/post/$postID' params={{ postID: post._id }} className='flex gap-1.5'>
           <img src='/assets/icons/comment.svg' alt='comment' className='w-5 h-5 cursor-pointer' />
           <p className={cn('small-medium lg:base:medium', textWhite && 'text-white')}>
             {post.comments.length}

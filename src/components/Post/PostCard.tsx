@@ -54,7 +54,7 @@ const PostCard: React.FC<IPostCard> = ({ post }) => {
           </ul>
         </div>
         {post.image && (
-          <Link to='/posts/$postID' params={{ postID: post._id }} className='flex-center'>
+          <Link to='/post/$postID' params={{ postID: post._id }} className='flex-center'>
             <img
               src={getImageURL(post.image, 'post')}
               alt='post'

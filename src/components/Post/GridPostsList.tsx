@@ -17,7 +17,7 @@ const GridPostsList: React.FC<IGridPostsList> = ({ posts, showStats = false, sho
         <li key={post._id} className='relative min-w-[18rem] h-72'>
           <Link
             className='flex rounded-[24px] border border-light-4 dark:border-dark-4 overflow-hidden cursor-pointer w-full h-full'
-            to='/posts/$postID'
+            to='/post/$postID'
             params={{ postID: post._id }}>
             <img src={getImageURL(post.image, 'post')} alt='image' className='h-full w-full object-cover' />
           </Link>

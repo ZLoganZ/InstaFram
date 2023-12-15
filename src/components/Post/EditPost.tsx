@@ -9,7 +9,7 @@ interface IEditPost {
 }
 
 const EditPost: React.FC<IEditPost> = ({ setOpen }) => {
-  const { postID } = new RouteApi({ id: '/main/posts/$postID' }).useParams();
+  const { postID } = new RouteApi({ id: '/main/post/$postID' }).useParams();
   const { post, isLoadingPost, isFetchingPost } = useGetPost(postID);
 
   return (

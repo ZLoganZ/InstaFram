@@ -18,7 +18,7 @@ import PostOptions from '@/components/Post/PostOptions';
 import CommentInput from '@/components/Forms/Comment/CommentInput';
 
 const PostDetails = () => {
-  const { postID } = new RouteApi({ id: '/main/posts/$postID' }).useParams();
+  const { postID } = new RouteApi({ id: '/main/post/$postID' }).useParams();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { history } = useRouter();
