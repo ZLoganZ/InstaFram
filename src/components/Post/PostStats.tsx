@@ -12,7 +12,7 @@ interface IPostStats {
   textWhite?: boolean;
 }
 
-const PostStats: React.FC<IPostStats> = ({ post, textWhite = false }) => {
+const PostStats = ({ post, textWhite = false }: IPostStats) => {
   const { likePost } = useLikePost();
   const { savePost } = useSavePost();
 

@@ -24,7 +24,7 @@ interface IPostForm {
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const PostForm: React.FC<IPostForm> = ({ post, action, setOpen }) => {
+const PostForm = ({ post, action, setOpen }: IPostForm) => {
   const tempFile = useMemo(() => new File([], post ? post.image : ''), []);
 
   const form = useForm<z.infer<typeof PostFormSchema>>({

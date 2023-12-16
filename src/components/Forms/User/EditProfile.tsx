@@ -20,7 +20,7 @@ interface IUpdateProfile {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const EditProfile: React.FC<IUpdateProfile> = ({ setOpen }) => {
+const EditProfile = ({ setOpen }: IUpdateProfile) => {
   const tempFile = new File([], '');
 
   const { toast } = useToast();

@@ -8,7 +8,7 @@ interface IModeToggleProps {
   topbar?: boolean;
 }
 
-export const ModeToggle: React.FC<IModeToggleProps> = ({ topbar }) => {
+export const ModeToggle = ({ topbar }: IModeToggleProps) => {
   const { setTheme, isDark } = useTheme();
 
   return (

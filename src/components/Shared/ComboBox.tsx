@@ -22,7 +22,7 @@ interface IComboBox {
   notFound: string;
 }
 
-const ComboBox: React.FC<IComboBox> = ({
+const ComboBox = ({
   data,
   onSelect,
   placeholder,
@@ -34,7 +34,7 @@ const ComboBox: React.FC<IComboBox> = ({
   side = 'top',
   align = 'center',
   defaultValue
-}) => {
+}: IComboBox) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(defaultValue ?? '');
 

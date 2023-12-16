@@ -9,7 +9,7 @@ interface ICommentProps {
   parentID?: string;
 }
 
-const CommentCard: React.FC<ICommentProps> = ({ comment }) => {
+const CommentCard = ({ comment }: ICommentProps) => {
   return (
     <article className='flex w-full flex-col'>
       <div className='flex items-start justify-between'>

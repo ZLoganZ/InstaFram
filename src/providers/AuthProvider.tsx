@@ -25,7 +25,11 @@ const initialState: AuthContextType = {
 
 export const AuthContext = createContext<AuthContextType>(initialState);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+interface IAuthProvider {
+  children: React.ReactNode;
+}
+
+export const AuthProvider = ({ children }: IAuthProvider) => {
   const [currentUser, setUser] = useState(initialState.currentUser);
   const [isAuthenticated, setIsAuthenticated] = useState(currentUser._id !== '');
 

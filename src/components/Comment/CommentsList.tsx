@@ -9,12 +9,7 @@ interface ICommentsListProps {
   setReplyTo: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
-const CommentsList: React.FC<ICommentsListProps> = ({
-  comments,
-  isLoadingComments,
-  commentsCount,
-  setReplyTo
-}) => {
+const CommentsList = ({ comments, isLoadingComments, commentsCount, setReplyTo }: ICommentsListProps) => {
   return (
     <div className='w-full max-w-5xl'>
       <h3 className='body-bold md:h3-bold w-full my-10'>Comments</h3>

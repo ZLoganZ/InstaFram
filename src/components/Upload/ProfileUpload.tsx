@@ -13,7 +13,7 @@ interface IProfileUpload {
   form: UseFormReturn<z.infer<typeof UpdateUserSchema>>;
 }
 
-const ProfileUpload: React.FC<IProfileUpload> = ({ fieldChange, mediaURL, form }) => {
+const ProfileUpload = ({ fieldChange, mediaURL, form }: IProfileUpload) => {
   const [fileUrl, setFileUrl] = useState(getImageURL(mediaURL, 'avatar'));
 
   const onDrop = useCallback(

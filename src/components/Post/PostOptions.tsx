@@ -26,7 +26,7 @@ interface IPostOptions {
   handleDeletePost: () => void;
 }
 
-const PostOptions: React.FC<IPostOptions> = ({ open, setOpen, handleDeletePost }) => {
+const PostOptions = ({ open, setOpen, handleDeletePost }: IPostOptions) => {
   return (
     <div className='flex-center gap-4'>
       <Dialog open={open} onOpenChange={setOpen}>

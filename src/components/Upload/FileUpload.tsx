@@ -13,7 +13,7 @@ interface IFileUpload {
   mediaURL?: string;
 }
 
-const FileUpload: React.FC<IFileUpload> = ({ fieldChange, mediaURL, form }) => {
+const FileUpload = ({ fieldChange, mediaURL, form }: IFileUpload) => {
   const [fileURL, setFileURL] = useState(getImageURL(mediaURL));
 
   const onDrop = useCallback(

@@ -7,7 +7,7 @@ interface ISearchResults {
   searchPosts: IPost[];
 }
 
-const SearchResults: React.FC<ISearchResults> = ({ isFetching, searchPosts }) => {
+const SearchResults = ({ isFetching, searchPosts }: ISearchResults) => {
   return (
     <>
       {isFetching ? (

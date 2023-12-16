@@ -14,7 +14,7 @@ interface IUserCard {
   user: IUser;
 }
 
-const UserCard: React.FC<IUserCard> = ({ user }) => {
+const UserCard = ({ user }: IUserCard) => {
   const { currentUser, setUser } = useAuth();
   const [open, setOpen] = useState(false);
 

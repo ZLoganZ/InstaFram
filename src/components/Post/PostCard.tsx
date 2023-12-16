@@ -9,7 +9,7 @@ interface IPostCard {
   post: IPost;
 }
 
-const PostCard: React.FC<IPostCard> = ({ post }) => {
+const PostCard = ({ post }: IPostCard) => {
   const navigate = useNavigate();
 
   return (

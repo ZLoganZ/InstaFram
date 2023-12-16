@@ -16,7 +16,7 @@ interface ICommentInputProps {
   replyTo?: string;
 }
 
-const CommentInput: React.FC<ICommentInputProps> = ({ currentUser, postID, replyTo }) => {
+const CommentInput = ({ currentUser, postID, replyTo }: ICommentInputProps) => {
   const form = useForm<z.infer<typeof CommentSchema>>({
     resolver: zodResolver(CommentSchema),
     defaultValues: {
