@@ -13,8 +13,10 @@ import { useFollowUser } from '@/lib/hooks/mutation';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { cn, getImageURL } from '@/lib/utils';
 
+const routeApi = new RouteApi({ id: '/main/profile/$profileID' });
+
 const Profile = () => {
-  const { profileID } = new RouteApi({ id: '/main/profile/$profileID' }).useParams();
+  const { profileID } = routeApi.useParams();
   const { currentUser, setUser } = useAuth();
   const routerState = useRouterState();
   const [open, setOpen] = useState(false);

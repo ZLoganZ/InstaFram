@@ -19,10 +19,12 @@ import { useGetTopPosts, useSearchPosts } from '@/lib/hooks/query';
 import { useDebounce } from '@/lib/hooks/useDebounce';
 import { FILTERS } from '@/lib/constants';
 
+const routeApi = new RouteApi({ id: '/main/explore' });
+
 const Explore = () => {
   const [ref, inView] = useInView({ threshold: 0 });
   const [searchRef, searchInView] = useInView({ threshold: 0 });
-  const { filter, search } = new RouteApi({ id: '/main/explore' }).useSearch();
+  const { filter, search } = routeApi.useSearch();
   const navigate = useNavigate();
 
   const [searchValue, setSearchValue] = useState(search ?? '');

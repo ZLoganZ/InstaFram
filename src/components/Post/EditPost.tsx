@@ -8,8 +8,10 @@ interface IEditPost {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const routeApi = new RouteApi({ id: '/main/post/$postID' });
+
 const EditPost: React.FC<IEditPost> = ({ setOpen }) => {
-  const { postID } = new RouteApi({ id: '/main/post/$postID' }).useParams();
+  const { postID } = routeApi.useParams();
   const { post, isLoadingPost, isFetchingPost } = useGetPost(postID);
 
   return (

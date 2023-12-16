@@ -12,6 +12,8 @@ import { useCheckEmailForgotPassword, useVerifyCode } from '@/lib/hooks/mutation
 import { ForgotPasswordSchema } from '@/lib/schema';
 import { ErrorResponse } from '@/types';
 
+const routeApi = new RouteApi({ id: '/auth/forgot' });
+
 const ForgotPasswordForm = () => {
   const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
     resolver: zodResolver(ForgotPasswordSchema),
@@ -22,7 +24,7 @@ const ForgotPasswordForm = () => {
   });
 
   const navigate = useNavigate();
-  const { verified } = new RouteApi({ id: '/auth/forgot' }).useRouteContext();
+  const { verified } = routeApi.useRouteContext();
 
   const { setIsVerified } = verified;
 

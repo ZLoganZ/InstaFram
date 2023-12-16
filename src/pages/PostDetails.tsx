@@ -17,8 +17,10 @@ import GridPostsList from '@/components/Post/GridPostsList';
 import PostOptions from '@/components/Post/PostOptions';
 import CommentInput from '@/components/Forms/Comment/CommentInput';
 
+const routeApi = new RouteApi({ id: '/main/post/$postID' })
+
 const PostDetails = () => {
-  const { postID } = new RouteApi({ id: '/main/post/$postID' }).useParams();
+  const { postID } = routeApi.useParams();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { history } = useRouter();

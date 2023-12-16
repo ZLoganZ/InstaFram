@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy, useEffect, useRef, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Outlet, rootRouteWithContext, useRouter, ScrollRestoration } from '@tanstack/react-router';
+import { Outlet, rootRouteWithContext, useRouterState, ScrollRestoration } from '@tanstack/react-router';
 import { QueryClient, QueryClientProvider, useQueryErrorResetBoundary } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SpeedInsights } from '@vercel/speed-insights/react';
@@ -30,7 +30,7 @@ export const queryClient = new QueryClient({
 });
 
 const RootPage = () => {
-  const { state } = useRouter();
+  const isLoading = useRouterState({ select: (s) => s.status === 'pending' });
   const { reset } = useQueryErrorResetBoundary();
 
   return (
@@ -49,7 +49,7 @@ const RootPage = () => {
           </div>
         )}>
         <main className='flex h-screen'>
-          <LoadingBar isLoading={state.status === 'pending'} />
+          <LoadingBar isLoading={isLoading} />
           <Outlet />
           <Toaster />
           <SpeedInsights />

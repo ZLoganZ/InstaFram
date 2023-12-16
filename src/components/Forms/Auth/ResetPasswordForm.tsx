@@ -12,8 +12,10 @@ import { useToast } from '@/lib/hooks/useToast';
 import { ResetPasswordSchema } from '@/lib/schema';
 import { ErrorResponse } from '@/types';
 
+const routeApi = new RouteApi({ id: '/auth/reset' });
+
 const ResetPasswordForm = () => {
-  const { email } = new RouteApi({ id: '/auth/reset' }).useSearch();
+  const { email } = routeApi.useSearch();
   const form = useForm<z.infer<typeof ResetPasswordSchema>>({
     resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
