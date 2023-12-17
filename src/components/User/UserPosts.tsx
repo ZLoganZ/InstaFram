@@ -9,16 +9,16 @@ import { useGetPostsByUserID } from '@/lib/hooks/query';
 const routeApi = new RouteApi({ id: '/main/profile/$profileID/' });
 
 const UserPosts = () => {
-  const [postsRef, isInPostsView] = useInView({ threshold: 0 });
+  const [postsRef, inPostsView] = useInView({ threshold: 0 });
   const { profileID } = routeApi.useParams();
   const { posts, hasNextPosts, isFetchingNextPosts, isLoadingPosts, fetchNextPosts } =
     useGetPostsByUserID(profileID);
 
   useEffect(() => {
-    if (isInPostsView && hasNextPosts && !isFetchingNextPosts) {
+    if (inPostsView && hasNextPosts && !isFetchingNextPosts) {
       fetchNextPosts();
     }
-  }, [isInPostsView]);
+  }, [inPostsView]);
 
   return (
     <>

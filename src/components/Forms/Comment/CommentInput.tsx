@@ -8,12 +8,12 @@ import { Button } from '@/components/ui/button';
 import { CommentSchema } from '@/lib/schema';
 import { getImageURL } from '@/lib/utils';
 import { useCommentPost } from '@/lib/hooks/mutation';
-import { IUser } from '@/types';
+import { IReplyTo, IUser } from '@/types';
 
 interface ICommentInputProps {
   postID: string;
   currentUser: IUser;
-  replyTo?: string;
+  replyTo?: IReplyTo;
 }
 
 const CommentInput = ({ currentUser, postID, replyTo }: ICommentInputProps) => {
@@ -28,7 +28,7 @@ const CommentInput = ({ currentUser, postID, replyTo }: ICommentInputProps) => {
 
   const onSubmit = async (values: z.infer<typeof CommentSchema>) => {
     await commentPost(
-      { ...values, post: postID, replyTo },
+      { ...values, post: postID, replyTo: replyTo?.to },
       {
         onSuccess: () => {
           form.reset();

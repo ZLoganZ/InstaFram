@@ -48,7 +48,8 @@ export enum QUERY_KEYS {
   LIKED_POSTS_BY_USER_ID = 'liked-posts-by-user-id',
   TOP_POSTS = 'top-posts',
   RELATED_POSTS = 'related-posts',
-  COMMENTS_BY_POST_ID = 'comments-by-post-id'
+  COMMENTS_BY_POST_ID = 'comments-by-post-id',
+  REPLIES_BY_COMMENT_ID = 'replies-by-comment-id'
 }
 
 export enum FILTERS {

@@ -1,15 +1,15 @@
 import { Link } from '@tanstack/react-router';
 
 import { getDateTimeToNow, getImageURL } from '@/lib/utils';
-import { IComment } from '@/types';
+import { IComment, IReplyTo } from '@/types';
 
 interface ICommentProps {
   comment: IComment;
-  setReplyTo: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setReplyTo: React.Dispatch<React.SetStateAction<IReplyTo | undefined>>;
   parentID?: string;
 }
 
-const CommentCard = ({ comment }: ICommentProps) => {
+const CommentCard = ({ comment, setReplyTo }: ICommentProps) => {
   return (
     <article className='flex w-full flex-col'>
       <div className='flex items-start justify-between'>
@@ -61,6 +61,7 @@ const CommentCard = ({ comment }: ICommentProps) => {
                   className='cursor-pointer object-contain h-4 w-4 md:h-5 md:w-5'
                   src='/assets/icons/reply.svg'
                   alt='reply'
+                  onClick={() => setReplyTo({ to: comment._id, user: comment.user })}
                 />
                 <img
                   className='cursor-pointer object-contain h-4 w-4 md:h-5 md:w-5'

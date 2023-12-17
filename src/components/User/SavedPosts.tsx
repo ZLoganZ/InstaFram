@@ -7,7 +7,7 @@ import { useGetSavedPostsByUserID } from '@/lib/hooks/query';
 import { useAuth } from '@/lib/hooks/useAuth';
 
 const SavedPosts = () => {
-  const [savedPostsRef, isInSavedPostsView] = useInView({ threshold: 0 });
+  const [savedPostsRef, inSavedPostsView] = useInView({ threshold: 0 });
   const { currentUser } = useAuth();
   const {
     posts: savedPosts,
@@ -18,10 +18,10 @@ const SavedPosts = () => {
   } = useGetSavedPostsByUserID(currentUser._id);
 
   useEffect(() => {
-    if (isInSavedPostsView && hasNextPosts && !isFetchingNextPosts) {
+    if (inSavedPostsView && hasNextPosts && !isFetchingNextPosts) {
       fetchNextPosts();
     }
-  }, [isInSavedPostsView]);
+  }, [inSavedPostsView]);
 
   return (
     <>

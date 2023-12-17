@@ -9,8 +9,8 @@ import PostCard from '@/components/Post/PostCard';
 import { useGetTopCreators, useGetPosts } from '@/lib/hooks/query';
 
 const Home = () => {
-  const [postsRef, isInPostsView] = useInView({ threshold: 0 });
-  const [creatorsRef, isInCreatorsView] = useInView({ threshold: 0 });
+  const [postsRef, inPostsView] = useInView({ threshold: 0 });
+  const [creatorsRef, inCreatorsView] = useInView({ threshold: 0 });
   const { isLoadingPosts, posts, hasNextPosts, isFetchingNextPosts, fetchNextPosts } = useGetPosts();
   const {
     topCreators,
@@ -22,16 +22,16 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isInPostsView && hasNextPosts && !isFetchingNextPosts) {
+    if (inPostsView && hasNextPosts && !isFetchingNextPosts) {
       fetchNextPosts();
     }
-  }, [isInPostsView]);
+  }, [inPostsView]);
 
   useEffect(() => {
-    if (isInCreatorsView && hasNextTopCreators && !isFetchingNextTopCreators) {
+    if (inCreatorsView && hasNextTopCreators && !isFetchingNextTopCreators) {
       fetchNextTopCreators();
     }
-  }, [isInCreatorsView]);
+  }, [inCreatorsView]);
 
   useEffect(() => {
     document.title = 'InstaFram';

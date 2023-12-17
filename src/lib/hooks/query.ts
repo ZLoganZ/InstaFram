@@ -246,7 +246,7 @@ export const useGetCommentsByPostID = (postID: string) => {
       },
       initialPageParam: 0,
       getNextPageParam: (lastPage, _, lastPageParam) => {
-        if (lastPage.length < 10) {
+        if (lastPage.length < 5) {
           return null;
         }
         return lastPageParam + 1;
@@ -263,6 +263,36 @@ export const useGetCommentsByPostID = (postID: string) => {
     fetchNextComments: fetchNextPage,
     isCommentsError: isError,
     errorComments: error
+  };
+};
+
+export const useGetRepliesByCommentID = (commentID: string) => {
+  const { data, isLoading, isError, error, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: [QUERY_KEYS.REPLIES_BY_COMMENT_ID, commentID],
+      queryFn: async ({ pageParam }) => {
+        const { data } = await commentService.getReliesByCommentID(commentID, pageParam);
+        return data.metadata;
+      },
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, _, lastPageParam) => {
+        if (lastPage.length < 5) {
+          return null;
+        }
+        return lastPageParam + 1;
+      },
+      select: (data) => {
+        return data.pages.flatMap((page) => page);
+      }
+    });
+  return {
+    replies: data!,
+    isLoadingReplies: isLoading,
+    isFetchingNextReplies: isFetchingNextPage,
+    hasNextReplies: hasNextPage,
+    fetchNextReplies: fetchNextPage,
+    isRepliesError: isError,
+    errorReplies: error
   };
 };
 

@@ -23,7 +23,7 @@ const routeApi = new RouteApi({ id: '/main/explore' });
 
 const Explore = () => {
   const [ref, inView] = useInView({ threshold: 0 });
-  const [searchRef, searchInView] = useInView({ threshold: 0 });
+  const [searchRef, inSearchView] = useInView({ threshold: 0 });
   const { filter, search } = routeApi.useSearch();
   const navigate = useNavigate();
 
@@ -65,10 +65,10 @@ const Explore = () => {
   }, [inView]);
 
   useEffect(() => {
-    if (searchInView && hasNextSearchPosts && showSearchResults && !isFetchingNextSearchPosts) {
+    if (inSearchView && hasNextSearchPosts && showSearchResults && !isFetchingNextSearchPosts) {
       fetchNextSearchPosts();
     }
-  }, [searchInView]);
+  }, [inSearchView]);
 
   return (
     <div className='flex flex-col flex-1 items-center overflow-scroll py-10 px-5 md:p-14 custom-scrollbar'>

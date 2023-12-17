@@ -17,16 +17,13 @@ class CommentService extends BaseService {
   createComment = (payload: INewComment): Promise<AxiosResponse<IResponse<IComment>>> => {
     return this.post(`/comments`, payload);
   };
-  createReply = (payload: INewComment): Promise<AxiosResponse<IResponse<IComment>>> => {
-    return this.post(`/comments/replies`, payload);
-  };
   likeComment = (commentID: string): Promise<AxiosResponse<IResponse<boolean>>> => {
     return this.post(`/comments/${commentID}/like`);
   };
   updateComment = (payload: INewComment): Promise<AxiosResponse<IResponse<IComment>>> => {
     return this.put(`/comments`, payload);
   };
-  deleteComment = (commentID: string): Promise<AxiosResponse<IResponse<boolean>>> => {
+  deleteComment = (commentID: string): Promise<AxiosResponse<IResponse<IComment>>> => {
     return this.delete(`/comments/${commentID}`);
   };
 }

@@ -16,8 +16,9 @@ import PostStats from '@/components/Post/PostStats';
 import GridPostsList from '@/components/Post/GridPostsList';
 import PostOptions from '@/components/Post/PostOptions';
 import CommentInput from '@/components/Forms/Comment/CommentInput';
+import { IReplyTo } from '@/types';
 
-const routeApi = new RouteApi({ id: '/main/post/$postID' })
+const routeApi = new RouteApi({ id: '/main/post/$postID' });
 
 const PostDetails = () => {
   const { postID } = routeApi.useParams();
@@ -30,11 +31,12 @@ const PostDetails = () => {
   const { post, isLoadingPost, errorPost } = useGetPost(postID);
   const { relatedPosts, isLoadingRelatedPosts } = useGetRelatedPosts(postID);
 
-  const { comments, isLoadingComments } = useGetCommentsByPostID(postID);
+  const { comments, isLoadingComments, isFetchingNextComments, fetchNextComments } =
+    useGetCommentsByPostID(postID);
 
   const { deletePost } = useDeletePost();
 
-  const [replyTo, setReplyTo] = useState<string>();
+  const [replyTo, setReplyTo] = useState<IReplyTo>();
 
   const handleDeletePost = () => {
     deletePost(postID, {
@@ -141,6 +143,8 @@ const PostDetails = () => {
             commentsCount={post.comments.length}
             comments={comments}
             isLoadingComments={isLoadingComments}
+            isFetchingComments={isFetchingNextComments}
+            fetchComments={fetchNextComments}
             setReplyTo={setReplyTo}
           />
 

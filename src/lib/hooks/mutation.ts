@@ -299,6 +299,108 @@ export const useCommentPost = () => {
   };
 };
 
+export const useLikeComment = () => {
+  const queryCLient = useQueryClient();
+  const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
+    mutationFn: (commentID: string) => {
+      return commentService.likeComment(commentID);
+    },
+    onSuccess: (_, commentID) => {
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.REPLIES_BY_COMMENT_ID, commentID] });
+    }
+  });
+  return {
+    likeComment: mutateAsync,
+    isLoadingLikeComment: isPending,
+    isLikeCommentSuccess: isSuccess,
+    isLikeCommentError: isError,
+    errorLikeComment: error
+  };
+};
+
+export const useUpdateComment = () => {
+  const queryCLient = useQueryClient();
+  const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
+    mutationFn: async (payload: INewComment) => {
+      const { data } = await commentService.updateComment(payload);
+      return data.metadata;
+    },
+    onSuccess: (newComment, { post }) => {
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POST, post] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID, newComment.user.alias] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
+      queryCLient.setQueriesData<InfiniteData<IComment[], number>>(
+        { queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID, post] },
+        (oldData) => {
+          if (!oldData) return;
+          const { pages, pageParams } = oldData;
+
+          const page = pages.find((page) => page.find((comment) => comment._id === newComment._id));
+          if (!page) return;
+
+          return {
+            pageParams,
+            pages: [
+              [newComment, ...page.filter((comment) => comment._id !== newComment._id)],
+              ...pages.filter((page) => page !== page)
+            ]
+          };
+        }
+      );
+    }
+  });
+  return {
+    updateComment: mutateAsync,
+    isLoadingUpdateComment: isPending,
+    isUpdateCommentSuccess: isSuccess,
+    isUpdateCommentError: isError,
+    errorUpdateComment: error
+  };
+};
+
+export const useDeleteComment = () => {
+  const queryCLient = useQueryClient();
+  const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
+    mutationFn: async (commentID: string) => {
+      const { data } = await commentService.deleteComment(commentID);
+      return data.metadata;
+    },
+    onSuccess: ({ post }, commentID) => {
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POST, post] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
+      queryCLient.setQueriesData<InfiniteData<IComment[], number>>(
+        { queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID, post] },
+        (oldData) => {
+          if (!oldData) return;
+          const { pages, pageParams } = oldData;
+
+          const page = pages.find((page) => page.find((comment) => comment._id === commentID));
+          if (!page) return;
+
+          return {
+            pageParams,
+            pages: [
+              page.filter((comment) => comment._id !== commentID),
+              ...pages.filter((page) => page !== page)
+            ]
+          };
+        }
+      );
+    }
+  });
+  return {
+    deleteComment: mutateAsync,
+    isLoadingDeleteComment: isPending,
+    isDeleteCommentSuccess: isSuccess,
+    isDeleteCommentError: isError,
+    errorDeleteComment: error
+  };
+};
+
 export const useUpdateUser = () => {
   const queryCLient = useQueryClient();
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({

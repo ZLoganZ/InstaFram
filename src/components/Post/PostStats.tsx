@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router';
+import { Link, useNavigate, useRouterState } from '@tanstack/react-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -17,6 +17,8 @@ const PostStats = ({ post, textWhite = false }: IPostStats) => {
   const { savePost } = useSavePost();
 
   const { currentUser } = useAuth();
+  const navigate = useNavigate();
+  const { location } = useRouterState();
 
   const [likes, setLikes] = useState(post.likes.map((like) => like._id));
   const [isSaved, setIsSaved] = useState(post.saves.some((save) => save.user._id === currentUser._id));
@@ -58,6 +60,20 @@ const PostStats = ({ post, textWhite = false }: IPostStats) => {
     return likes.includes(currentUser._id);
   }, [likes, currentUser._id]);
 
+  const isPostPage = useMemo(() => {
+    return location.pathname.includes('post');
+  }, [location]);
+
+  const handleClickComment = useCallback(() => {
+    if (isPostPage) return;
+    navigate({
+      to: '/post/$postID',
+      params: {
+        postID: post._id
+      }
+    });
+  }, [navigate, post._id, location]);
+
   return (
     <div className='flex justify-between items-center'>
       <div className='flex gap-2 mr-2'>
@@ -87,15 +103,20 @@ const PostStats = ({ post, textWhite = false }: IPostStats) => {
                     </li>
                   ) : (
                     post.likes.slice(0, 10).map((like) => (
-                      <li key={like._id} className='flex items-center gap-2.5'>
-                        <img
-                          src={
-                            getImageURL(like.image, 'miniAvatar') || '/assets/icons/profile-placeholder.svg'
-                          }
-                          alt='avatar'
-                          className='w-8 h-8 rounded-full'
-                        />
-                        <p className='small-regular'>{like.name}</p>
+                      <li key={like._id}>
+                        <Link
+                          to='/profile/$profileID'
+                          params={{ profileID: like._id }}
+                          className='flex items-center gap-2.5 group'>
+                          <img
+                            src={
+                              getImageURL(like.image, 'miniAvatar') || '/assets/icons/profile-placeholder.svg'
+                            }
+                            alt='avatar'
+                            className='w-8 h-8 rounded-full'
+                          />
+                          <p className='small-regular group-hover:underline'>{like.name}</p>
+                        </Link>
                       </li>
                     ))
                   )}
@@ -110,12 +131,12 @@ const PostStats = ({ post, textWhite = false }: IPostStats) => {
           </TooltipProvider>
         </div>
 
-        <Link to='/post/$postID' params={{ postID: post._id }} className='flex gap-1.5'>
-          <img src='/assets/icons/comment.svg' alt='comment' className='w-5 h-5 cursor-pointer' />
+        <div className={cn('flex gap-1.5', !isPostPage && 'cursor-pointer')} onClick={handleClickComment}>
+          <img src='/assets/icons/comment.svg' alt='comment' className='w-5 h-5' />
           <p className={cn('small-medium lg:base:medium', textWhite && 'text-white')}>
             {post.comments.length}
           </p>
-        </Link>
+        </div>
       </div>
 
       <img

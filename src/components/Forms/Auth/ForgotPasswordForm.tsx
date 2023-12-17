@@ -106,7 +106,7 @@ const ForgotPasswordForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type='email' placeholder='Your email' {...field} disabled={showVerifyCode} />
+                  <Input type='email' placeholder='Your email' {...field} readOnly={showVerifyCode} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

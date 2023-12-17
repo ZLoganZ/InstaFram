@@ -1,15 +1,28 @@
 import Loader from '@/components/Shared/Loader';
+import { Button } from '@/components/ui/button';
 import CommentCard from './CommentCard';
-import { IComment } from '@/types';
+import { IComment, IReplyTo } from '@/types';
 
 interface ICommentsListProps {
   isLoadingComments: boolean;
+  isFetchingComments: boolean;
   comments: IComment[];
   commentsCount: number;
-  setReplyTo: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setReplyTo: React.Dispatch<React.SetStateAction<IReplyTo | undefined>>;
+  fetchComments: () => void;
 }
 
-const CommentsList = ({ comments, isLoadingComments, commentsCount, setReplyTo }: ICommentsListProps) => {
+const CommentsList = ({
+  comments,
+  isLoadingComments,
+  isFetchingComments,
+  commentsCount,
+  setReplyTo,
+  fetchComments
+}: ICommentsListProps) => {
+  const totalDisplayedComments =
+    comments.length + comments.reduce((sum, comment) => sum + comment.replies.length, 0);
+
   return (
     <div className='w-full max-w-5xl'>
       <h3 className='body-bold md:h3-bold w-full my-10'>Comments</h3>
@@ -24,10 +37,24 @@ const CommentsList = ({ comments, isLoadingComments, commentsCount, setReplyTo }
               <CommentCard comment={comment} setReplyTo={setReplyTo} />
             </li>
           ))}
-          {commentsCount > comments.length && (
-            <p className='text-[#5C5C7B] mt-10 text-center w-full'>
-              {commentsCount - comments.length} more comments
-            </p>
+          {commentsCount > totalDisplayedComments && (
+            <Button
+              type='button'
+              variant='link'
+              className='text-[#5C5C7B] mt-2 w-full'
+              disabled={isFetchingComments}
+              onClick={fetchComments}>
+              {isFetchingComments ? (
+                <div className='flex-center gap-2'>
+                  <Loader /> Loading...
+                </div>
+              ) : (
+                <>
+                  View {commentsCount - totalDisplayedComments}
+                  &nbsp;more comment{commentsCount - totalDisplayedComments > 1 && 's'}
+                </>
+              )}
+            </Button>
           )}
         </ul>
       )}

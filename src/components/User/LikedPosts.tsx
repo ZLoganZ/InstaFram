@@ -7,7 +7,7 @@ import { useGetLikedPostsByUserID } from '@/lib/hooks/query';
 import { useAuth } from '@/lib/hooks/useAuth';
 
 const LikedPosts = () => {
-  const [likedPostsRef, isInLikedPostsView] = useInView({ threshold: 0 });
+  const [likedPostsRef, inLikedPostsView] = useInView({ threshold: 0 });
   const { currentUser } = useAuth();
   const {
     posts: likedPosts,
@@ -18,10 +18,10 @@ const LikedPosts = () => {
   } = useGetLikedPostsByUserID(currentUser._id);
 
   useEffect(() => {
-    if (isInLikedPostsView && hasNextPosts && !isFetchingNextPosts) {
+    if (inLikedPostsView && hasNextPosts && !isFetchingNextPosts) {
       fetchNextPosts();
     }
-  }, [isInLikedPostsView]);
+  }, [inLikedPostsView]);
 
   return (
     <>

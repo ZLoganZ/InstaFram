@@ -6,7 +6,7 @@ import { useGetTopCreators } from '@/lib/hooks/query';
 import { useInView } from 'react-intersection-observer';
 
 const People = () => {
-  const [creatorsRef, isInCreatorsView] = useInView({ threshold: 0 });
+  const [creatorsRef, inCreatorsView] = useInView({ threshold: 0 });
   const {
     topCreators,
     isLoadingTopCreators,
@@ -20,10 +20,10 @@ const People = () => {
   }, []);
 
   useEffect(() => {
-    if (isInCreatorsView && hasNextTopCreators && !isFetchingNextTopCreators) {
+    if (inCreatorsView && hasNextTopCreators && !isFetchingNextTopCreators) {
       fetchNextTopCreators();
     }
-  }, [isInCreatorsView]);
+  }, [inCreatorsView]);
 
   return (
     <div className='flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14 custom-scrollbar'>

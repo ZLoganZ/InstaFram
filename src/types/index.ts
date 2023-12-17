@@ -50,7 +50,7 @@ export type IPost = {
 export type IComment = {
   _id: string;
   user: IUser;
-  post: IPost;
+  post: string;
   content: string;
   likes: IUser[];
   replies: IComment[];
@@ -62,6 +62,11 @@ export type INewComment = {
   content: string;
   post: string;
   replyTo?: string;
+};
+
+export type IReplyTo = {
+  to: string;
+  user: IUser;
 };
 
 export type INewPost = {
