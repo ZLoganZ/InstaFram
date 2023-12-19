@@ -2,6 +2,7 @@ import Loader from '@/components/Shared/Loader';
 import { Button } from '@/components/ui/button';
 import CommentCard from './CommentCard';
 import { IComment, IReplyTo } from '@/types';
+import { useMemo } from 'react';
 
 interface ICommentsListProps {
   isLoadingComments: boolean;
@@ -20,8 +21,10 @@ const CommentsList = ({
   setReplyTo,
   fetchComments
 }: ICommentsListProps) => {
-  const totalDisplayedComments =
-    comments.length + comments.reduce((sum, comment) => sum + comment.replies.length, 0);
+  const totalDisplayedComments = useMemo(() => {
+    if (comments) return comments.length + comments.reduce((sum, comment) => sum + comment.replies.length, 0);
+    return 0;
+  }, [comments]);
 
   return (
     <div className='w-full max-w-5xl'>
