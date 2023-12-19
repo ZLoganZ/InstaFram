@@ -5,13 +5,11 @@ import { Outlet, rootRouteWithContext, useRouterState, ScrollRestoration } from 
 import { QueryClient, QueryClientProvider, useQueryErrorResetBoundary } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { SpeedInsights } from '@vercel/speed-insights/react';
-import { inject } from '@vercel/analytics';
+import { Analytics } from '@vercel/analytics/react';
 
 import { Toaster } from '@/components/ui/toaster';
 import { Button } from '@/components/ui/button';
 import { Verified } from '@/types';
-
-inject({ mode: process.env.NODE_ENV === 'production' ? 'production' : 'development' });
 
 const TanStackRouterDevtools =
   process.env.NODE_ENV === 'production'
@@ -55,6 +53,7 @@ const RootPage = () => {
           <LoadingBar isLoading={isLoading} />
           <Outlet />
           <Toaster />
+          <Analytics />
           <SpeedInsights />
           <ScrollRestoration />
           <ReactQueryDevtools initialIsOpen={false} />
