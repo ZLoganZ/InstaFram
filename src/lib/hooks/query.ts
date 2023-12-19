@@ -251,6 +251,7 @@ export const useGetCommentsByPostID = (postID: string) => {
         }
         return lastPageParam + 1;
       },
+      enabled: !!postID,
       select: (data) => {
         return data.pages.flatMap((page) => page);
       }
@@ -281,6 +282,7 @@ export const useGetRepliesByCommentID = (commentID: string) => {
         }
         return lastPageParam + 1;
       },
+      enabled: !!commentID,
       select: (data) => {
         return data.pages.flatMap((page) => page);
       }

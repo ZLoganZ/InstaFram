@@ -136,6 +136,7 @@ export const getCommentsByPostIDQueryOptions = (postID: string) =>
       }
       return lastPageParam + 1;
     },
+    enabled: !!postID,
     select: (data) => {
       return data.pages.flatMap((page) => page);
     }
