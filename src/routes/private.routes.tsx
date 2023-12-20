@@ -29,8 +29,8 @@ export const MainRoute = new Route({
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import('@/layouts/MainLayout')),
   pendingComponent: LoaderLogo,
-  beforeLoad: async ({ context, location }) => {
-    if (!context.userID) {
+  beforeLoad: async ({ context: { userID }, location }) => {
+    if (!userID) {
       redirect({
         to: '/signin',
         search: { redirect: location.href === '/' ? undefined : location.href },
@@ -88,10 +88,10 @@ export const PostDetailsRoute = new Route({
   getParentRoute: () => MainRoute,
   parseParams: (params) => ({ postID: z.string().parse(params.postID) }),
   component: lazyRouteComponent(() => import('@/pages/PostDetails')),
-  loader: ({ context: { queryClient }, params }) => {
-    queryClient.prefetchQuery(getPostQueryOptions(params.postID));
-    queryClient.prefetchInfiniteQuery(getCommentsByPostIDQueryOptions(params.postID));
-    queryClient.prefetchQuery(getRelatedPostsQueryOptions(params.postID));
+  loader: ({ context: { queryClient }, params: { postID } }) => {
+    queryClient.prefetchQuery(getPostQueryOptions(postID));
+    queryClient.prefetchInfiniteQuery(getCommentsByPostIDQueryOptions(postID));
+    queryClient.prefetchQuery(getRelatedPostsQueryOptions(postID));
   },
   wrapInSuspense: true
 });
@@ -101,8 +101,8 @@ export const ProfileRoute = new Route({
   getParentRoute: () => MainRoute,
   parseParams: (params) => ({ profileID: z.string().parse(params.profileID) }),
   component: lazyRouteComponent(() => import('@/pages/Profile')),
-  loader: ({ context: { queryClient }, params }) => {
-    queryClient.prefetchQuery(getUserByIDQueryOptions(params.profileID));
+  loader: ({ context: { queryClient }, params: { profileID } }) => {
+    queryClient.prefetchQuery(getUserByIDQueryOptions(profileID));
   },
   wrapInSuspense: true
 });
@@ -111,8 +111,8 @@ export const UserPostsRoute = new Route({
   path: '/',
   getParentRoute: () => ProfileRoute,
   component: lazyRouteComponent(() => import('@/components/User/UserPosts')),
-  loader: ({ context: { queryClient }, params }) => {
-    queryClient.prefetchInfiniteQuery(getPostsByUserIDQueryOptions(params.profileID));
+  loader: ({ context: { queryClient }, params: { profileID } }) => {
+    queryClient.prefetchInfiniteQuery(getPostsByUserIDQueryOptions(profileID));
   },
   wrapInSuspense: true
 });
@@ -121,11 +121,11 @@ export const LikedPostsRoute = new Route({
   path: 'liked',
   getParentRoute: () => ProfileRoute,
   component: lazyRouteComponent(() => import('@/components/User/LikedPosts')),
-  beforeLoad: async ({ context, params }) => {
-    if (params.profileID !== context.userID && params.profileID !== context.userAlias) {
+  beforeLoad: async ({ context: { userAlias, userID }, params: { profileID } }) => {
+    if (profileID !== userID && profileID !== userAlias) {
       redirect({
         to: '/profile/$profileID',
-        params: { profileID: params.profileID },
+        params: { profileID },
         replace: true,
         throw: true
       });
@@ -141,11 +141,11 @@ export const SavedPostsRoute = new Route({
   path: 'saved',
   getParentRoute: () => ProfileRoute,
   component: lazyRouteComponent(() => import('@/components/User/SavedPosts')),
-  beforeLoad: async ({ context, params }) => {
-    if (params.profileID !== context.userID && params.profileID !== context.userAlias) {
+  beforeLoad: async ({ context: { userAlias, userID }, params: { profileID } }) => {
+    if (profileID !== userID && profileID !== userAlias) {
       redirect({
         to: '/profile/$profileID',
-        params: { profileID: params.profileID },
+        params: { profileID },
         replace: true,
         throw: true
       });

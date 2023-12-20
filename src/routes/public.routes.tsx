@@ -19,8 +19,8 @@ export const AuthRoute = new Route({
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import('@/layouts/AuthLayout')),
   pendingComponent: LoaderLogo,
-  beforeLoad: async ({ context }) => {
-    if (context.userID) {
+  beforeLoad: async ({ context: { userID } }) => {
+    if (userID) {
       redirect({
         to: '/',
         replace: true,

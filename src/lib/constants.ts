@@ -52,6 +52,20 @@ export enum QUERY_KEYS {
   REPLIES_BY_COMMENT_ID = 'replies-by-comment-id'
 }
 
+export const MUTATION_KEYS = {
+  CREATE_POST: 'create-post',
+  UPDATE_POST: 'update-post',
+  DELETE_POST: 'delete-post',
+  LIKE_POST: 'like-post',
+  SAVE_POST: 'save-post',
+  FOLLOW_USER: 'follow-user',
+  UNFOLLOW_USER: 'unfollow-user',
+  LIKE_COMMENT: 'like-comment',
+  CREATE_COMMENT: 'create-comment',
+  UPDATE_COMMENT: 'update-comment',
+  DELETE_COMMENT: 'delete-comment'
+};
+
 export enum FILTERS {
   ALL = 'All',
   TODAY = 'Today',

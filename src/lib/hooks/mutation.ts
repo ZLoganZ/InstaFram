@@ -7,7 +7,7 @@ import { postService } from '@/services/PostService';
 import { userService } from '@/services/UserService';
 import { commentService } from '@/services/CommentService';
 import { IComment, ILogin, INewComment, INewPost, IRegister, IUpdatePost, IUpdateUser } from '@/types';
-import { HEADER, QUERY_KEYS } from '@/lib/constants';
+import { HEADER, QUERY_KEYS, MUTATION_KEYS } from '@/lib/constants';
 import { parseFormData } from '@/lib/utils';
 
 export const useSignin = () => {
@@ -319,11 +319,12 @@ export const useLikeComment = () => {
   };
 };
 
-export const useUpdateComment = () => {
+export const useUpdateComment = (commentID: string) => {
   const queryCLient = useQueryClient();
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
+    mutationKey: [MUTATION_KEYS.UPDATE_COMMENT, commentID],
     mutationFn: async (payload: INewComment) => {
-      const { data } = await commentService.updateComment(payload);
+      const { data } = await commentService.updateComment(commentID, payload);
       return data.metadata;
     },
     onSuccess: (newComment, { post }) => {
