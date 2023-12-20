@@ -33,10 +33,13 @@ export type ISavedPost = {
   user: IUser;
 };
 
+export type IVisibility = 'Public' | 'Private' | 'Followers';
+
 export type IPost = {
   _id: string;
   content: string;
   image: string;
+  visibility: IVisibility;
   location: string;
   tags: string[];
   likes: IUser[];
@@ -72,6 +75,7 @@ export type IReplyTo = {
 export type INewPost = {
   creator: string;
   content: string;
+  visibility: IVisibility;
   image: File;
   location?: string;
   tags?: string;
@@ -92,6 +96,7 @@ export type ILocationResponse = {
 export type IUpdatePost = {
   postID: string;
   content: string;
+  visibility: IVisibility;
   image?: File;
   isChangeImage: boolean;
   location?: string;

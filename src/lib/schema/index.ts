@@ -1,3 +1,4 @@
+import { IVisibility } from '@/types';
 import { z } from 'zod';
 
 export const SignupFormSchema = z
@@ -30,6 +31,7 @@ export const PostFormSchema = z.object({
     .max(1000, { message: 'Content must be at most 1000 characters' }),
   image: z.custom<File>().refine((image) => image.name !== '', { message: 'Select one image' }),
   location: z.string().min(1, { message: 'Select your location' }),
+  visibility: z.custom<IVisibility>(),
   tags: z
     .string()
     .min(1, { message: 'Tags must not be empty' })

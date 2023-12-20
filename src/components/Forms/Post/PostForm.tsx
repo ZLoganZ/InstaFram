@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useRouter } from '@tanstack/react-router';
+import { Check, ChevronsUpDown } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button } from '@/components/ui/button';
@@ -9,6 +10,12 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ToastAction } from '@/components/ui/toast';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 import FileUpload from '@/components/Upload/FileUpload';
 import ComboBox from '@/components/Shared/ComboBox';
 import Loader from '@/components/Shared/Loader';
@@ -16,6 +23,7 @@ import { PostFormSchema } from '@/lib/schema';
 import { useCreatePost, useUpdatePost } from '@/lib/hooks/mutation';
 import { useToast } from '@/lib/hooks/useToast';
 import { useAuth } from '@/lib/hooks/useAuth';
+import { cn } from '@/lib/utils';
 import { IDataComboBox, ILocationResponse, IPost } from '@/types';
 
 interface IPostForm {
@@ -33,6 +41,7 @@ const PostForm = ({ post, action, setOpen }: IPostForm) => {
       location: post ? post.location : '',
       tags: post ? post.tags.join(', ') : '',
       content: post ? post.content : '',
+      visibility: post ? post.visibility : 'Public',
       image: tempFile
     }
   });
@@ -154,6 +163,78 @@ const PostForm = ({ post, action, setOpen }: IPostForm) => {
             </FormItem>
           )}
         />
+        {/* <div className='w-full flex flex-1 gap-x-32 gap-y-9 flex-col sm:flex-row md:flex-col lg:flex-row max-w-5xl'> */}
+        <FormField
+          control={form.control}
+          name='visibility'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className='mr-2'>Visibility</FormLabel>
+              <FormControl>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      type='button'
+                      variant='outline'
+                      aria-expanded={false}
+                      className='flex w-40 justify-between'>
+                      <p className='truncate'>{field.value}</p>
+                      <ChevronsUpDown className='h-4 w-4 shrink-0 opacity-50' />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align='center' className='p-0 w-40 gap-0'>
+                    <DropdownMenuItem className='focus:bg-transparent'>
+                      <Button
+                        type='button'
+                        variant='ghost'
+                        className='justify-start w-full'
+                        onClick={() => field.onChange('Public')}>
+                        <Check
+                          className={cn(
+                            'mr-2 h-4 w-4',
+                            field.value === 'Public' ? 'opacity-100' : 'opacity-0'
+                          )}
+                        />
+                        Public
+                      </Button>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className='focus:bg-transparent'>
+                      <Button
+                        type='button'
+                        variant='ghost'
+                        className='justify-start w-full'
+                        onClick={() => field.onChange('Followers')}>
+                        <Check
+                          className={cn(
+                            'mr-2 h-4 w-4',
+                            field.value === 'Followers' ? 'opacity-100' : 'opacity-0'
+                          )}
+                        />
+                        Followers
+                      </Button>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className='focus:bg-transparent'>
+                      <Button
+                        type='button'
+                        variant='ghost'
+                        className='justify-start w-full'
+                        onClick={() => field.onChange('Private')}>
+                        <Check
+                          className={cn(
+                            'mr-2 h-4 w-4',
+                            field.value === 'Private' ? 'opacity-100' : 'opacity-0'
+                          )}
+                        />
+                        Private
+                      </Button>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name='location'
@@ -162,6 +243,7 @@ const PostForm = ({ post, action, setOpen }: IPostForm) => {
               <FormLabel className='mr-2'>Add Location</FormLabel>
               <FormControl>
                 <ComboBox
+                  key='location'
                   onSelect={field.onChange}
                   placeholder='Select a location'
                   searchPlaceholder='Search for a location'
@@ -174,6 +256,7 @@ const PostForm = ({ post, action, setOpen }: IPostForm) => {
             </FormItem>
           )}
         />
+        {/* </div> */}
         <FormField
           control={form.control}
           name='tags'
