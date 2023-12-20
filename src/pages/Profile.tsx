@@ -47,7 +47,7 @@ const Profile = () => {
     <div className='flex flex-col items-center flex-1 gap-10 overflow-scroll py-10 px-5 md:p-14 custom-scrollbar'>
       {errorUser ? (
         <NotFound />
-      ) : isLoadingUser ? (
+      ) : isLoadingUser || !user? (
         <Loader />
       ) : (
         <>

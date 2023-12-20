@@ -3,7 +3,7 @@ import { Link, useNavigate, useRouter, RouteApi } from '@tanstack/react-router';
 
 import NotFound from '@/pages/NotFound';
 
-import { useGetCommentsByPostID, useGetPost, useGetRelatedPosts } from '@/lib/hooks/query';
+import { useGetPost, useGetRelatedPosts } from '@/lib/hooks/query';
 import { useDeletePost } from '@/lib/hooks/mutation';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { useToast } from '@/lib/hooks/useToast';
@@ -30,9 +30,6 @@ const PostDetails = () => {
 
   const { post, isLoadingPost, errorPost } = useGetPost(postID);
   const { relatedPosts, isLoadingRelatedPosts } = useGetRelatedPosts(postID);
-
-  const { comments, isLoadingComments, isFetchingNextComments, fetchNextComments } =
-    useGetCommentsByPostID(postID);
 
   const { deletePost } = useDeletePost();
 
@@ -64,7 +61,7 @@ const PostDetails = () => {
     <div className='flex flex-col flex-1 gap-10 overflow-scroll py-10 px-5 md:p-14 custom-scrollbar items-center'>
       {errorPost ? (
         <NotFound />
-      ) : isLoadingPost ? (
+      ) : isLoadingPost || !post ? (
         <Loader />
       ) : (
         <>
@@ -139,14 +136,7 @@ const PostDetails = () => {
             </div>
           </div>
 
-          <CommentsList
-            commentsCount={post.comments.length}
-            comments={comments}
-            isLoadingComments={isLoadingComments}
-            isFetchingComments={isFetchingNextComments}
-            fetchComments={fetchNextComments}
-            setReplyTo={setReplyTo}
-          />
+          <CommentsList commentsCount={post.comments.length} postID={postID} setReplyTo={setReplyTo} />
 
           <CommentInput currentUser={currentUser} postID={postID} replyTo={replyTo} />
 

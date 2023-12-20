@@ -43,7 +43,7 @@ const Explore = () => {
   } = useSearchPosts(searchDebounce, filter);
 
   const showSearchResults = useMemo(() => searchDebounce !== '', [searchDebounce]);
-  const showNoPost = useMemo(() => !showSearchResults && posts?.length === 0, [hasNextPosts, posts]);
+  const showEndPost = useMemo(() => !showSearchResults && !hasNextPosts, [hasNextPosts, showSearchResults]);
 
   useEffect(() => {
     document.title = 'Explore - InstaFram';
@@ -51,10 +51,10 @@ const Explore = () => {
 
   useEffect(() => {
     if (searchDebounce !== '' && searchDebounce !== searchInputRef.current) {
-      navigate({ search: (pre) => ({ ...pre, search: searchDebounce }), replace: true, resetScroll: false });
+      navigate({ search: (pre) => ({ ...pre, search: searchDebounce }), replace: true });
       searchInputRef.current = searchDebounce;
     } else if (searchDebounce === '') {
-      navigate({ search: (pre) => ({ ...pre, search: undefined }), replace: true, resetScroll: false });
+      navigate({ search: (pre) => ({ ...pre, search: undefined }), replace: true });
     }
   }, [searchDebounce]);
 
@@ -105,9 +105,7 @@ const Explore = () => {
             {Object.values(FILTERS).map((filterValue) => (
               <DropdownMenuCheckboxItem
                 key={filterValue}
-                onClick={() =>
-                  navigate({ search: (pre) => ({ ...pre, filter: filterValue }), resetScroll: false })
-                }
+                onClick={() => navigate({ search: (pre) => ({ ...pre, filter: filterValue }) })}
                 checked={filter === filterValue}>
                 {filterValue}
               </DropdownMenuCheckboxItem>
@@ -119,7 +117,7 @@ const Explore = () => {
       <div className='flex flex-wrap gap-9 w-full max-w-5xl'>
         {showSearchResults ? (
           <SearchResults isFetching={isLoadingSearchPosts} searchPosts={searchPosts} />
-        ) : showNoPost ? (
+        ) : showEndPost ? (
           <p className='text-[#5C5C7B] mt-10 text-center w-full'>End of posts</p>
         ) : isLoadingPosts ? (
           <Loader />

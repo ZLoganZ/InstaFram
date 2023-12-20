@@ -1,26 +1,21 @@
+import { useMemo } from 'react';
+
 import Loader from '@/components/Shared/Loader';
 import { Button } from '@/components/ui/button';
 import CommentCard from './CommentCard';
-import { IComment, IReplyTo } from '@/types';
-import { useMemo } from 'react';
+import { useGetCommentsByPostID } from '@/lib/hooks/query';
+import { IReplyTo } from '@/types';
 
 interface ICommentsListProps {
-  isLoadingComments: boolean;
-  isFetchingComments: boolean;
-  comments: IComment[];
+  postID: string;
   commentsCount: number;
   setReplyTo: React.Dispatch<React.SetStateAction<IReplyTo | undefined>>;
-  fetchComments: () => void;
 }
 
-const CommentsList = ({
-  comments,
-  isLoadingComments,
-  isFetchingComments,
-  commentsCount,
-  setReplyTo,
-  fetchComments
-}: ICommentsListProps) => {
+const CommentsList = ({ postID, commentsCount, setReplyTo }: ICommentsListProps) => {
+  const { comments, isLoadingComments, isFetchingNextComments, fetchNextComments } =
+    useGetCommentsByPostID(postID);
+
   const totalDisplayedComments = useMemo(() => {
     if (comments) return comments.length + comments.reduce((sum, comment) => sum + comment.replies.length, 0);
     return 0;
@@ -45,9 +40,9 @@ const CommentsList = ({
               type='button'
               variant='link'
               className='text-[#5C5C7B] mt-2 w-full'
-              disabled={isFetchingComments}
-              onClick={fetchComments}>
-              {isFetchingComments ? (
+              disabled={isFetchingNextComments}
+              onClick={() => fetchNextComments()}>
+              {isFetchingNextComments ? (
                 <div className='flex-center gap-2'>
                   <Loader /> Loading...
                 </div>
