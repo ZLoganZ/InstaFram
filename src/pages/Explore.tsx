@@ -43,10 +43,6 @@ const Explore = () => {
   } = useSearchPosts(searchDebounce, filter);
 
   const showSearchResults = useMemo(() => searchDebounce !== '', [searchDebounce]);
-  const showEndPost = useMemo(
-    () => !showSearchResults && !hasNextPosts && !isLoadingPosts,
-    [hasNextPosts, showSearchResults, isLoadingPosts]
-  );
 
   useEffect(() => {
     document.title = 'Explore - InstaFram';
@@ -125,7 +121,7 @@ const Explore = () => {
         ) : (
           <GridPostsList posts={posts} showStats showUser />
         )}
-        {showEndPost && <p className='text-[#5C5C7B] mt-10 text-center w-full'>End of posts</p>}
+        {/* {showEndPost && <p className='text-[#5C5C7B] mt-10 text-center w-full'>End of posts</p>} */}
       </div>
 
       {hasNextPosts && !showSearchResults && (
