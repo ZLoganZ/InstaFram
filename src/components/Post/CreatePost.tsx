@@ -14,7 +14,7 @@ const CreatePost = () => {
           <img src='/assets/icons/add-post.svg' alt='create post' className='w-9 h-9' />
           <h2 className='h3-bold md:h2-bold text-left w-full'>Create post</h2>
         </div>
-        <PostForm key={Math.random()} action='create' />
+        <PostForm action='create' />
       </div>
     </div>
   );
