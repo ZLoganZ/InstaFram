@@ -33,7 +33,7 @@ const TopBar = () => {
           <DropdownMenu>
             <DropdownMenuTrigger>
               <img
-                src={getImageURL(currentUser.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
+                src={getImageURL(currentUser.image, 'miniAvatar') || '/assets/icons/profile-placeholder.svg'}
                 className={cn(
                   'h-8 w-8 rounded-full select-none',
                   pathname.includes(`/profile/${currentUser._id}`) && 'ring-2 ring-primary'
@@ -42,8 +42,18 @@ const TopBar = () => {
               />
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end'>
-              <DropdownMenuLabel className='flex flex-col text-center gap-1'>
-                {currentUser.name} <p className='text-[#7878A3]'>@{currentUser.alias}</p>
+              <DropdownMenuLabel className='flex justify-start items-center gap-3'>
+                <img
+                  src={getImageURL(currentUser.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
+                  className={cn(
+                    'ml-3 h-12 w-12 rounded-full select-none',
+                    pathname.includes(`/profile/${currentUser._id}`) && 'ring-2 ring-primary'
+                  )}
+                  alt='profile'
+                />
+                <div className='flex flex-col text-center gap-1'>
+                  {currentUser.name} <p className='text-[#7878A3]'>@{currentUser.alias}</p>
+                </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem className='focus:bg-transparent'>
