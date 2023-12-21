@@ -30,7 +30,7 @@ const HoverUser = ({ userID, children }: IHoverUser) => {
   };
 
   return (
-    <HoverCard>
+    <HoverCard openDelay={200}>
       <HoverCardTrigger asChild>{children}</HoverCardTrigger>
       <HoverCardContent className='w-full max-w-5xl'>
         {isLoadingUser ? (
