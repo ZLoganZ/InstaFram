@@ -30,14 +30,14 @@ const LeftSideBar = () => {
             src={getImageURL(currentUser.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
             alt='profile'
             className={cn(
-              'w-14 h-14 rounded-full',
+              'w-14 h-14 rounded-full hover:ring-2 ring-primary',
               (pathname.includes(`/profile/${currentUser._id}`) ||
                 pathname.includes(`/profile/${currentUser.alias}`)) &&
                 'ring-2 ring-primary'
             )}
           />
           <div className='flex flex-col'>
-            <p className='body-bold'>{currentUser.name}</p>
+            <p className='body-bold hover:underline line-clamp-1'>{currentUser.name}</p>
             <p className='small-regular text-[#7878A3]'>@{currentUser.alias}</p>
           </div>
         </Link>

@@ -18,17 +18,19 @@ const PostCard = ({ post }: IPostCard) => {
     <div className='bg-light-2 dark:bg-dark-2 rounded-3xl border border-light-4 dark:border-dark-4 p-5 lg:p-7 w-full max-w-screen-sm'>
       <div className='flex-between'>
         <div className='flex items-center gap-3'>
-          <Link to='/profile/$profileID' params={{ profileID: post.creator.alias || post.creator._id }}>
-            <img
-              className='w-12 lg:h-12 rounded-full'
-              src={getImageURL(post.creator.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
-              alt='avatar'
-            />
-          </Link>
+          <HoverUser userID={post.creator._id} showFollowButton>
+            <Link to='/profile/$profileID' params={{ profileID: post.creator.alias || post.creator._id }}>
+              <img
+                className='w-12 lg:h-12 rounded-full hover:ring-2 ring-primary'
+                src={getImageURL(post.creator.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
+                alt='avatar'
+              />
+            </Link>
+          </HoverUser>
           <div className='flex flex-col'>
-            <HoverUser userID={post.creator._id}>
+            <HoverUser userID={post.creator._id} showFollowButton>
               <Link to='/profile/$profileID' params={{ profileID: post.creator.alias || post.creator._id }}>
-                <p className='base-medium lg:body-bold hover:underline'>{post.creator.name}</p>
+                <p className='base-medium lg:body-bold hover:underline line-clamp-1'>{post.creator.name}</p>
               </Link>
             </HoverUser>
             <Link
@@ -36,10 +38,11 @@ const PostCard = ({ post }: IPostCard) => {
               params={{ profileID: post.creator.alias || post.creator._id }}
               className='flex-center gap-1 text-[#7878A3]'>
               <PostVisibility visibility={post.visibility} />-
-              <p className='subtle-semibold lg:small-regular hover:underline'>
+              <p className='subtle-semibold lg:small-regular hover:underline line-clamp-1'>
                 {getDateTimeToNow(post.createdAt)}
               </p>
-              -<p className='subtle-semibold lg:small-regular hover:underline'>{post.location}</p>
+              -
+              <p className='subtle-semibold lg:small-regular hover:underline line-clamp-1'>{post.location}</p>
             </Link>
           </div>
         </div>
@@ -51,7 +54,7 @@ const PostCard = ({ post }: IPostCard) => {
             {post.tags.map((tag) => (
               <li
                 key={tag}
-                className='text-[#7878A3] cursor-pointer hover:underline'
+                className='text-[#7878A3] cursor-pointer hover:underline line-clamp-1'
                 onClick={() =>
                   navigate({
                     to: '/explore',

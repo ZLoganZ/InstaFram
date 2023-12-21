@@ -99,7 +99,7 @@ const PostStats = ({ post, textWhite = false }: IPostStats) => {
                   <TooltipTrigger asChild>
                     <p
                       className={cn(
-                        'small-medium lg:base:medium cursor-pointer hover:underline',
+                        'small-medium lg:base:medium cursor-pointer hover:underline line-clamp-1',
                         textWhite && 'text-white'
                       )}>
                       {likes.length}
@@ -127,7 +127,7 @@ const PostStats = ({ post, textWhite = false }: IPostStats) => {
                               alt='avatar'
                               className='w-8 h-8 rounded-full'
                             />
-                            <p className='small-regular group-hover:underline'>{like.name}</p>
+                            <p className='small-regular group-hover:underline line-clamp-1'>{like.name}</p>
                           </Link>
                         </li>
                       ))
@@ -171,7 +171,7 @@ const PostStats = ({ post, textWhite = false }: IPostStats) => {
                           className='w-12 h-12 rounded-full'
                         />
                         <div className='flex flex-col'>
-                          <p className='base-regular hover:underline'>{like.name}</p>
+                          <p className='base-regular hover:underline line-clamp-1'>{like.name}</p>
                           <p className='small-regular text-[#7878A3]'>@{like.alias}</p>
                         </div>
                       </Link>

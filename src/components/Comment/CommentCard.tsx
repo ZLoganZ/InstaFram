@@ -32,7 +32,7 @@ const CommentCard = ({ comment, setReplyTo }: ICommentProps) => {
           <div className='flex w-full flex-col'>
             <div className='flex gap-2 items-baseline'>
               <Link
-                className='w-fit hover:underline'
+                className='w-fit hover:underline line-clamp-1'
                 to='/profile/$profileID'
                 params={{ profileID: comment.user.alias || comment.user._id }}>
                 <h4 className='cursor-pointer base-semibold text-dark-1 dark:text-light-1'>
@@ -72,7 +72,7 @@ const CommentCard = ({ comment, setReplyTo }: ICommentProps) => {
 
               {comment.replies.length > 0 && (
                 <div className='flex gap-1 w-fit cursor-pointer group'>
-                  <p className='subtle-medium group-hover:underline'>
+                  <p className='subtle-medium group-hover:underline line-clamp-1'>
                     {comment.replies.length} repl{comment.replies.length > 1 ? 'ies' : 'y'}
                   </p>
                   <img src='/assets/icons/reply.svg' alt='reply' className='object-contain h-4 w-4' />

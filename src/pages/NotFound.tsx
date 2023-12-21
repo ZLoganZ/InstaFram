@@ -23,7 +23,7 @@ const NotFound = () => {
             focus-visible:outline-offset-2 focus-visible:outline-primary'>
             Go back to home page
           </Link>
-          <Link to='/' className='small-semibold hover:underline'>
+          <Link to='/' className='small-semibold hover:underline line-clamp-1'>
             Contact support <span aria-hidden='true'>&rarr;</span>
           </Link>
         </div>

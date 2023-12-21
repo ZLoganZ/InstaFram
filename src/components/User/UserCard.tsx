@@ -4,6 +4,7 @@ import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import Loader from '@/components/Shared/Loader';
+import HoverUser from '@/components/Post/HoverUser';
 import EditProfile from '@/components/Forms/User/EditProfile';
 import { getImageURL } from '@/lib/utils';
 import { useAuth } from '@/lib/hooks/useAuth';
@@ -29,17 +30,21 @@ const UserCard = ({ user }: IUserCard) => {
         className='flex-center flex-col gap-4'
         to='/profile/$profileID'
         params={{ profileID: user.alias || user._id }}>
-        <img
-          src={getImageURL(user.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
-          alt='creator'
-          className='rounded-full w-14 h-14'
-        />
+        <HoverUser userID={user._id}>
+          <img
+            src={getImageURL(user.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
+            alt='creator'
+            className='rounded-full w-14 h-14 hover:ring-2 ring-primary'
+          />
+        </HoverUser>
 
         <div className='flex-center flex-col gap-1'>
-          <p className='base-medium text-center line-clamp-1 hover:underline'>{user.name}</p>
-          <p className='small-regular text-dark-1/70 dark:text-light-1/70 text-center line-clamp-1 hover:underline'>
-            @{user.alias}
-          </p>
+          <HoverUser userID={user._id}>
+            <p className='base-medium text-center line-clamp-1 hover:underline'>{user.name}</p>
+          </HoverUser>
+          <HoverUser userID={user._id}>
+            <p className='small-regular text-[#7878A3] text-center'>@{user.alias}</p>
+          </HoverUser>
         </div>
       </Link>
 

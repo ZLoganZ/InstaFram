@@ -24,7 +24,7 @@ const GridPostsList = ({ posts, showStats = false, showUser = false }: IGridPost
           </Link>
           <div className='absolute bottom-0 p-5 flex-between w-full bg-gradient-to-t from-dark-3 rounded-b-[24px] to-transparent gap-2'>
             {showUser && (
-              <HoverUser userID={post.creator._id}>
+              <HoverUser userID={post.creator._id} showFollowButton>
                 <Link
                   className='flex items-center justify-start gap-2 flex-1'
                   to='/profile/$profileID'

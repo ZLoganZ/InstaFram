@@ -5,13 +5,15 @@ import { useGetUserByID } from '@/lib/hooks/query';
 import { useFollowUser } from '@/lib/hooks/mutation';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { getImageURL } from '@/lib/utils';
+import { Link } from '@tanstack/react-router';
 
 interface IHoverUser {
   userID: string;
   children?: React.ReactNode;
+  showFollowButton?: boolean;
 }
 
-const HoverUser = ({ userID, children }: IHoverUser) => {
+const HoverUser = ({ userID, children, showFollowButton = false }: IHoverUser) => {
   const { currentUser, setUser } = useAuth();
   const { user, isLoadingUser } = useGetUserByID(userID);
 
@@ -38,19 +40,24 @@ const HoverUser = ({ userID, children }: IHoverUser) => {
         ) : (
           <div className='flex flex-col gap-2'>
             <div className='flex items-center gap-4'>
-              <img
-                src={getImageURL(user?.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
-                alt='profile'
-                className='w-14 h-14 rounded-full'
-              />
-              <div className='flex flex-col'>
-                <p className='font-bold text-lg'>{user.name}</p>
-                <p className='text-sm text-gray-500'>@{user.alias}</p>
-              </div>
-              {currentUser._id !== user?._id && (
+              <Link
+                className='flex gap-2'
+                to='/profile/$profileID'
+                params={{ profileID: user.alias || user._id }}>
+                <img
+                  src={getImageURL(user.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
+                  alt='profile'
+                  className='w-14 h-14 rounded-full hover:ring-2 ring-primary'
+                />
+                <div className='flex flex-col'>
+                  <p className='font-bold text-lg hover:underline line-clamp-1'>{user.name}</p>
+                  <p className='text-sm text-dark-4/80 dark:text-light-4/80'>@{user.alias}</p>
+                </div>
+              </Link>
+              {currentUser._id !== user._id && showFollowButton && (
                 <Button
                   className='ml-auto'
-                  variant='outline'
+                  type='button'
                   size='sm'
                   disabled={isLoadingFollowUser}
                   onClick={handleFollow}>
@@ -68,8 +75,15 @@ const HoverUser = ({ userID, children }: IHoverUser) => {
               )}
             </div>
             <div className='flex-center gap-1 text-[#7878A3]'>
-              <p className='subtle-semibold lg:small-regular'>{user.followers.length} followers</p>-
-              <p className='subtle-semibold lg:small-regular'>{user.following.length} following</p>
+              <p className='subtle-semibold lg:small-regular text-dark-2 dark:text-light-2'>
+                <span className='text-primary small-semibold lg:base-semibold'>{user.followers.length} </span>{' '}
+                Followers
+              </p>
+              -
+              <p className='subtle-semibold lg:small-regular text-dark-2 dark:text-light-2'>
+                <span className='text-primary small-semibold lg:base-semibold'>{user.following.length}</span>{' '}
+                Following
+              </p>
             </div>
           </div>
         )}
