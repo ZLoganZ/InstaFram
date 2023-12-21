@@ -14,6 +14,7 @@ import Loader from '@/components/Shared/Loader';
 import CommentsList from '@/components/Comment/CommentsList';
 import PostStats from '@/components/Post/PostStats';
 import GridPostsList from '@/components/Post/GridPostsList';
+import Visibility from '@/components/Post/Visibility';
 import PostOptions from '@/components/Post/PostOptions';
 import CommentInput from '@/components/Forms/Comment/CommentInput';
 import { IReplyTo } from '@/types';
@@ -94,7 +95,8 @@ const PostDetails = () => {
                       <p className='subtle-semibold lg:small-regular hover:underline'>
                         {getDateTimeToNow(post.createdAt)}
                       </p>
-                      -<p className='subtle-semibold lg:small-regular hover:underline'>{post.location}</p>
+                      -<p className='subtle-semibold lg:small-regular hover:underline'>{post.location}</p>-
+                      <Visibility visibility={post.visibility} />
                     </div>
                   </div>
                 </Link>

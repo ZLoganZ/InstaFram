@@ -167,7 +167,6 @@ const PostForm = ({ post, action, setOpen }: IPostForm) => {
             </FormItem>
           )}
         />
-        {/* <div className='w-full flex flex-1 gap-x-32 gap-y-9 flex-col sm:flex-row md:flex-col lg:flex-row max-w-5xl'> */}
         <FormField
           control={form.control}
           name='visibility'
@@ -260,7 +259,6 @@ const PostForm = ({ post, action, setOpen }: IPostForm) => {
             </FormItem>
           )}
         />
-        {/* </div> */}
         <FormField
           control={form.control}
           name='tags'

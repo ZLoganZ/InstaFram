@@ -10,11 +10,6 @@ const headers = {
   'client-id': localStorage.getItem(HEADER.CLIENT_ID)
 };
 
-const githubHeaders = {
-  'github-token': localStorage.getItem(HEADER.GITHUB_TOKEN),
-  ...headers
-};
-
 class BaseService {
   private request(method: string, url: string, data?: object | string, customHeaders?: object) {
     const requestHeaders = customHeaders ? { ...headers, ...customHeaders } : headers;
@@ -23,24 +18,20 @@ class BaseService {
     return axios.request({ method, url: requestUrl, ...requestConfig });
   }
 
-  put(url: string, model?: object | string) {
-    return this.request('put', url, model);
+  get(url: string, model?: object | string) {
+    return this.request('get', url, model);
   }
 
   post(url: string, model?: object | string) {
     return this.request('post', url, model);
   }
 
-  get(url: string, model?: object | string) {
-    return this.request('get', url, model);
+  put(url: string, model?: object | string) {
+    return this.request('put', url, model);
   }
 
   delete(url: string, model?: object | string) {
     return this.request('delete', url, model);
-  }
-
-  getGithub(url: string) {
-    return this.request('get', url, undefined, githubHeaders);
   }
 }
 

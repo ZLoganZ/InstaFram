@@ -4,6 +4,7 @@ import PostStats from '@/components/Post/PostStats';
 import { FILTERS } from '@/lib/constants';
 import { getDateTimeToNow, getImageURL } from '@/lib/utils';
 import { IPost } from '@/types';
+import Visibility from './Visibility';
 
 interface IPostCard {
   post: IPost;
@@ -28,7 +29,8 @@ const PostCard = ({ post }: IPostCard) => {
                 <p className='subtle-semibold lg:small-regular hover:underline'>
                   {getDateTimeToNow(post.createdAt)}
                 </p>
-                -<p className='subtle-semibold lg:small-regular hover:underline'>{post.location}</p>
+                -<p className='subtle-semibold lg:small-regular hover:underline'>{post.location}</p>-
+                <Visibility visibility={post.visibility} />
               </div>
             </div>
           </div>

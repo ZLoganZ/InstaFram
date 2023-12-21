@@ -1,6 +1,12 @@
-const Loader = () => {
+import { cn } from '@/lib/utils';
+
+interface ILoaderProps {
+  className?: string;
+}
+
+const Loader = ({ className }: ILoaderProps) => {
   return (
-    <div className='flex-center w-full'>
+    <div className={cn('flex-center w-full', className)}>
       <img
         className='w-6 h-6 invert dark:invert-0 animate-spin'
         src='/assets/icons/loader.svg'

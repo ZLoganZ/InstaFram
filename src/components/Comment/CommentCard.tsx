@@ -30,7 +30,7 @@ const CommentCard = ({ comment, setReplyTo }: ICommentProps) => {
           </div>
 
           <div className='flex w-full flex-col'>
-            <div className='flex gap-2'>
+            <div className='flex gap-2 items-baseline'>
               <Link
                 className='w-fit hover:underline'
                 to='/profile/$profileID'
@@ -40,7 +40,7 @@ const CommentCard = ({ comment, setReplyTo }: ICommentProps) => {
                 </h4>
               </Link>
 
-              <p className='mt-1 subtle-medium'>{getDateTimeToNow(comment.createdAt)}</p>
+              <p className='subtle-medium'>{getDateTimeToNow(comment.createdAt)}</p>
             </div>
 
             <div className='flex flex-row justify-between'>
