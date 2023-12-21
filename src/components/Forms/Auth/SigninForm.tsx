@@ -108,7 +108,7 @@ const SigninForm = () => {
 
           <p className='text-dark-2 dark:text-light-2 small-regular md:base-regular text-center mt-2'>
             Don&apos;t have an account yet?&nbsp;
-            <Link to='/signup' className='text-primary small-semibold md:base-semibold hover:underline line-clamp-1'>
+            <Link to='/signup' className='text-primary small-semibold md:base-semibold hover:underline'>
               Sign up
             </Link>
           </p>
