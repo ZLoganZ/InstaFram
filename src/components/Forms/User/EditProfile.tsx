@@ -149,7 +149,7 @@ const EditProfile = ({ setOpen }: IUpdateProfile) => {
               <FormItem>
                 <FormLabel>Bio</FormLabel>
                 <FormControl>
-                  <Textarea className='custom-scrollbar' {...field} />
+                  <Textarea className='custom-scrollbar resize-none' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

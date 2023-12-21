@@ -144,7 +144,11 @@ const PostForm = ({ post, action, setOpen }: IPostForm) => {
             <FormItem>
               <FormLabel>Content</FormLabel>
               <FormControl>
-                <Textarea className='custom-scrollbar' placeholder='What do you want to share?' {...field} />
+                <Textarea
+                  className='custom-scrollbar resize-none'
+                  placeholder='What do you want to share?'
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
