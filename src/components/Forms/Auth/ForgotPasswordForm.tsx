@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, RouteApi } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -88,6 +88,10 @@ const ForgotPasswordForm = () => {
       });
     }
   };
+
+  useEffect(() => {
+    document.title = 'Forgot password - InstaFram';
+  }, []);
 
   return (
     <Form {...form}>

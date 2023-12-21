@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { useEffect } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -46,6 +47,10 @@ const SignupForm = () => {
       }
     });
   };
+
+  useEffect(() => {
+    document.title = 'Sign up - InstaFram';
+  }, []);
 
   return (
     <Form {...form}>
