@@ -1,6 +1,6 @@
-import { IPost } from '@/types';
+import GridPostsList from '@/components/Post/GridPostsList';
 import Loader from '@/components/Shared/Loader';
-import GridPostsList from './GridPostsList';
+import { IPost } from '@/types';
 
 interface ISearchResults {
   isFetching: boolean;

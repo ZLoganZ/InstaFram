@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import Loader from '@/components/Shared/Loader';
 import { Button } from '@/components/ui/button';
-import CommentCard from './CommentCard';
+import CommentCard from '@/components/Comment/CommentCard';
 import { useGetCommentsByPostID } from '@/lib/hooks/query';
 import { IReplyTo } from '@/types';
 

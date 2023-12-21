@@ -11,10 +11,11 @@ import { FILTERS } from '@/lib/constants';
 import { getDateTimeToNow, getImageURL } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import Loader from '@/components/Shared/Loader';
+import HoverUser from '@/components/Post/HoverUser';
 import CommentsList from '@/components/Comment/CommentsList';
 import PostStats from '@/components/Post/PostStats';
 import GridPostsList from '@/components/Post/GridPostsList';
-import Visibility from '@/components/Post/Visibility';
+import PostVisibility from '@/components/Post/PostVisibility';
 import PostOptions from '@/components/Post/PostOptions';
 import CommentInput from '@/components/Forms/Comment/CommentInput';
 import { IReplyTo } from '@/types';
@@ -80,26 +81,38 @@ const PostDetails = () => {
             />
             <div className='bg-light-2 dark:bg-dark-2 flex flex-col gap-5 lg:gap-7 flex-1 items-start p-8 rounded-[30px]'>
               <div className='flex-between w-full'>
-                <Link
-                  className='flex items-center gap-3'
-                  to='/profile/$profileID'
-                  params={{ profileID: post.creator.alias || post.creator._id }}>
-                  <img
-                    className='w-8 h-8 lg:h-12 lg:w-12 rounded-full'
-                    src={getImageURL(post.creator.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
-                    alt='avatar'
-                  />
+                <div className='flex items-center gap-3'>
+                  <Link
+                    to='/profile/$profileID'
+                    params={{ profileID: post.creator.alias || post.creator._id }}>
+                    <img
+                      className='w-8 h-8 lg:h-12 lg:w-12 rounded-full'
+                      src={
+                        getImageURL(post.creator.image, 'avatar') || '/assets/icons/profile-placeholder.svg'
+                      }
+                      alt='avatar'
+                    />
+                  </Link>
                   <div className='flex flex-col'>
-                    <p className='base-medium lg:body-bold hover:underline'>{post.creator.name}</p>
-                    <div className='flex-center gap-1 text-[#7878A3]'>
+                    <HoverUser userID={post.creator._id}>
+                      <Link
+                        to='/profile/$profileID'
+                        params={{ profileID: post.creator.alias || post.creator._id }}>
+                        <p className='base-medium lg:body-bold hover:underline'>{post.creator.name}</p>
+                      </Link>
+                    </HoverUser>
+                    <Link
+                      to='/profile/$profileID'
+                      params={{ profileID: post.creator.alias || post.creator._id }}
+                      className='flex-center gap-1 text-[#7878A3]'>
+                      <PostVisibility visibility={post.visibility} />-
                       <p className='subtle-semibold lg:small-regular hover:underline'>
                         {getDateTimeToNow(post.createdAt)}
                       </p>
-                      -<p className='subtle-semibold lg:small-regular hover:underline'>{post.location}</p>-
-                      <Visibility visibility={post.visibility} />
-                    </div>
+                      -<p className='subtle-semibold lg:small-regular hover:underline'>{post.location}</p>
+                    </Link>
                   </div>
-                </Link>
+                </div>
 
                 {currentUser._id === post.creator._id && (
                   <PostOptions

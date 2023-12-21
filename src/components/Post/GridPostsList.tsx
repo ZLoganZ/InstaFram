@@ -1,8 +1,8 @@
 import { Link } from '@tanstack/react-router';
 
+import PostStats from '@/components/Post/PostStats';
 import { getImageURL } from '@/lib/utils';
 import { IPost } from '@/types';
-import PostStats from './PostStats';
 
 interface IGridPostsList {
   posts: IPost[];

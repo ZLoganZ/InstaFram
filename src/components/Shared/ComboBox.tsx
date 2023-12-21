@@ -4,7 +4,7 @@ import { Check, ChevronsUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import Loader from './Loader';
+import Loader from '@/components/Shared/Loader';
 import { cn } from '@/lib/utils';
 import { IDataComboBox } from '@/types';
 

@@ -1,10 +1,11 @@
 import { Link, useNavigate } from '@tanstack/react-router';
 
 import PostStats from '@/components/Post/PostStats';
+import HoverUser from '@/components/Post/HoverUser';
+import PostVisibility from '@/components/Post/PostVisibility';
 import { FILTERS } from '@/lib/constants';
 import { getDateTimeToNow, getImageURL } from '@/lib/utils';
 import { IPost } from '@/types';
-import Visibility from './Visibility';
 
 interface IPostCard {
   post: IPost;
@@ -16,25 +17,32 @@ const PostCard = ({ post }: IPostCard) => {
   return (
     <div className='bg-light-2 dark:bg-dark-2 rounded-3xl border border-light-4 dark:border-dark-4 p-5 lg:p-7 w-full max-w-screen-sm'>
       <div className='flex-between'>
-        <Link to='/profile/$profileID' params={{ profileID: post.creator.alias || post.creator._id }}>
-          <div className='flex items-center gap-3'>
+        <div className='flex items-center gap-3'>
+          <Link to='/profile/$profileID' params={{ profileID: post.creator.alias || post.creator._id }}>
             <img
               className='w-12 lg:h-12 rounded-full'
               src={getImageURL(post.creator.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
               alt='avatar'
             />
-            <div className='flex flex-col'>
-              <p className='base-medium lg:body-bold hover:underline'>{post.creator.name}</p>
-              <div className='flex-center gap-1 text-[#7878A3]'>
-                <p className='subtle-semibold lg:small-regular hover:underline'>
-                  {getDateTimeToNow(post.createdAt)}
-                </p>
-                -<p className='subtle-semibold lg:small-regular hover:underline'>{post.location}</p>-
-                <Visibility visibility={post.visibility} />
-              </div>
-            </div>
+          </Link>
+          <div className='flex flex-col'>
+            <HoverUser userID={post.creator._id}>
+              <Link to='/profile/$profileID' params={{ profileID: post.creator.alias || post.creator._id }}>
+                <p className='base-medium lg:body-bold hover:underline'>{post.creator.name}</p>
+              </Link>
+            </HoverUser>
+            <Link
+              to='/profile/$profileID'
+              params={{ profileID: post.creator.alias || post.creator._id }}
+              className='flex-center gap-1 text-[#7878A3]'>
+              <PostVisibility visibility={post.visibility} />-
+              <p className='subtle-semibold lg:small-regular hover:underline'>
+                {getDateTimeToNow(post.createdAt)}
+              </p>
+              -<p className='subtle-semibold lg:small-regular hover:underline'>{post.location}</p>
+            </Link>
           </div>
-        </Link>
+        </div>
       </div>
       <>
         <div className='small-medium lg:base-medium py-5'>

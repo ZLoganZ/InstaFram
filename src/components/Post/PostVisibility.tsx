@@ -9,7 +9,7 @@ interface IVisibilityProps {
   visibility: IVisibility;
 }
 
-const Visibility = ({ visibility, className }: IVisibilityProps) => {
+const PostVisibility = ({ visibility, className }: IVisibilityProps) => {
   const svgUrl = useMemo(() => {
     switch (visibility) {
       case 'Public':
@@ -35,4 +35,4 @@ const Visibility = ({ visibility, className }: IVisibilityProps) => {
   );
 };
 
-export default Visibility;
+export default PostVisibility;
