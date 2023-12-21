@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router';
 
 import PostStats from '@/components/Post/PostStats';
+import HoverUser from '@/components/Post/HoverUser';
 import { getImageURL } from '@/lib/utils';
 import { IPost } from '@/types';
 
@@ -23,17 +24,19 @@ const GridPostsList = ({ posts, showStats = false, showUser = false }: IGridPost
           </Link>
           <div className='absolute bottom-0 p-5 flex-between w-full bg-gradient-to-t from-dark-3 rounded-b-[24px] to-transparent gap-2'>
             {showUser && (
-              <Link
-                className='flex items-center justify-start gap-2 flex-1'
-                to='/profile/$profileID'
-                params={{ profileID: post.creator.alias || post.creator._id }}>
-                <img
-                  src={getImageURL(post.creator.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
-                  alt='avatar'
-                  className='w-8 h-8 rounded-full'
-                />
-                <p className='line-clamp-1 text-white hover:underline'>{post.creator.name}</p>
-              </Link>
+              <HoverUser userID={post.creator._id}>
+                <Link
+                  className='flex items-center justify-start gap-2 flex-1'
+                  to='/profile/$profileID'
+                  params={{ profileID: post.creator.alias || post.creator._id }}>
+                  <img
+                    src={getImageURL(post.creator.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
+                    alt='avatar'
+                    className='w-8 h-8 rounded-full'
+                  />
+                  <p className='line-clamp-1 text-white hover:underline'>{post.creator.name}</p>
+                </Link>
+              </HoverUser>
             )}
             {showStats && <PostStats post={post} textWhite />}
           </div>

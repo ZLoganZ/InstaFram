@@ -60,7 +60,7 @@ const HoverUser = ({ userID, children }: IHoverUser) => {
                       {isFollowing ? 'Unfollowing' : 'Following'}
                     </div>
                   ) : isFollowing ? (
-                    'Unfollow'
+                    'Following'
                   ) : (
                     'Follow'
                   )}
