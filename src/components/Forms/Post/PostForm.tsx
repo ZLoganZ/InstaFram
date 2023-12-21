@@ -98,6 +98,7 @@ const PostForm = ({ post, action, setOpen }: IPostForm) => {
               description: 'Post created successfully'
             });
             navigate({ to: '/', replace: true });
+            form.reset();
           }
         }
       );

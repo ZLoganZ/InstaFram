@@ -19,7 +19,7 @@ const EditPost = ({ setOpen }: IEditPost) => {
       {isLoadingPost || isFetchingPost ? (
         <Loader />
       ) : (
-        <PostForm key={Math.random()} post={post} action='edit' setOpen={setOpen} />
+        <PostForm key={postID} post={post} action='edit' setOpen={setOpen} />
       )}
     </div>
   );
