@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Route, lazyRouteComponent, redirect, NotFoundRoute as NotFound } from '@tanstack/react-router';
+import { Route, lazyRouteComponent, redirect } from '@tanstack/react-router';
 
 import { rootRoute } from '@/routes/root.routes';
 
@@ -70,7 +70,8 @@ export const ResetPasswordRoute = new Route({
   wrapInSuspense: true
 });
 
-export const NotFoundRoute = new NotFound({
+export const NotFoundRoute = new Route({
+  path: '*',
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import('@/pages/NotFound')),
   wrapInSuspense: true
