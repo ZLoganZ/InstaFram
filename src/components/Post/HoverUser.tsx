@@ -1,3 +1,5 @@
+import { Link } from '@tanstack/react-router';
+
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Button } from '@/components//ui/button';
 import Loader from '@/components/Shared/Loader';
@@ -5,7 +7,6 @@ import { useGetUserByID } from '@/lib/hooks/query';
 import { useFollowUser } from '@/lib/hooks/mutation';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { getImageURL } from '@/lib/utils';
-import { Link } from '@tanstack/react-router';
 
 interface IHoverUser {
   userID: string;
@@ -74,15 +75,15 @@ const HoverUser = ({ userID, children, showFollowButton = false }: IHoverUser) =
                 </Button>
               )}
             </div>
-            <div className='flex-center gap-1 text-[#7878A3]'>
-              <p className='subtle-semibold lg:small-regular text-dark-2 dark:text-light-2'>
-                <span className='text-primary small-semibold lg:base-semibold'>{user.followers.length} </span>{' '}
-                Followers
+            <div className='flex-center gap-1'>
+              <p className='flex-center subtle-semibold lg:small-regular text-dark-2 dark:text-light-2'>
+                <span className='text-primary small-semibold lg:base-bold'>{user.followers.length}</span>
+                &nbsp; Followers
               </p>
               -
-              <p className='subtle-semibold lg:small-regular text-dark-2 dark:text-light-2'>
-                <span className='text-primary small-semibold lg:base-semibold'>{user.following.length}</span>{' '}
-                Following
+              <p className='flex-center subtle-semibold lg:small-regular text-dark-2 dark:text-light-2'>
+                <span className='text-primary small-semibold lg:base-bold'>{user.following.length}</span>
+                &nbsp; Following
               </p>
             </div>
           </div>

@@ -1,17 +1,9 @@
-import { Link, useNavigate, useRouterState } from '@tanstack/react-router';
+import { useNavigate, useRouterState } from '@tanstack/react-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-  DialogHeader,
-  DialogTrigger
-} from '@/components/ui/dialog';
+import StatNumber from '@/components/Post/StatNumber';
 import { useLikePost, useSavePost } from '@/lib/hooks/mutation';
-import { cn, getImageURL } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { IPost } from '@/types';
 
@@ -80,7 +72,7 @@ const PostStats = ({ post, textWhite = false }: IPostStats) => {
         postID: post._id
       }
     });
-  }, [navigate, post._id, location]);
+  }, [post._id, isPostPage, navigate]);
 
   return (
     <div className='flex justify-between items-center'>
@@ -92,94 +84,7 @@ const PostStats = ({ post, textWhite = false }: IPostStats) => {
             alt='like'
             onClick={handleLikePost}
           />
-          <Dialog modal>
-            <TooltipProvider delayDuration={100}>
-              <Tooltip>
-                <DialogTrigger asChild>
-                  <TooltipTrigger asChild>
-                    <p
-                      className={cn(
-                        'small-medium lg:base:medium cursor-pointer hover:underline line-clamp-1',
-                        textWhite && 'text-white'
-                      )}>
-                      {likes.length}
-                    </p>
-                  </TooltipTrigger>
-                </DialogTrigger>
-                <TooltipContent>
-                  <ul className='flex flex-col gap-2'>
-                    {post.likes.length === 0 ? (
-                      <li className='flex items-center'>
-                        <p className='small-regular'>No one has liked this post yet</p>
-                      </li>
-                    ) : (
-                      post.likes.slice(0, 10).map((like) => (
-                        <li key={like._id}>
-                          <Link
-                            to='/profile/$profileID'
-                            params={{ profileID: like.alias || like._id }}
-                            className='flex items-center gap-2.5 group'>
-                            <img
-                              src={
-                                getImageURL(like.image, 'miniAvatar') ||
-                                '/assets/icons/profile-placeholder.svg'
-                              }
-                              alt='avatar'
-                              className='w-8 h-8 rounded-full'
-                            />
-                            <p className='small-regular group-hover:underline line-clamp-1'>{like.name}</p>
-                          </Link>
-                        </li>
-                      ))
-                    )}
-                    {post.likes.length > 10 && (
-                      <li className='flex items-center'>
-                        <p className='small-regular'>and {post.likes.length - 10} more...</p>
-                      </li>
-                    )}
-                  </ul>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-            <DialogContent className='max-w-md'>
-              <DialogHeader className='flex justify-start w-full'>
-                <DialogTitle className='flex-start gap-3'>
-                  <img src='/assets/icons/like.svg' alt='likes' className='w-9 h-9' />
-                  <h2 className='h3-bold md:h2-bold text-left w-full'>Likes</h2>
-                </DialogTitle>
-                <DialogDescription>
-                  {post.likes.length === 0
-                    ? 'No one has liked this post yet'
-                    : post.likes.length === 1
-                    ? '1 person likes this post'
-                    : `${post.likes.length} people like this post`}
-                </DialogDescription>
-              </DialogHeader>
-              <ul className='flex flex-col gap-5 max-h-[40rem] custom-scrollbar overflow-auto'>
-                {post.likes.length !== 0 &&
-                  post.likes.map((like) => (
-                    <li key={like._id}>
-                      <Link
-                        to='/profile/$profileID'
-                        params={{ profileID: like.alias || like._id }}
-                        className='flex items-center gap-4'>
-                        <img
-                          src={
-                            getImageURL(like.image, 'miniAvatar') || '/assets/icons/profile-placeholder.svg'
-                          }
-                          alt='avatar'
-                          className='w-12 h-12 rounded-full'
-                        />
-                        <div className='flex flex-col'>
-                          <p className='base-regular hover:underline line-clamp-1'>{like.name}</p>
-                          <p className='small-regular text-[#7878A3]'>@{like.alias}</p>
-                        </div>
-                      </Link>
-                    </li>
-                  ))}
-              </ul>
-            </DialogContent>
-          </Dialog>
+          <StatNumber data={post.likes} dataCount={likes.length} type='like' textWhite={textWhite} />
         </div>
 
         <div className={cn('flex gap-1.5', !isPostPage && 'cursor-pointer')} onClick={handleClickComment}>

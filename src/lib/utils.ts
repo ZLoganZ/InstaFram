@@ -119,6 +119,10 @@ export const getDateMonth = (date: string | number | Date) => {
   return format(commentDate, 'MMM dd, yyyy');
 };
 
+export const capitalizeFirstLetter = (text: string) => {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const parseFormData = (data: Record<string, any>) => {
   const formData = new FormData();
