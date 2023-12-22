@@ -87,7 +87,7 @@ const PostDetails = () => {
                       to='/profile/$profileID'
                       params={{ profileID: post.creator.alias || post.creator._id }}>
                       <img
-                        className='w-8 h-8 lg:h-12 lg:w-12 rounded-full'
+                        className='w-8 h-8 lg:h-12 lg:w-12 rounded-full hover:ring-2 ring-primary'
                         src={
                           getImageURL(post.creator.image, 'avatar') || '/assets/icons/profile-placeholder.svg'
                         }
