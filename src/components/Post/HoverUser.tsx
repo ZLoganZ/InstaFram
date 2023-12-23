@@ -7,6 +7,7 @@ import { useGetUserByID } from '@/lib/hooks/query';
 import { useFollowUser } from '@/lib/hooks/mutation';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { getImageURL } from '@/lib/utils';
+import { useMemo } from 'react';
 
 interface IHoverUser {
   userID: string;
@@ -20,7 +21,10 @@ const HoverUser = ({ userID, children, showFollowButton = false }: IHoverUser) =
 
   const { followUser, isLoadingFollowUser } = useFollowUser();
 
-  const isFollowing = currentUser.following.includes(user?._id || '');
+  const isFollowing = useMemo(
+    () => currentUser.following.includes(user?._id || ''),
+    [currentUser.following, user?._id]
+  );
 
   const handleFollow = async () => {
     await followUser(user._id);
