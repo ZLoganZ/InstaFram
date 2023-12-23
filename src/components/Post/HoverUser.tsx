@@ -33,7 +33,7 @@ const HoverUser = ({ userID, children, showFollowButton = false }: IHoverUser) =
   };
 
   return (
-    <HoverCard openDelay={200}>
+    <HoverCard openDelay={300}>
       <HoverCardTrigger asChild>{children}</HoverCardTrigger>
       <HoverCardContent className='w-full max-w-5xl'>
         {isLoadingUser ? (

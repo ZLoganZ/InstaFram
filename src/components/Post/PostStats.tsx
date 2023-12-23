@@ -84,7 +84,7 @@ const PostStats = ({ post, textWhite = false }: IPostStats) => {
             alt='like'
             onClick={handleLikePost}
           />
-          <StatNumber data={post.likes} dataCount={likes.length} type='like' textWhite={textWhite} />
+          <StatNumber dataList={post.likes} dataCount={likes.length} type='like' textWhite={textWhite} />
         </div>
 
         <div className={cn('flex gap-1.5', !isPostPage && 'cursor-pointer')} onClick={handleClickComment}>
