@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTrigger
 } from '@/components/ui/dialog';
-import HoverUser from '@/components/Post/HoverUser';
+// import HoverUser from '@/components/Post/HoverUser';
 import { capitalizeFirstLetter, cn, getImageURL } from '@/lib/utils';
 import { IUser } from '@/types';
 
@@ -87,7 +87,7 @@ const StatNumber = ({ dataList, textWhite, dataCount, type }: IStatNumber) => {
             dataList.map((data) => (
               <li key={data._id}>
                 <div className='flex items-center gap-4'>
-                  <HoverUser userID={data._id} showFollowButton>
+                  {/* <HoverUser userID={data._id} showFollowButton> */}
                     <Link to='/profile/$profileID' params={{ profileID: data.alias || data._id }}>
                       <img
                         src={getImageURL(data.image, 'miniAvatar') || '/assets/icons/profile-placeholder.svg'}
@@ -95,8 +95,8 @@ const StatNumber = ({ dataList, textWhite, dataCount, type }: IStatNumber) => {
                         className='w-12 h-12 rounded-full'
                       />
                     </Link>
-                  </HoverUser>
-                  <HoverUser userID={data._id} showFollowButton>
+                  {/* </HoverUser> */}
+                  {/* <HoverUser userID={data._id} showFollowButton> */}
                     <Link
                       to='/profile/$profileID'
                       params={{ profileID: data.alias || data._id }}
@@ -104,7 +104,7 @@ const StatNumber = ({ dataList, textWhite, dataCount, type }: IStatNumber) => {
                       <p className='base-regular hover:underline line-clamp-1'>{data.name}</p>
                       <p className='small-regular text-[#7878A3]'>@{data.alias}</p>
                     </Link>
-                  </HoverUser>
+                  {/* </HoverUser> */}
                 </div>
               </li>
             ))}
