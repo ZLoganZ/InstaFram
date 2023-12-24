@@ -30,7 +30,7 @@ const CommentsList = ({ postID, commentsCount, replyTo, setReplyTo }: ICommentsL
       ) : comments.length === 0 ? (
         <p className='text-[#5C5C7B] mt-10 text-center w-full'>No comments yet</p>
       ) : (
-        <ul className='flex flex-col gap-5 bg-light-2 dark:bg-dark-2 rounded-2xl p-5'>
+        <ul className='flex flex-col max-h-[30rem] lg:max-h-[35rem] overflow-auto custom-scrollbar gap-5 bg-light-2 dark:bg-dark-2 rounded-2xl p-5'>
           {comments.map((comment) => (
             <li key={comment._id}>
               <CommentCard comment={comment} replyTo={replyTo} setReplyTo={setReplyTo} />
