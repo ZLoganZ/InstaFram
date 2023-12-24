@@ -31,8 +31,7 @@ const LeftSideBar = () => {
             alt='profile'
             className={cn(
               'size-14 rounded-full hover:ring-2 ring-primary',
-              (pathname.includes(`/profile/${currentUser._id}`) ||
-                pathname.includes(`/profile/${currentUser.alias}`)) &&
+              (pathname.includes(`/${currentUser._id}`) || pathname.includes(`/${currentUser.alias}`)) &&
                 'ring-2 ring-primary'
             )}
           />
