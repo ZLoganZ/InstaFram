@@ -53,7 +53,7 @@ const ProfileUpload = ({ fieldChange, mediaURL, form }: IProfileUpload) => {
         <img
           src={fileUrl || '/assets/icons/profile-placeholder.svg'}
           alt='image'
-          className='h-24 w-24 rounded-full object-cover object-top'
+          className='size-24 rounded-full object-cover object-top'
         />
         <Button type='button' className='small-regular md:base-semibold'>
           Change profile photo

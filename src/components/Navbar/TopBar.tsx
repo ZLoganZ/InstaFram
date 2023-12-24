@@ -26,7 +26,7 @@ const TopBar = () => {
     <section className='sticky top-0 z-50 md:hidden bg-light-2 dark:bg-dark-2 w-full'>
       <div className='flex-between py-4 px-5'>
         <Link to='/' className='flex gap-1 items-center'>
-          <img src='/assets/images/logo.svg' alt='logo' height={36} />
+          <img src='/assets/images/logo.svg' alt='logo' className='size-9' />
           <p className='font-mono h2-bold select-none'>InstaFram</p>
         </Link>
         <div className='flex gap-4'>
@@ -35,7 +35,7 @@ const TopBar = () => {
               <img
                 src={getImageURL(currentUser.image, 'miniAvatar') || '/assets/icons/profile-placeholder.svg'}
                 className={cn(
-                  'h-8 w-8 rounded-full select-none',
+                  'size-8 rounded-full select-none',
                   pathname.includes(`/profile/${currentUser._id}`) && 'ring-2 ring-primary'
                 )}
                 alt='profile'
@@ -46,7 +46,7 @@ const TopBar = () => {
                 <img
                   src={getImageURL(currentUser.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
                   className={cn(
-                    'ml-3 h-12 w-12 rounded-full select-none',
+                    'ml-3 size-12 rounded-full select-none',
                     pathname.includes(`/profile/${currentUser._id}`) && 'ring-2 ring-primary'
                   )}
                   alt='profile'
@@ -67,7 +67,7 @@ const TopBar = () => {
                       params: { profileID: currentUser.alias || currentUser._id }
                     })
                   }>
-                  <img src='/assets/icons/user.svg' alt='logout' height={20} width={20} />
+                  <img src='/assets/icons/user.svg' alt='logout' className='size-5' />
                   <p className='small-medium lg:base-medium'>View Profile</p>
                 </Button>
               </DropdownMenuItem>
@@ -80,7 +80,7 @@ const TopBar = () => {
                   variant='ghost'
                   className='justify-start gap-4 py-6 group w-full'
                   onClick={() => signout()}>
-                  <img src='/assets/icons/logout.svg' alt='logout' height={20} width={20} />
+                  <img src='/assets/icons/logout.svg' alt='logout' className='size-5' />
                   <p className='small-medium lg:base-medium'>Sign out</p>
                 </Button>
               </DropdownMenuItem>

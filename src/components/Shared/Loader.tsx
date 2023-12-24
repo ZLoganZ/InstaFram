@@ -7,11 +7,7 @@ interface ILoaderProps {
 const Loader = ({ className }: ILoaderProps) => {
   return (
     <div className={cn('flex-center w-full', className)}>
-      <img
-        className='w-6 h-6 invert dark:invert-0 animate-spin'
-        src='/assets/icons/loader.svg'
-        alt='loader'
-      />
+      <img className='size-6 invert dark:invert-0 animate-spin' src='/assets/icons/loader.svg' alt='loader' />
     </div>
   );
 };

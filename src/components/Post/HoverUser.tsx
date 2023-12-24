@@ -52,7 +52,7 @@ const HoverUser = ({ userID, children, showFollowButton = false }: IHoverUser) =
                 <img
                   src={getImageURL(user.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
                   alt='profile'
-                  className='w-14 h-14 rounded-full hover:ring-2 ring-primary'
+                  className='size-14 rounded-full hover:ring-2 ring-primary'
                 />
                 <div className='flex flex-col'>
                   <p className='font-bold text-lg hover:underline line-clamp-1'>{user.name}</p>

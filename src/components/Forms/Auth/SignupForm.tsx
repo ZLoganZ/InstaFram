@@ -56,7 +56,7 @@ const SignupForm = () => {
     <Form {...form}>
       <div className='sm:w-[420px] flex-center flex-col'>
         <div className='flex gap-1 items-center'>
-          <img src='/assets/images/logo.svg' alt='logo' />
+          <img src='/assets/images/logo.svg' alt='logo' className='size-9' />
           <p className='font-mono h2-bold select-none'>InstaFram</p>
         </div>
         <h2 className='h3-bold md:h2-bold pt-5 sm:pt-8'>Create an account</h2>

@@ -25,7 +25,7 @@ const PostVisibility = ({ visibility, className }: IVisibilityProps) => {
     <TooltipProvider delayDuration={300}>
       <Tooltip>
         <TooltipTrigger asChild>
-          <img className={cn('w-4 h-4 dark:invert-white', className)} src={svgUrl} alt={visibility} />
+          <img className={cn('size-4 dark:invert-white', className)} src={svgUrl} alt={visibility} />
         </TooltipTrigger>
         <TooltipContent>
           <p className='small-regular'>{visibility}</p>

@@ -19,13 +19,13 @@ export const ModeToggle = ({ topbar }: IModeToggleProps) => {
       onClick={() => setTheme(isDark ? 'light' : 'dark')}>
       <Sun
         className={cn(
-          'h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 text-primary',
+          'size-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 text-primary',
           !topbar && 'h-6 w-6 group-hover:invert-white'
         )}
       />
       <Moon
         className={cn(
-          'absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 text-primary',
+          'absolute size-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 text-primary',
           !topbar && 'h-6 w-6 group-hover:invert-white'
         )}
       />

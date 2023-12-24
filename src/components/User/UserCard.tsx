@@ -34,7 +34,7 @@ const UserCard = ({ user }: IUserCard) => {
           <img
             src={getImageURL(user.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
             alt='creator'
-            className='rounded-full w-14 h-14 hover:ring-2 ring-primary'
+            className='rounded-full size-14 hover:ring-2 ring-primary'
           />
         </HoverUser>
 

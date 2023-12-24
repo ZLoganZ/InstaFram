@@ -5,7 +5,7 @@ const NotFound = () => {
     <section className='relative container grid min-h-full w-full place-items-center px-6 py-24 sm:py-32 lg:px-8'>
       <div className='text-center'>
         <div className='flex-center gap-1'>
-          <img src='/assets/images/logo.svg' alt='logo' className='w-14 h-14 sm:w-16 sm:h-16' />
+          <img src='/assets/images/logo.svg' alt='logo' className='size-14 sm:size-16' />
           <p className='font-mono h2-bold select-none'>InstaFram</p>
         </div>
         <h2 className='mt-2 h2-bold sm:h1-bold text-gray-900 dark:text-gray-100'>

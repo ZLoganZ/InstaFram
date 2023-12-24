@@ -56,7 +56,7 @@
     @apply border-border box-border list-none p-0 m-0 scroll-smooth;
   }
   body {
-    @apply bg-background text-foreground min-h-screen font-inter;
+    @apply bg-background text-foreground min-h-dvh font-inter;
   }
 }
 

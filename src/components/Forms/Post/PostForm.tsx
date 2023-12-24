@@ -183,7 +183,7 @@ const PostForm = ({ post, action, setOpen }: IPostForm) => {
                       aria-expanded={false}
                       className='flex w-40 justify-between'>
                       <p className='truncate'>{field.value}</p>
-                      <ChevronsUpDown className='h-4 w-4 shrink-0 opacity-50' />
+                      <ChevronsUpDown className='size-4 shrink-0 opacity-50' />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align='center' className='p-0 w-40 gap-0'>
@@ -195,7 +195,7 @@ const PostForm = ({ post, action, setOpen }: IPostForm) => {
                         onClick={() => field.onChange('Public')}>
                         <Check
                           className={cn(
-                            'mr-2 h-4 w-4',
+                            'mr-2 size-4',
                             field.value === 'Public' ? 'opacity-100' : 'opacity-0'
                           )}
                         />
@@ -210,7 +210,7 @@ const PostForm = ({ post, action, setOpen }: IPostForm) => {
                         onClick={() => field.onChange('Followers')}>
                         <Check
                           className={cn(
-                            'mr-2 h-4 w-4',
+                            'mr-2 size-4',
                             field.value === 'Followers' ? 'opacity-100' : 'opacity-0'
                           )}
                         />
@@ -225,7 +225,7 @@ const PostForm = ({ post, action, setOpen }: IPostForm) => {
                         onClick={() => field.onChange('Private')}>
                         <Check
                           className={cn(
-                            'mr-2 h-4 w-4',
+                            'mr-2 size-4',
                             field.value === 'Private' ? 'opacity-100' : 'opacity-0'
                           )}
                         />

@@ -89,7 +89,7 @@ const EditProfile = ({ setOpen }: IUpdateProfile) => {
     <div className='flex flex-col flex-1 items-center gap-10 overflow-scroll p-5 custom-scrollbar'>
       <DialogHeader className='flex justify-start w-full max-w-5xl'>
         <div className='flex-start gap-3'>
-          <img src='/assets/icons/edit.svg' width={36} height={36} alt='edit' />
+          <img src='/assets/icons/edit.svg' alt='edit' className='size-9' />
           <h2 className='h3-bold md:h2-bold text-left w-full'>Edit Profile</h2>
         </div>
         <DialogDescription>

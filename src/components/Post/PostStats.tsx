@@ -79,7 +79,7 @@ const PostStats = ({ post, textWhite = false }: IPostStats) => {
       <div className='flex gap-2 mr-2'>
         <div className='flex gap-1.5'>
           <img
-            className='w-5 h-5 cursor-pointer hover:scale-110'
+            className='size-5 cursor-pointer hover:scale-110'
             src={checkIsLiked ? '/assets/icons/liked.svg' : '/assets/icons/like.svg'}
             alt='like'
             onClick={handleLikePost}
@@ -88,7 +88,7 @@ const PostStats = ({ post, textWhite = false }: IPostStats) => {
         </div>
 
         <div className={cn('flex gap-1.5', !isPostPage && 'cursor-pointer')} onClick={handleClickComment}>
-          <img src='/assets/icons/comment.svg' alt='comment' className='w-5 h-5' />
+          <img src='/assets/icons/comment.svg' alt='comment' className='size-5' />
           <p className={cn('small-medium lg:base:medium', textWhite && 'text-white')}>
             {post.comments.length}
           </p>
@@ -98,7 +98,7 @@ const PostStats = ({ post, textWhite = false }: IPostStats) => {
       <img
         src={isSaved ? '/assets/icons/saved.svg' : '/assets/icons/save.svg'}
         alt='save'
-        className='w-5 h-5 cursor-pointer'
+        className='size-5 cursor-pointer'
         onClick={handleSavePost}
       />
     </div>

@@ -69,7 +69,7 @@ const PostDetails = () => {
         <>
           <div className='hidden md:flex max-w-5xl w-full'>
             <Button onClick={() => history.back()} className='gap-2' variant='ghost'>
-              <img src='/assets/icons/back.svg' alt='back' width={24} height={24} />
+              <img src='/assets/icons/back.svg' alt='back' className='size-6' />
               <p className='small-medium lg:base-medium'>Back</p>
             </Button>
           </div>
@@ -87,7 +87,7 @@ const PostDetails = () => {
                       to='/profile/$profileID'
                       params={{ profileID: post.creator.alias || post.creator._id }}>
                       <img
-                        className='w-8 h-8 lg:h-12 lg:w-12 rounded-full hover:ring-2 ring-primary'
+                        className='size-8 lg:size-12 rounded-full hover:ring-2 ring-primary'
                         src={
                           getImageURL(post.creator.image, 'avatar') || '/assets/icons/profile-placeholder.svg'
                         }
@@ -133,7 +133,7 @@ const PostDetails = () => {
 
               <hr className='border w-full border-light-4/80 dark:border-dark-4/80' />
 
-              <div className='flex flex-1 flex-col w-full small-medium lg:base-regular'>
+              <div className='flex flex-1 flex-col w-full small-medium lg:base-regular text-pretty'>
                 <p>{post.content}</p>
                 <ul className='flex flex-wrap gap-1.5 mt-2'>
                   {post.tags.map((tag) => (

@@ -61,7 +61,7 @@ const ResetPasswordForm = () => {
     <Form {...form}>
       <div className='sm:w-[420px] flex-center flex-col'>
         <div className='flex gap-1 items-center'>
-          <img src='/assets/images/logo.svg' alt='logo' height={36} />
+          <img src='/assets/images/logo.svg' alt='logo' className='size-9' />
           <p className='font-mono h2-bold select-none'>InstaFram</p>
         </div>
         <h2 className='h3-bold md:h2-bold pt-5 sm:pt-8'>Reset your password</h2>
@@ -110,7 +110,7 @@ const ResetPasswordForm = () => {
 
           <p className='small-regular md:base-regular text-dark-2 dark:text-light-2 text-center mt-2'>
             Already remember your password?&nbsp;
-            <Link to='/signin' className='text-primary small-semibold md:base-semibold hover:underline line-clamp-1'>
+            <Link to='/signin' className='text-primary small-semibold md:base-semibold hover:underline'>
               Sign in
             </Link>
           </p>

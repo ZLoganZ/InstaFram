@@ -18,7 +18,7 @@ const LeftSideBar = () => {
     <nav className='hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-light-2 dark:bg-dark-2'>
       <div className='flex flex-col gap-11'>
         <Link to='/' className='flex gap-1 items-center'>
-          <img src='/assets/images/logo.svg' alt='logo' height={36} />
+          <img src='/assets/images/logo.svg' alt='logo' className='size-9' />
           <p className='font-mono h2-bold select-none'>InstaFram</p>
         </Link>
 
@@ -30,7 +30,7 @@ const LeftSideBar = () => {
             src={getImageURL(currentUser.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
             alt='profile'
             className={cn(
-              'w-14 h-14 rounded-full hover:ring-2 ring-primary',
+              'size-14 rounded-full hover:ring-2 ring-primary',
               (pathname.includes(`/profile/${currentUser._id}`) ||
                 pathname.includes(`/profile/${currentUser.alias}`)) &&
                 'ring-2 ring-primary'
@@ -56,7 +56,7 @@ const LeftSideBar = () => {
                   <img
                     src={link.imgURL}
                     alt={link.label}
-                    className={cn('group-hover:invert-white', isActive && 'invert-white')}
+                    className={cn('group-hover:invert-white size-6', isActive && 'invert-white')}
                   />
                   <p className={cn('group-hover:invert-white', isActive && 'invert-white')}>{link.label}</p>
                 </Link>
@@ -71,7 +71,7 @@ const LeftSideBar = () => {
           variant='ghost'
           className='justify-start gap-4 py-6 hover:bg-primary transition group'
           onClick={() => signout()}>
-          <img className='group-hover:invert-white' src='/assets/icons/logout.svg' alt='logout' />
+          <img className='group-hover:invert-white size-6' src='/assets/icons/logout.svg' alt='logout' />
           <p className='small-medium lg:base-medium group-hover:invert-white'>Sign Out</p>
         </Button>
       </div>

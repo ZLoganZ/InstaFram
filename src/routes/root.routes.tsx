@@ -49,7 +49,7 @@ const RootPage = () => {
             </Button>
           </div>
         )}>
-        <main className='flex h-screen'>
+        <main className='flex h-dvh'>
           <LoadingBar isLoading={isLoading} />
           <Outlet />
           <Toaster />

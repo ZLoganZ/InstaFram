@@ -47,7 +47,7 @@ const Profile = () => {
     <div className='flex flex-col items-center flex-1 gap-10 overflow-scroll py-10 px-5 md:p-14 custom-scrollbar'>
       {errorUser ? (
         <NotFound />
-      ) : isLoadingUser || !user? (
+      ) : isLoadingUser || !user ? (
         <Loader />
       ) : (
         <>
@@ -56,7 +56,7 @@ const Profile = () => {
               <img
                 src={getImageURL(user.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
                 alt='profile'
-                className='w-28 h-28 lg:h-36 lg:w-36 rounded-full'
+                className='size-28 lg:size-36 rounded-full'
               />
               <div className='flex flex-col flex-1 justify-between md:mt-2'>
                 <div className='flex flex-col w-full'>
@@ -86,7 +86,7 @@ const Profile = () => {
                           'h-12 bg-light-4 dark:bg-dark-4 px-5 flex-center gap-2 rounded-lg cursor-pointer',
                           currentUser._id !== user._id && 'hidden'
                         )}>
-                        <img src='/assets/icons/edit.svg' alt='edit' className='h-5 w-5' />
+                        <img src='/assets/icons/edit.svg' alt='edit' className='size-5' />
                         <p className='flex whitespace-nowrap small-medium'>Edit Profile</p>
                       </div>
                     </DialogTrigger>
@@ -129,7 +129,7 @@ const Profile = () => {
                 )}
                 to='/profile/$profileID'
                 params={{ profileID: currentUser.alias || currentUser._id }}>
-                <img src='/assets/icons/posts.svg' alt='posts' className='h-5 w-5' />
+                <img src='/assets/icons/posts.svg' alt='posts' className='size-5' />
                 Posts
               </Link>
               <Link
@@ -139,7 +139,7 @@ const Profile = () => {
                 )}
                 to='/profile/$profileID/liked'
                 params={{ profileID: currentUser.alias || currentUser._id }}>
-                <img src='/assets/icons/like.svg' alt='liked' className='h-5 w-5' />
+                <img src='/assets/icons/like.svg' alt='liked' className='size-5' />
                 Liked Posts
               </Link>
               <Link
@@ -149,7 +149,7 @@ const Profile = () => {
                 )}
                 to='/profile/$profileID/saved'
                 params={{ profileID: currentUser.alias || currentUser._id }}>
-                <img src='/assets/icons/save.svg' alt='saved' className='h-5 w-5' />
+                <img src='/assets/icons/save.svg' alt='saved' className='size-5' />
                 Saved Posts
               </Link>
             </div>

@@ -52,9 +52,7 @@ const CommentInput = ({ currentUser, postID, replyTo }: ICommentInputProps) => {
                 <img
                   src={getImageURL(currentUser.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
                   alt='current_user'
-                  width={48}
-                  height={48}
-                  className='rounded-full object-cover'
+                  className='rounded-full object-cover size-12'
                 />
               </FormLabel>
               <FormControl className='border-none bg-transparent'>

@@ -39,7 +39,7 @@ const routeTree = rootRoute.addChildren([
 
 export const router = new Router({
   routeTree,
-  defaultPendingComponent: () => <Loader className='h-screen' />,
+  defaultPendingComponent: () => <Loader className='h-dvh' />,
   context: { queryClient, userID: undefined!, userAlias: undefined!, verified: undefined! }
 });
 

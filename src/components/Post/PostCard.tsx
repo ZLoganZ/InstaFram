@@ -21,7 +21,7 @@ const PostCard = ({ post }: IPostCard) => {
           <HoverUser userID={post.creator._id} showFollowButton>
             <Link to='/profile/$profileID' params={{ profileID: post.creator.alias || post.creator._id }}>
               <img
-                className='w-12 lg:h-12 rounded-full hover:ring-2 ring-primary'
+                className='size-12 rounded-full hover:ring-2 ring-primary'
                 src={getImageURL(post.creator.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
                 alt='avatar'
               />
@@ -48,7 +48,7 @@ const PostCard = ({ post }: IPostCard) => {
         </div>
       </div>
       <>
-        <div className='small-medium lg:base-medium py-5'>
+        <div className='small-medium lg:base-medium py-5 text-pretty'>
           <p>{post.content}</p>
           <ul className='flex flex-wrap gap-1.5 mt-2'>
             {post.tags.map((tag) => (

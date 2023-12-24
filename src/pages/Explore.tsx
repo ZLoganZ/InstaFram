@@ -75,7 +75,7 @@ const Explore = () => {
         <h2 className='h3-bold md:h2-bold w-full'>Search Posts</h2>
         <div className='flex-center gap-1 px-4 w-full rounded-lg bg-light-4 dark:bg-dark-4'>
           <Label htmlFor='search'>
-            <img src='/assets/icons/search.svg' alt='search' className='w-6 h-6' />
+            <img src='/assets/icons/search.svg' alt='search' className='size-6' />
           </Label>
           <Input
             id='search'
@@ -94,7 +94,7 @@ const Explore = () => {
           <DropdownMenuTrigger asChild>
             <div className='flex-center gap-3 bg-light-3 dark:bg-dark-3 rounded-xl px-4 py-2 cursor-pointer'>
               <p className='small-medium md:base-medium text-dark-2 dark:text-light-2'>{filter}</p>
-              <img src='/assets/icons/filter.svg' alt='filter' className='w-5 h-5' />
+              <img src='/assets/icons/filter.svg' alt='filter' className='size-5' />
             </div>
           </DropdownMenuTrigger>
 

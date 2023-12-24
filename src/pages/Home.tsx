@@ -83,8 +83,8 @@ const Home = () => {
 
       <Button
         onClick={() => navigate({ to: '/posts/create' })}
-        className='hidden md:flex fixed h-12 w-12 p-3 rounded-full right-16 bottom-16 2xl:right-[32rem] xl:right-72'>
-        <img src='/assets/icons/add-post.svg' alt='create post' className='w-9 h-9 invert-white' />
+        className='hidden md:flex fixed size-12 p-3 rounded-full right-16 bottom-16 2xl:right-[32rem] xl:right-72'>
+        <img src='/assets/icons/add-post.svg' alt='create post' className='size-9 invert-white' />
       </Button>
     </div>
   );

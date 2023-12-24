@@ -32,7 +32,7 @@ const GridPostsList = ({ posts, showStats = false, showUser = false }: IGridPost
                   <img
                     src={getImageURL(post.creator.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
                     alt='avatar'
-                    className='w-8 h-8 rounded-full'
+                    className='size-8 rounded-full'
                   />
                   <p className='line-clamp-1 text-white hover:underline'>{post.creator.name}</p>
                 </Link>

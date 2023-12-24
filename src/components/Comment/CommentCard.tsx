@@ -16,7 +16,7 @@ const CommentCard = ({ comment, setReplyTo }: ICommentProps) => {
         <div className='flex w-full flex-1 flex-row gap-4'>
           <div className='flex flex-col items-center'>
             <Link
-              className='h-11 w-11'
+              className='size-11'
               to='/profile/$profileID'
               params={{ profileID: comment.user.alias || comment.user._id }}>
               <img
@@ -47,7 +47,7 @@ const CommentCard = ({ comment, setReplyTo }: ICommentProps) => {
               <p className='mt-2 small-regular text-dark-2 dark:text-light-2'>{comment.content}</p>
               <div className='flex-center flex-col gap-0.5 '>
                 <img
-                  className='cursor-pointer object-contain h-4 w-4 md:h-5 md:w-5 hover:scale-110'
+                  className='cursor-pointer object-contain size-4 md:size-5 hover:scale-110'
                   src='/assets/icons/like.svg'
                   alt='like'
                 />
@@ -58,13 +58,13 @@ const CommentCard = ({ comment, setReplyTo }: ICommentProps) => {
             <div className='mb-2 flex flex-col gap-2'>
               <div className='flex-center w-fit gap-2'>
                 <img
-                  className='cursor-pointer object-contain h-4 w-4 md:h-5 md:w-5'
+                  className='cursor-pointer object-contain size-4 md:size-5'
                   src='/assets/icons/reply.svg'
                   alt='reply'
                   onClick={() => setReplyTo({ to: comment._id, user: comment.user })}
                 />
                 <img
-                  className='cursor-pointer object-contain h-4 w-4 md:h-5 md:w-5'
+                  className='cursor-pointer object-contain size-4 md:size-5'
                   src='/assets/icons/send.svg'
                   alt='send'
                 />
@@ -75,7 +75,7 @@ const CommentCard = ({ comment, setReplyTo }: ICommentProps) => {
                   <p className='subtle-medium group-hover:underline line-clamp-1'>
                     {comment.replies.length} repl{comment.replies.length > 1 ? 'ies' : 'y'}
                   </p>
-                  <img src='/assets/icons/reply.svg' alt='reply' className='object-contain h-4 w-4' />
+                  <img src='/assets/icons/reply.svg' alt='reply' className='object-contain size-4' />
                 </div>
               )}
             </div>

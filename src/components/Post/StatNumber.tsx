@@ -52,7 +52,7 @@ const StatNumber = ({ dataList, textWhite, dataCount, type }: IStatNumber) => {
                       <img
                         src={getImageURL(like.image, 'miniAvatar') || '/assets/icons/profile-placeholder.svg'}
                         alt='avatar'
-                        className='w-8 h-8 rounded-full'
+                        className='size-8 rounded-full'
                       />
                       <p className='small-regular group-hover:underline line-clamp-1'>{like.name}</p>
                     </Link>
@@ -71,7 +71,7 @@ const StatNumber = ({ dataList, textWhite, dataCount, type }: IStatNumber) => {
       <DialogContent className='max-w-md'>
         <DialogHeader className='flex justify-start w-full'>
           <DialogTitle className='flex-start gap-3'>
-            <img src={`/assets/icons/${type}.svg`} alt={type} className='w-9 h-9' />
+            <img src={`/assets/icons/${type}.svg`} alt={type} className='size-9' />
             <p className='h3-bold md:h2-bold text-left w-full'>{capitalizeFirstLetter(type)}s</p>
           </DialogTitle>
           <DialogDescription>
@@ -88,22 +88,22 @@ const StatNumber = ({ dataList, textWhite, dataCount, type }: IStatNumber) => {
               <li key={data._id}>
                 <div className='flex items-center gap-4'>
                   {/* <HoverUser userID={data._id} showFollowButton> */}
-                    <Link to='/profile/$profileID' params={{ profileID: data.alias || data._id }}>
-                      <img
-                        src={getImageURL(data.image, 'miniAvatar') || '/assets/icons/profile-placeholder.svg'}
-                        alt='avatar'
-                        className='w-12 h-12 rounded-full'
-                      />
-                    </Link>
+                  <Link to='/profile/$profileID' params={{ profileID: data.alias || data._id }}>
+                    <img
+                      src={getImageURL(data.image, 'miniAvatar') || '/assets/icons/profile-placeholder.svg'}
+                      alt='avatar'
+                      className='size-12 rounded-full'
+                    />
+                  </Link>
                   {/* </HoverUser> */}
                   {/* <HoverUser userID={data._id} showFollowButton> */}
-                    <Link
-                      to='/profile/$profileID'
-                      params={{ profileID: data.alias || data._id }}
-                      className='flex flex-col'>
-                      <p className='base-regular hover:underline line-clamp-1'>{data.name}</p>
-                      <p className='small-regular text-[#7878A3]'>@{data.alias}</p>
-                    </Link>
+                  <Link
+                    to='/profile/$profileID'
+                    params={{ profileID: data.alias || data._id }}
+                    className='flex flex-col'>
+                    <p className='base-regular hover:underline line-clamp-1'>{data.name}</p>
+                    <p className='small-regular text-[#7878A3]'>@{data.alias}</p>
+                  </Link>
                   {/* </HoverUser> */}
                 </div>
               </li>
