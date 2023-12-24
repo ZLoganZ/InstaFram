@@ -294,9 +294,9 @@ export const useLikeComment = () => {
     mutationFn: (commentID: string) => {
       return commentService.likeComment(commentID);
     },
-    onSuccess: (_, commentID) => {
+    onSuccess: () => {
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID] });
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.REPLIES_BY_COMMENT_ID, commentID] });
+      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.REPLIES_BY_COMMENT_ID] });
     }
   });
   return {
