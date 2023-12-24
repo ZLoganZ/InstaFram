@@ -27,7 +27,7 @@ const GridPostsList = ({ posts, showStats = false, showUser = false }: IGridPost
               <HoverUser userID={post.creator._id} showFollowButton>
                 <Link
                   className='flex items-center justify-start gap-2 flex-1'
-                  to='/profile/$profileID'
+                  to='/$profileID'
                   params={{ profileID: post.creator.alias || post.creator._id }}>
                   <img
                     src={getImageURL(post.creator.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}

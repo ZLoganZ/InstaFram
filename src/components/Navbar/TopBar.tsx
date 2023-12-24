@@ -63,7 +63,7 @@ const TopBar = () => {
                   className='justify-start gap-4 py-6 w-full'
                   onClick={() =>
                     navigate({
-                      to: '/profile/$profileID',
+                      to: '/$profileID',
                       params: { profileID: currentUser.alias || currentUser._id }
                     })
                   }>

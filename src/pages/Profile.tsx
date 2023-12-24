@@ -13,7 +13,7 @@ import { useFollowUser } from '@/lib/hooks/mutation';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { cn, getImageURL } from '@/lib/utils';
 
-const routeApi = new RouteApi({ id: '/main/profile/$profileID' });
+const routeApi = new RouteApi({ id: '/main/$profileID' });
 
 const Profile = () => {
   const { profileID } = routeApi.useParams();
@@ -125,9 +125,9 @@ const Profile = () => {
               <Link
                 className={cn(
                   'flex-center gap-3 py-4 w-full xl:w-48 bg-light-2 dark:bg-dark-2 flex-1 xl:flex-initial rounded-l-lg',
-                  pathname === `/profile/${profileID}` && '!bg-light-4 dark:!bg-dark-4'
+                  pathname === `/${profileID}` && '!bg-light-4 dark:!bg-dark-4'
                 )}
-                to='/profile/$profileID'
+                to='/$profileID'
                 params={{ profileID: currentUser.alias || currentUser._id }}>
                 <img src='/assets/icons/posts.svg' alt='posts' className='size-5' />
                 Posts
@@ -135,9 +135,9 @@ const Profile = () => {
               <Link
                 className={cn(
                   'flex-center gap-3 py-4 w-full xl:w-48 bg-light-2 dark:bg-dark-2 flex-1 xl:flex-initial',
-                  pathname === `/profile/${profileID}/liked` && '!bg-light-4 dark:!bg-dark-4'
+                  pathname === `/${profileID}/liked` && '!bg-light-4 dark:!bg-dark-4'
                 )}
-                to='/profile/$profileID/liked'
+                to='/$profileID/liked'
                 params={{ profileID: currentUser.alias || currentUser._id }}>
                 <img src='/assets/icons/like.svg' alt='liked' className='size-5' />
                 Liked Posts
@@ -145,9 +145,9 @@ const Profile = () => {
               <Link
                 className={cn(
                   'flex-center gap-3 py-4 w-full xl:w-48 bg-light-2 dark:bg-dark-2 flex-1 xl:flex-initial rounded-r-lg',
-                  pathname === `/profile/${profileID}/saved` && '!bg-light-4 dark:!bg-dark-4'
+                  pathname === `/${profileID}/saved` && '!bg-light-4 dark:!bg-dark-4'
                 )}
-                to='/profile/$profileID/saved'
+                to='/$profileID/saved'
                 params={{ profileID: currentUser.alias || currentUser._id }}>
                 <img src='/assets/icons/save.svg' alt='saved' className='size-5' />
                 Saved Posts

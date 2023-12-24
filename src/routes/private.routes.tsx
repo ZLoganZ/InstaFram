@@ -97,7 +97,7 @@ export const PostDetailsRoute = new Route({
 });
 
 export const ProfileRoute = new Route({
-  path: '/profile/$profileID',
+  path: '/$profileID',
   getParentRoute: () => MainRoute,
   parseParams: (params) => ({ profileID: z.string().parse(params.profileID) }),
   component: lazyRouteComponent(() => import('@/pages/Profile')),
@@ -124,7 +124,7 @@ export const LikedPostsRoute = new Route({
   beforeLoad: async ({ context: { userAlias, userID }, params: { profileID } }) => {
     if (profileID !== userID && profileID !== userAlias) {
       redirect({
-        to: '/profile/$profileID',
+        to: '/$profileID',
         params: { profileID },
         replace: true,
         throw: true
@@ -144,7 +144,7 @@ export const SavedPostsRoute = new Route({
   beforeLoad: async ({ context: { userAlias, userID }, params: { profileID } }) => {
     if (profileID !== userID && profileID !== userAlias) {
       redirect({
-        to: '/profile/$profileID',
+        to: '/$profileID',
         params: { profileID },
         replace: true,
         throw: true

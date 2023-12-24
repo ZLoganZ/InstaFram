@@ -28,7 +28,7 @@ const UserCard = ({ user }: IUserCard) => {
     <div className='flex-center flex-col gap-4 border bg-light-2 dark:bg-dark-2 border-light-4 dark:border-dark-4 rounded-[20px] px-5 py-8'>
       <Link
         className='flex-center flex-col gap-4'
-        to='/profile/$profileID'
+        to='/$profileID'
         params={{ profileID: user.alias || user._id }}>
         <HoverUser userID={user._id}>
           <img

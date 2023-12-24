@@ -57,6 +57,7 @@ export type IComment = {
   content: string;
   likes: IUser[];
   replies: IComment[];
+  isChild: boolean;
   createdAt: string;
   updatedAt: string;
 };

@@ -45,10 +45,7 @@ const HoverUser = ({ userID, children, showFollowButton = false }: IHoverUser) =
         ) : (
           <div className='flex flex-col gap-2'>
             <div className='flex items-center gap-4'>
-              <Link
-                className='flex gap-2'
-                to='/profile/$profileID'
-                params={{ profileID: user.alias || user._id }}>
+              <Link className='flex gap-2' to='/$profileID' params={{ profileID: user.alias || user._id }}>
                 <img
                   src={getImageURL(user.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
                   alt='profile'

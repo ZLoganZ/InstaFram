@@ -19,7 +19,7 @@ const PostCard = ({ post }: IPostCard) => {
       <div className='flex-between'>
         <div className='flex items-center gap-3'>
           <HoverUser userID={post.creator._id} showFollowButton>
-            <Link to='/profile/$profileID' params={{ profileID: post.creator.alias || post.creator._id }}>
+            <Link to='/$profileID' params={{ profileID: post.creator.alias || post.creator._id }}>
               <img
                 className='size-12 rounded-full hover:ring-2 ring-primary'
                 src={getImageURL(post.creator.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
@@ -29,12 +29,12 @@ const PostCard = ({ post }: IPostCard) => {
           </HoverUser>
           <div className='flex flex-col'>
             <HoverUser userID={post.creator._id} showFollowButton>
-              <Link to='/profile/$profileID' params={{ profileID: post.creator.alias || post.creator._id }}>
+              <Link to='/$profileID' params={{ profileID: post.creator.alias || post.creator._id }}>
                 <p className='base-medium lg:body-bold hover:underline line-clamp-1'>{post.creator.name}</p>
               </Link>
             </HoverUser>
             <Link
-              to='/profile/$profileID'
+              to='/$profileID'
               params={{ profileID: post.creator.alias || post.creator._id }}
               className='flex-center gap-1 text-[#7878A3]'>
               <PostVisibility visibility={post.visibility} />-

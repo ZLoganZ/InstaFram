@@ -46,7 +46,7 @@ const StatNumber = ({ dataList, textWhite, dataCount, type }: IStatNumber) => {
                 dataList.slice(0, 10).map((like) => (
                   <li key={like._id}>
                     <Link
-                      to='/profile/$profileID'
+                      to='/$profileID'
                       params={{ profileID: like.alias || like._id }}
                       className='flex items-center gap-2.5 group'>
                       <img
@@ -88,7 +88,7 @@ const StatNumber = ({ dataList, textWhite, dataCount, type }: IStatNumber) => {
               <li key={data._id}>
                 <div className='flex items-center gap-4'>
                   {/* <HoverUser userID={data._id} showFollowButton> */}
-                  <Link to='/profile/$profileID' params={{ profileID: data.alias || data._id }}>
+                  <Link to='/$profileID' params={{ profileID: data.alias || data._id }}>
                     <img
                       src={getImageURL(data.image, 'miniAvatar') || '/assets/icons/profile-placeholder.svg'}
                       alt='avatar'
@@ -98,7 +98,7 @@ const StatNumber = ({ dataList, textWhite, dataCount, type }: IStatNumber) => {
                   {/* </HoverUser> */}
                   {/* <HoverUser userID={data._id} showFollowButton> */}
                   <Link
-                    to='/profile/$profileID'
+                    to='/$profileID'
                     params={{ profileID: data.alias || data._id }}
                     className='flex flex-col'>
                     <p className='base-regular hover:underline line-clamp-1'>{data.name}</p>

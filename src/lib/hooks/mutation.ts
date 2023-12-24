@@ -275,19 +275,25 @@ export const useCommentPost = () => {
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID, newComment.user.alias] });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
-      queryCLient.setQueriesData<InfiniteData<IComment[], number>>(
-        { queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID, post] },
-        (oldData) => {
-          if (!oldData) return;
-          const { pages, pageParams } = oldData;
-          const firstPage = pages[0];
+      if (!newComment.isChild) {
+        queryCLient.setQueriesData<InfiniteData<IComment[], number>>(
+          { queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID, post] },
+          (oldData) => {
+            if (!oldData) return;
+            const { pages, pageParams } = oldData;
+            const firstPage = pages[0];
 
-          return {
-            pageParams,
-            pages: [[newComment, ...firstPage], ...pages.slice(1)]
-          };
-        }
-      );
+            return {
+              pageParams,
+              pages: [[newComment, ...firstPage], ...pages.slice(1)]
+            };
+          }
+        );
+      } else {
+        queryCLient.invalidateQueries({
+          queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID, post]
+        });
+      }
     }
   });
   return {

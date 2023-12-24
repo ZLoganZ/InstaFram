@@ -9,10 +9,11 @@ import { IReplyTo } from '@/types';
 interface ICommentsListProps {
   postID: string;
   commentsCount: number;
+  replyTo: IReplyTo | undefined;
   setReplyTo: React.Dispatch<React.SetStateAction<IReplyTo | undefined>>;
 }
 
-const CommentsList = ({ postID, commentsCount, setReplyTo }: ICommentsListProps) => {
+const CommentsList = ({ postID, commentsCount, replyTo, setReplyTo }: ICommentsListProps) => {
   const { comments, isLoadingComments, isFetchingNextComments, fetchNextComments } =
     useGetCommentsByPostID(postID);
 
@@ -32,7 +33,7 @@ const CommentsList = ({ postID, commentsCount, setReplyTo }: ICommentsListProps)
         <ul className='flex flex-col gap-5 bg-light-2 dark:bg-dark-2 rounded-2xl p-5'>
           {comments.map((comment) => (
             <li key={comment._id}>
-              <CommentCard comment={comment} setReplyTo={setReplyTo} />
+              <CommentCard comment={comment} replyTo={replyTo} setReplyTo={setReplyTo} />
             </li>
           ))}
           {commentsCount > totalDisplayedComments && (

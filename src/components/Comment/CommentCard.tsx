@@ -1,15 +1,16 @@
 import { Link } from '@tanstack/react-router';
 
-import { getDateTimeToNow, getImageURL } from '@/lib/utils';
+import { cn, getDateTimeToNow, getImageURL } from '@/lib/utils';
 import { IComment, IReplyTo } from '@/types';
 
 interface ICommentProps {
   comment: IComment;
+  replyTo: IReplyTo | undefined;
   setReplyTo: React.Dispatch<React.SetStateAction<IReplyTo | undefined>>;
   parentID?: string;
 }
 
-const CommentCard = ({ comment, setReplyTo }: ICommentProps) => {
+const CommentCard = ({ comment, replyTo, setReplyTo }: ICommentProps) => {
   return (
     <article className='flex w-full flex-col'>
       <div className='flex items-start justify-between'>
@@ -17,7 +18,7 @@ const CommentCard = ({ comment, setReplyTo }: ICommentProps) => {
           <div className='flex flex-col items-center'>
             <Link
               className='size-11'
-              to='/profile/$profileID'
+              to='/$profileID'
               params={{ profileID: comment.user.alias || comment.user._id }}>
               <img
                 className='cursor-pointer rounded-full'
@@ -33,7 +34,7 @@ const CommentCard = ({ comment, setReplyTo }: ICommentProps) => {
             <div className='flex gap-2 items-baseline'>
               <Link
                 className='w-fit hover:underline line-clamp-1'
-                to='/profile/$profileID'
+                to='/$profileID'
                 params={{ profileID: comment.user.alias || comment.user._id }}>
                 <h4 className='cursor-pointer base-semibold text-dark-1 dark:text-light-1'>
                   {comment.user.name}
@@ -58,13 +59,16 @@ const CommentCard = ({ comment, setReplyTo }: ICommentProps) => {
             <div className='mb-2 flex flex-col gap-2'>
               <div className='flex-center w-fit gap-2'>
                 <img
-                  className='cursor-pointer object-contain size-4 md:size-5'
+                  className={cn(
+                    'cursor-pointer object-contain size-4 transition duration-300 transform md:size-5 hover:scale-110',
+                    replyTo && replyTo.to === comment._id && 'drop-shadow-2xl'
+                  )}
                   src='/assets/icons/reply.svg'
                   alt='reply'
                   onClick={() => setReplyTo({ to: comment._id, user: comment.user })}
                 />
                 <img
-                  className='cursor-pointer object-contain size-4 md:size-5'
+                  className='cursor-pointer object-contain size-4 md:size-5 hover:scale-110'
                   src='/assets/icons/send.svg'
                   alt='send'
                 />

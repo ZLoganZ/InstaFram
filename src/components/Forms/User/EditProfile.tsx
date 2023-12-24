@@ -61,7 +61,7 @@ const EditProfile = ({ setOpen }: IUpdateProfile) => {
             description: 'Profile updated successfully!'
           });
           navigate({
-            to: '/profile/$profileID',
+            to: '/$profileID',
             params: {
               profileID: data.alias || data._id
             },

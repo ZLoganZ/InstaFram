@@ -83,9 +83,7 @@ const PostDetails = () => {
               <div className='flex-between w-full'>
                 <div className='flex items-center gap-3'>
                   <HoverUser userID={post.creator._id} showFollowButton>
-                    <Link
-                      to='/profile/$profileID'
-                      params={{ profileID: post.creator.alias || post.creator._id }}>
+                    <Link to='/$profileID' params={{ profileID: post.creator.alias || post.creator._id }}>
                       <img
                         className='size-8 lg:size-12 rounded-full hover:ring-2 ring-primary'
                         src={
@@ -97,16 +95,14 @@ const PostDetails = () => {
                   </HoverUser>
                   <div className='flex flex-col'>
                     <HoverUser userID={post.creator._id} showFollowButton>
-                      <Link
-                        to='/profile/$profileID'
-                        params={{ profileID: post.creator.alias || post.creator._id }}>
+                      <Link to='/$profileID' params={{ profileID: post.creator.alias || post.creator._id }}>
                         <p className='base-medium lg:body-bold hover:underline line-clamp-1'>
                           {post.creator.name}
                         </p>
                       </Link>
                     </HoverUser>
                     <Link
-                      to='/profile/$profileID'
+                      to='/$profileID'
                       params={{ profileID: post.creator.alias || post.creator._id }}
                       className='flex-center gap-1 text-[#7878A3]'>
                       <PostVisibility visibility={post.visibility} />-
@@ -158,9 +154,14 @@ const PostDetails = () => {
             </div>
           </div>
 
-          <CommentsList commentsCount={post.comments.length} postID={postID} setReplyTo={setReplyTo} />
+          <CommentsList
+            commentsCount={post.comments.length}
+            postID={postID}
+            replyTo={replyTo}
+            setReplyTo={setReplyTo}
+          />
 
-          <CommentInput currentUser={currentUser} postID={postID} replyTo={replyTo} />
+          <CommentInput currentUser={currentUser} postID={postID} replyTo={replyTo} setReplyTo={setReplyTo} />
 
           <div className='w-full max-w-5xl'>
             <h3 className='body-bold md:h3-bold w-full my-10'>More Related Posts</h3>

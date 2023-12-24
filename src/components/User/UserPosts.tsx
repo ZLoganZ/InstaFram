@@ -6,7 +6,7 @@ import Loader from '@/components/Shared/Loader';
 import GridPostsList from '@/components/Post/GridPostsList';
 import { useGetPostsByUserID } from '@/lib/hooks/query';
 
-const routeApi = new RouteApi({ id: '/main/profile/$profileID/' });
+const routeApi = new RouteApi({ id: '/main/$profileID/' });
 
 const UserPosts = () => {
   const [postsRef, inPostsView] = useInView({ threshold: 0 });
