@@ -1,20 +1,20 @@
 import { IUser } from '@/types';
 
-type routeURL = '/' | '/explore' | '/people' | '/posts/create';
-type navbarLinkLabel = 'Home' | 'Explore' | 'People' | 'Create Post';
-type navbarLinkImgURL =
+type RouteURL = '/' | '/explore' | '/people' | '/posts/create';
+type NavbarLinkLabel = 'Home' | 'Explore' | 'People' | 'Create Post';
+type NavbarLinkImgURL =
   | '/assets/icons/home.svg'
   | '/assets/icons/wallpaper.svg'
   | '/assets/icons/people.svg'
   | '/assets/icons/gallery-add.svg';
 
-type navbarLink = {
-  imgURL: navbarLinkImgURL;
-  route: routeURL;
-  label: navbarLinkLabel;
+type NavbarLink = {
+  imgURL: NavbarLinkImgURL;
+  route: RouteURL;
+  label: NavbarLinkLabel;
 };
 
-export const navbarLinks: navbarLink[] = [
+export const navbarLinks: NavbarLink[] = [
   {
     imgURL: '/assets/icons/home.svg',
     route: '/',

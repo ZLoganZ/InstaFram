@@ -60,8 +60,8 @@ const CommentInput = ({ currentUser, postID, replyTo, setReplyTo }: ICommentInpu
               <div className='flex flex-col w-full'>
                 {replyTo && (
                   <div className='flex items-center gap-1'>
-                    <p className='subtle-semibold'>Replying to</p>
-                    <p className='subtle-semibold text-primary'>{replyTo.user.name}</p>
+                    <p className='small-semibold'>Replying to</p>
+                    <p className='small-semibold text-primary'>{replyTo.user.name}</p>
                     <XCircle className='cursor-pointer size-4' onClick={() => setReplyTo(undefined)} />
                   </div>
                 )}

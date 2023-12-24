@@ -18,7 +18,7 @@ class CommentService extends BaseService {
     return this.post(`/comments`, payload);
   };
   likeComment = (commentID: string): Promise<AxiosResponse<IResponse<boolean>>> => {
-    return this.post(`/comments/${commentID}/like`);
+    return this.put(`/comments/${commentID}/like`);
   };
   updateComment = (commentID: string, payload: INewComment): Promise<AxiosResponse<IResponse<IComment>>> => {
     return this.put(`/comments/${commentID}`, payload);
