@@ -1,13 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { useQueryClient } from '@tanstack/react-query';
 
 import Loader from '@/components/Shared/Loader';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { useLikeComment } from '@/lib/hooks/mutation';
 import { useGetRepliesByCommentID } from '@/lib/hooks/query';
 import { cn, getDateTimeToNow, getImageURL } from '@/lib/utils';
-import { QUERY_KEYS } from '@/lib/constants';
 import { IComment, IReplyTo } from '@/types';
 
 interface ICommentProps {
@@ -18,7 +16,6 @@ interface ICommentProps {
 }
 
 const CommentCard = ({ comment, replyTo, setReplyTo }: ICommentProps) => {
-  const queryClient = useQueryClient();
   const { currentUser } = useAuth();
   const [likes, setLikes] = useState(comment.likes.map((like) => like._id));
 
@@ -43,12 +40,6 @@ const CommentCard = ({ comment, replyTo, setReplyTo }: ICommentProps) => {
 
     await likeComment(comment._id);
   };
-
-  useEffect(() => {
-    return () => {
-      queryClient.resetQueries({ queryKey: [QUERY_KEYS.REPLIES_BY_COMMENT_ID, comment._id] });
-    };
-  }, []);
 
   return (
     <article className='flex w-full flex-col'>
