@@ -78,6 +78,7 @@ export const PeopleRoute = new Route({
   path: '/people',
   getParentRoute: () => MainRoute,
   component: lazyRouteComponent(() => import('@/pages/People')),
+  validateSearch: (search) => searchQuerySchema.parse(search),
   loader: ({ context: { queryClient } }) => {
     queryClient.prefetchInfiniteQuery(getTopCreatorsQueryOptions());
   },

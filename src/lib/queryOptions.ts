@@ -163,6 +163,26 @@ export const getSearchPostsQueryOptions = (search: string, filter: string) =>
     enabled: !!search
   });
 
+export const getSearchUsersQueryOptions = (search: string) =>
+  infiniteQueryOptions({
+    queryKey: [QUERY_KEYS.SEARCH_USERS, search],
+    queryFn: async ({ pageParam }) => {
+      const { data } = await userService.searchUsers(search, pageParam);
+      return data.metadata;
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, _, lastPageParam) => {
+      if (lastPage.length < 10) {
+        return null;
+      }
+      return lastPageParam + 1;
+    },
+    select: (data) => {
+      return data.pages.flatMap((page) => page);
+    },
+    enabled: !!search
+  });
+
 export const getPostQueryOptions = (postID: string) =>
   queryOptions({
     queryKey: [QUERY_KEYS.POST, postID],

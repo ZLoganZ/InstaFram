@@ -346,3 +346,35 @@ export const useGetTopCreators = () => {
     errorTopCreators: error
   };
 };
+
+export const useSearchUsers = (search: string) => {
+  const { data, isLoading, isError, error, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: [QUERY_KEYS.SEARCH_USERS, search],
+      queryFn: async ({ pageParam }) => {
+        const { data } = await userService.searchUsers(search, pageParam);
+        return data.metadata;
+      },
+      initialPageParam: 0,
+      getNextPageParam: (lastPage, _, lastPageParam) => {
+        if (lastPage.length < 12) {
+          return null;
+        }
+        return lastPageParam + 1;
+      },
+      select: (data) => {
+        return data.pages.flatMap((page) => page);
+      },
+      enabled: !!search
+    });
+
+  return {
+    searchUsers: data!,
+    isLoadingSearchUsers: isLoading,
+    isFetchingNextSearchUsers: isFetchingNextPage,
+    hasNextSearchUsers: hasNextPage,
+    fetchNextSearchUsers: fetchNextPage,
+    isSearchUsersError: isError,
+    errorSearchUsers: error
+  };
+};

@@ -42,6 +42,7 @@ export enum QUERY_KEYS {
   POST = 'post',
   USER = 'user',
   SEARCH_POSTS = 'search-posts',
+  SEARCH_USERS = 'search-users',
   POSTS_BY_USER_ID = 'posts-by-user-id',
   SAVED_POSTS_BY_USER_ID = 'saved-posts-by-user-id',
   POPULAR_USERS = 'popular-users',

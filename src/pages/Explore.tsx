@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Label } from '@/components/ui/label';
-import SearchResults from '@/components/Post/SearchResults';
+import SearchPostsResults from '@/components/Post/SearchPostsResults';
 import Loader from '@/components/Shared/Loader';
 import GridPostsList from '@/components/Post/GridPostsList';
 import { useGetTopPosts, useSearchPosts } from '@/lib/hooks/query';
@@ -22,7 +22,7 @@ import { FILTERS } from '@/lib/constants';
 const routeApi = new RouteApi({ id: '/main/explore' });
 
 const Explore = () => {
-  const [ref, inView] = useInView({ threshold: 0 });
+  const [postsRef, inPostsView] = useInView({ threshold: 0 });
   const [searchRef, inSearchView] = useInView({ threshold: 0 });
   const { filter, search } = routeApi.useSearch();
   const navigate = useNavigate();
@@ -58,10 +58,10 @@ const Explore = () => {
   }, [searchDebounce]);
 
   useEffect(() => {
-    if (inView && hasNextPosts && !showSearchResults && !isFetchingNextPosts) {
+    if (inPostsView && hasNextPosts && !showSearchResults && !isFetchingNextPosts) {
       fetchNextPosts();
     }
-  }, [inView]);
+  }, [inPostsView]);
 
   useEffect(() => {
     if (inSearchView && hasNextSearchPosts && showSearchResults && !isFetchingNextSearchPosts) {
@@ -70,7 +70,7 @@ const Explore = () => {
   }, [inSearchView]);
 
   return (
-    <div className='flex flex-col flex-1 items-center overflow-scroll py-10 px-5 md:p-14 custom-scrollbar'>
+    <div className='flex flex-col flex-1 items-center overflow-scroll gap-10 py-10 px-5 md:p-14 custom-scrollbar'>
       <div className='max-w-5xl flex flex-col items-center w-full gap-6 md:gap-9'>
         <h2 className='h3-bold md:h2-bold w-full'>Search Posts</h2>
         <div className='flex-center gap-1 px-4 w-full rounded-lg bg-light-4 dark:bg-dark-4'>
@@ -88,7 +88,7 @@ const Explore = () => {
         </div>
       </div>
 
-      <div className='flex-between w-full max-w-5xl mt-16 mb-7'>
+      <div className='flex-between w-full max-w-5xl'>
         <h3 className='body-bold md:h3-bold'>Popular</h3>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -115,8 +115,8 @@ const Explore = () => {
 
       <div className='flex flex-wrap gap-9 w-full max-w-5xl'>
         {showSearchResults ? (
-          <SearchResults isFetching={isLoadingSearchPosts} searchPosts={searchPosts} />
-        ) : isLoadingPosts ? (
+          <SearchPostsResults isFetching={isLoadingSearchPosts} searchPosts={searchPosts} />
+        ) : isLoadingPosts || !posts ? (
           <Loader />
         ) : (
           <GridPostsList posts={posts} showStats showUser />
@@ -125,13 +125,13 @@ const Explore = () => {
       </div>
 
       {hasNextPosts && !showSearchResults && (
-        <div ref={ref} className='mt-6'>
+        <div ref={postsRef}>
           <Loader />
         </div>
       )}
 
       {hasNextSearchPosts && showSearchResults && (
-        <div ref={searchRef} className='mt-6'>
+        <div ref={searchRef}>
           <Loader />
         </div>
       )}

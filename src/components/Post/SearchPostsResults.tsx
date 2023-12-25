@@ -7,7 +7,7 @@ interface ISearchResults {
   searchPosts: IPost[];
 }
 
-const SearchResults = ({ isFetching, searchPosts }: ISearchResults) => {
+const SearchPostsResults = ({ isFetching, searchPosts }: ISearchResults) => {
   return (
     <>
       {isFetching ? (
@@ -21,4 +21,4 @@ const SearchResults = ({ isFetching, searchPosts }: ISearchResults) => {
   );
 };
 
-export default SearchResults;
+export default SearchPostsResults;
