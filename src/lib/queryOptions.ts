@@ -19,6 +19,7 @@ export const getPostsQueryOptions = () =>
       }
       return lastPageParam + 1;
     },
+    maxPages: 3,
     select: (data) => {
       return data.pages.flatMap((page) => page);
     }

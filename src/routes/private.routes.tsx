@@ -50,6 +50,10 @@ export const HomeRoute = new Route({
     queryClient.prefetchInfiniteQuery(getPostsQueryOptions());
     queryClient.prefetchInfiniteQuery(getTopCreatorsQueryOptions());
   },
+  onLeave: ({ context: { queryClient } }) => {
+    queryClient.resetQueries({ queryKey: getPostsQueryOptions().queryKey });
+    queryClient.resetQueries({ queryKey: getTopCreatorsQueryOptions().queryKey });
+  },
   wrapInSuspense: true
 });
 
@@ -63,6 +67,10 @@ export const ExploreRoute = new Route({
     queryClient.prefetchInfiniteQuery(getTopPostsQueryOptions(filter));
     queryClient.prefetchInfiniteQuery(getSearchPostsQueryOptions(search || '', filter));
   },
+  onLeave: ({ context: { queryClient }, loaderDeps: { search, filter } }) => {
+    queryClient.resetQueries({ queryKey: getSearchPostsQueryOptions(search || '', filter).queryKey });
+    queryClient.resetQueries({ queryKey: getTopPostsQueryOptions(filter).queryKey });
+  },
   wrapInSuspense: true
 });
 
@@ -72,6 +80,9 @@ export const PeopleRoute = new Route({
   component: lazyRouteComponent(() => import('@/pages/People')),
   loader: ({ context: { queryClient } }) => {
     queryClient.prefetchInfiniteQuery(getTopCreatorsQueryOptions());
+  },
+  onLeave: ({ context: { queryClient } }) => {
+    queryClient.resetQueries({ queryKey: getTopCreatorsQueryOptions().queryKey });
   },
   wrapInSuspense: true
 });
@@ -93,6 +104,9 @@ export const PostDetailsRoute = new Route({
     queryClient.prefetchInfiniteQuery(getCommentsByPostIDQueryOptions(postID));
     queryClient.prefetchQuery(getRelatedPostsQueryOptions(postID));
   },
+  onLeave: ({ context: { queryClient }, params: { postID } }) => {
+    queryClient.resetQueries({ queryKey: getCommentsByPostIDQueryOptions(postID).queryKey });
+  },
   wrapInSuspense: true
 });
 
@@ -104,6 +118,9 @@ export const ProfileRoute = new Route({
   loader: ({ context: { queryClient }, params: { profileID } }) => {
     queryClient.prefetchQuery(getUserByIDQueryOptions(profileID));
   },
+  onLeave: ({ context: { queryClient }, params: { profileID } }) => {
+    queryClient.resetQueries({ queryKey: getUserByIDQueryOptions(profileID).queryKey });
+  },
   wrapInSuspense: true
 });
 
@@ -113,6 +130,9 @@ export const UserPostsRoute = new Route({
   component: lazyRouteComponent(() => import('@/components/User/UserPosts')),
   loader: ({ context: { queryClient }, params: { profileID } }) => {
     queryClient.prefetchInfiniteQuery(getPostsByUserIDQueryOptions(profileID));
+  },
+  onLeave: ({ context: { queryClient }, params: { profileID } }) => {
+    queryClient.resetQueries({ queryKey: getPostsByUserIDQueryOptions(profileID).queryKey });
   },
   wrapInSuspense: true
 });
@@ -134,6 +154,9 @@ export const LikedPostsRoute = new Route({
   loader: ({ context: { queryClient, userID } }) => {
     queryClient.prefetchInfiniteQuery(getLikedPostsByUserIDQueryOptions(userID));
   },
+  onLeave: ({ context: { queryClient, userID } }) => {
+    queryClient.resetQueries({ queryKey: getLikedPostsByUserIDQueryOptions(userID).queryKey });
+  },
   wrapInSuspense: true
 });
 
@@ -153,6 +176,9 @@ export const SavedPostsRoute = new Route({
   },
   loader: ({ context: { queryClient, userID } }) => {
     queryClient.prefetchInfiniteQuery(getSavedPostsByUserIDQueryOptions(userID));
+  },
+  onLeave: ({ context: { queryClient, userID } }) => {
+    queryClient.resetQueries({ queryKey: getSavedPostsByUserIDQueryOptions(userID).queryKey });
   },
   wrapInSuspense: true
 });
