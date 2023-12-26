@@ -99,10 +99,10 @@ const ResetPasswordForm = () => {
 
           <Button type='submit' disabled={isLoadingResetPassword}>
             {isLoadingResetPassword ? (
-              <>
+              <div className='flex-center gap-2'>
                 <Loader />
                 Resetting...
-              </>
+              </div>
             ) : (
               'Reset Password'
             )}

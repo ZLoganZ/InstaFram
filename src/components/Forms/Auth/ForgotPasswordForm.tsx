@@ -154,10 +154,10 @@ const ForgotPasswordForm = () => {
 
           <Button type='submit' disabled={isLoadingVerifyCode || isLoadingCheckEmailForgotPassword}>
             {isLoadingVerifyCode || isLoadingCheckEmailForgotPassword ? (
-              <>
+              <div className='flex-center gap-2'>
                 <Loader />
                 {showVerifyCode ? 'Submitting...' : 'Verifying email...'}
-              </>
+              </div>
             ) : showVerifyCode ? (
               'Submit'
             ) : (
