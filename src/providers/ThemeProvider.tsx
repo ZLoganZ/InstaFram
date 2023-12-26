@@ -5,7 +5,6 @@ type Theme = 'dark' | 'light' | 'system';
 type ThemeProviderProps = {
   children: React.ReactNode;
   disableTransitionOnChange?: boolean;
-  defaultTheme?: Theme;
   storageKey?: string;
 };
 
@@ -25,11 +24,11 @@ export const ThemeContext = createContext<ThemeContextType>(initialState);
 
 export const ThemeProvider = ({
   children,
-  defaultTheme = 'light',
   storageKey = 'ui-theme',
   disableTransitionOnChange = false
 }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState<Theme>((localStorage.getItem(storageKey) as Theme) || defaultTheme);
+  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const [theme, setTheme] = useState<Theme>((localStorage.getItem(storageKey) as Theme) || systemTheme);
   const isDark = theme === 'dark';
 
   useEffect(() => {

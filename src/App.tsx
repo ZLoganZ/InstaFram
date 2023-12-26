@@ -19,7 +19,7 @@ const App = () => {
   const { currentUser } = useAuth();
 
   return (
-    <ThemeProvider disableTransitionOnChange>
+    <ThemeProvider>
       <AuthProvider>
         <RouterProvider
           router={router}
