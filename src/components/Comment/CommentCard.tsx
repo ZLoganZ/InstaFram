@@ -53,7 +53,7 @@ const CommentCard = ({ comment, replyTo, setReplyTo }: ICommentProps) => {
                 to='/$profileID'
                 params={{ profileID: comment.user.alias || comment.user._id }}>
                 <img
-                  className='cursor-pointer rounded-full'
+                  className='cursor-pointer rounded-full hover:ring-2 ring-primary'
                   src={getImageURL(comment.user.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
                   alt='user_community_image'
                 />
