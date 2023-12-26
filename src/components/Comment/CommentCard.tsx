@@ -7,6 +7,7 @@ import { useLikeComment } from '@/lib/hooks/mutation';
 import { useGetRepliesByCommentID } from '@/lib/hooks/query';
 import { cn, getDateTimeToNow, getImageURL } from '@/lib/utils';
 import { IComment, IReplyTo } from '@/types';
+import HoverUser from '../Post/HoverUser';
 
 interface ICommentProps {
   comment: IComment;
@@ -46,30 +47,34 @@ const CommentCard = ({ comment, replyTo, setReplyTo }: ICommentProps) => {
       <div className='flex items-start justify-between'>
         <div className='flex w-full flex-1 flex-row gap-4'>
           <div className='flex flex-col items-center'>
-            <Link
-              className='size-11'
-              to='/$profileID'
-              params={{ profileID: comment.user.alias || comment.user._id }}>
-              <img
-                className='cursor-pointer rounded-full'
-                src={getImageURL(comment.user.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
-                alt='user_community_image'
-              />
-            </Link>
+            <HoverUser userID={comment.user._id} showFollowButton>
+              <Link
+                className='size-11'
+                to='/$profileID'
+                params={{ profileID: comment.user.alias || comment.user._id }}>
+                <img
+                  className='cursor-pointer rounded-full'
+                  src={getImageURL(comment.user.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
+                  alt='user_community_image'
+                />
+              </Link>
+            </HoverUser>
 
             {/* <div className='mt-2 w-0.5 grow rounded-full bg-dark-3/50 dark:bg-light-3/50' /> */}
           </div>
 
           <div className='flex w-full flex-col'>
             <div className='flex gap-2 items-baseline'>
-              <Link
-                className='w-fit hover:underline line-clamp-1'
-                to='/$profileID'
-                params={{ profileID: comment.user.alias || comment.user._id }}>
-                <h4 className='cursor-pointer base-semibold text-dark-1 dark:text-light-1'>
-                  {comment.user.name}
-                </h4>
-              </Link>
+              <HoverUser userID={comment.user._id} showFollowButton>
+                <Link
+                  className='w-fit hover:underline line-clamp-1'
+                  to='/$profileID'
+                  params={{ profileID: comment.user.alias || comment.user._id }}>
+                  <h4 className='cursor-pointer base-semibold text-dark-1 dark:text-light-1'>
+                    {comment.user.name}
+                  </h4>
+                </Link>
+              </HoverUser>
 
               <p className='subtle-medium'>{getDateTimeToNow(comment.createdAt)}</p>
             </div>
