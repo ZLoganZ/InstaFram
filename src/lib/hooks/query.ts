@@ -299,14 +299,14 @@ export const useGetRepliesByCommentID = (commentID: string) => {
   };
 };
 
-export const useGetUserByID = (userID: string) => {
+export const useGetUserByID = (userID: string, enabled = true) => {
   const { data, isLoading, isError, error, isFetching } = useQuery({
     queryKey: [QUERY_KEYS.USER, userID],
     queryFn: async () => {
       const { data } = await userService.getUserByID(userID);
       return data.metadata;
     },
-    enabled: !!userID
+    enabled: !!userID && enabled
   });
   return {
     user: data!,

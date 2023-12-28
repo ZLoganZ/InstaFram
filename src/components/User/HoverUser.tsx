@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router';
+import { useMemo, useState } from 'react';
 
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Button } from '@/components//ui/button';
@@ -7,7 +8,6 @@ import { useGetUserByID } from '@/lib/hooks/query';
 import { useFollowUser } from '@/lib/hooks/mutation';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { getImageURL } from '@/lib/utils';
-import { useMemo } from 'react';
 
 interface IHoverUser {
   userID: string;
@@ -16,8 +16,10 @@ interface IHoverUser {
 }
 
 const HoverUser = ({ userID, children, showFollowButton = false }: IHoverUser) => {
+  const [open, setOpen] = useState(false);
+
   const { currentUser, setUser } = useAuth();
-  const { user, isLoadingUser } = useGetUserByID(userID);
+  const { user, isLoadingUser } = useGetUserByID(userID, open);
 
   const { followUser, isLoadingFollowUser } = useFollowUser();
 
@@ -37,10 +39,10 @@ const HoverUser = ({ userID, children, showFollowButton = false }: IHoverUser) =
   };
 
   return (
-    <HoverCard openDelay={300} closeDelay={200}>
+    <HoverCard openDelay={300} closeDelay={200} onOpenChange={setOpen}>
       <HoverCardTrigger asChild>{children}</HoverCardTrigger>
       <HoverCardContent className='w-full max-w-5xl'>
-        {isLoadingUser ? (
+        {isLoadingUser || !user ? (
           <Loader className='w-12 h-12' />
         ) : (
           <div className='flex flex-col gap-2'>

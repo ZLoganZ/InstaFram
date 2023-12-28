@@ -20,7 +20,12 @@ const GridPostsList = ({ posts, showStats = false, showUser = false }: IGridPost
             className='flex rounded-[24px] border border-light-4 dark:border-dark-4 overflow-hidden cursor-pointer w-full h-full'
             to='/post/$postID'
             params={{ postID: post._id }}>
-            <img src={getImageURL(post.image, 'post')} alt='image' className='h-full w-full object-cover' />
+            <img
+              src={getImageURL(post.image, 'post')}
+              alt='image'
+              className='h-full w-full object-cover'
+              loading='lazy'
+            />
           </Link>
           <div className='absolute bottom-0 p-5 flex-between w-full bg-gradient-to-t from-dark-3 rounded-b-[24px] to-transparent gap-2'>
             {showUser && (
@@ -33,6 +38,7 @@ const GridPostsList = ({ posts, showStats = false, showUser = false }: IGridPost
                     src={getImageURL(post.creator.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
                     alt='avatar'
                     className='size-8 rounded-full'
+                    loading='lazy'
                   />
                   <p className='line-clamp-1 text-white hover:underline'>{post.creator.name}</p>
                 </Link>

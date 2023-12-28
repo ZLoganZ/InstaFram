@@ -24,6 +24,7 @@ const PostCard = ({ post }: IPostCard) => {
                 className='size-12 rounded-full hover:ring-2 ring-primary'
                 src={getImageURL(post.creator.image, 'avatar') || '/assets/icons/profile-placeholder.svg'}
                 alt='avatar'
+                loading='lazy'
               />
             </Link>
           </HoverUser>
@@ -72,6 +73,7 @@ const PostCard = ({ post }: IPostCard) => {
               src={getImageURL(post.image, 'post')}
               alt='post'
               className='h-64 xs:h-[400px] lg:h-[450px] w-full rounded-[24px] object-cover mb-5'
+              loading='lazy'
             />
           </Link>
         )}
