@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router';
 
 import PostStats from '@/components/Post/PostStats';
-import HoverUser from '@/components/Post/HoverUser';
+import HoverUser from '@/components/User/HoverUser';
 import { getImageURL } from '@/lib/utils';
 import { IPost } from '@/types';
 

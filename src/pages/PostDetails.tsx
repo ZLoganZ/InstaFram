@@ -11,7 +11,7 @@ import { FILTERS } from '@/lib/constants';
 import { getDateTimeToNow, getImageURL } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import Loader from '@/components/Shared/Loader';
-import HoverUser from '@/components/Post/HoverUser';
+import HoverUser from '@/components/User/HoverUser';
 import CommentsList from '@/components/Comment/CommentsList';
 import PostStats from '@/components/Post/PostStats';
 import GridPostsList from '@/components/Post/GridPostsList';

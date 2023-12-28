@@ -1,7 +1,7 @@
 import { Link, useNavigate } from '@tanstack/react-router';
 
 import PostStats from '@/components/Post/PostStats';
-import HoverUser from '@/components/Post/HoverUser';
+import HoverUser from '@/components/User/HoverUser';
 import PostVisibility from '@/components/Post/PostVisibility';
 import { FILTERS } from '@/lib/constants';
 import { getDateTimeToNow, getImageURL } from '@/lib/utils';

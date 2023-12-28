@@ -7,7 +7,7 @@ import { useLikeComment } from '@/lib/hooks/mutation';
 import { useGetRepliesByCommentID } from '@/lib/hooks/query';
 import { cn, getDateTimeToNow, getImageURL } from '@/lib/utils';
 import { IComment, IReplyTo } from '@/types';
-import HoverUser from '../Post/HoverUser';
+import HoverUser from '../User/HoverUser';
 
 interface ICommentProps {
   comment: IComment;

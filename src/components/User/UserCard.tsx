@@ -4,7 +4,7 @@ import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import Loader from '@/components/Shared/Loader';
-import HoverUser from '@/components/Post/HoverUser';
+import HoverUser from '@/components/User/HoverUser';
 import EditProfile from '@/components/Forms/User/EditProfile';
 import { getImageURL } from '@/lib/utils';
 import { useAuth } from '@/lib/hooks/useAuth';
