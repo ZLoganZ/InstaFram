@@ -1,9 +1,9 @@
-import { queryOptions, infiniteQueryOptions } from '@tanstack/react-query';
+import { queryOptions, infiniteQueryOptions } from "@tanstack/react-query";
 
-import { postService } from '@/services/PostService';
-import { userService } from '@/services/UserService';
-import { commentService } from '@/services/CommentService';
-import { QUERY_KEYS } from '@/lib/constants';
+import { postService } from "@/services/PostService";
+import { userService } from "@/services/UserService";
+import { commentService } from "@/services/CommentService";
+import { QUERY_KEYS } from "@/lib/constants";
 
 export const getPostsQueryOptions = () =>
   infiniteQueryOptions({
@@ -22,7 +22,7 @@ export const getPostsQueryOptions = () =>
     maxPages: 3,
     select: (data) => {
       return data.pages.flatMap((page) => page);
-    }
+    },
   });
 
 export const getTopPostsQueryOptions = (filter: string) =>
@@ -41,7 +41,7 @@ export const getTopPostsQueryOptions = (filter: string) =>
     },
     select: (data) => {
       return data.pages.flatMap((page) => page);
-    }
+    },
   });
 
 export const getTopCreatorsQueryOptions = () =>
@@ -60,7 +60,7 @@ export const getTopCreatorsQueryOptions = () =>
     },
     select: (data) => {
       return data.pages.flatMap((page) => page);
-    }
+    },
   });
 
 export const getPostsByUserIDQueryOptions = (userID: string) =>
@@ -80,14 +80,17 @@ export const getPostsByUserIDQueryOptions = (userID: string) =>
     },
     select: (data) => {
       return data.pages.flatMap((page) => page);
-    }
+    },
   });
 
 export const getSavedPostsByUserIDQueryOptions = (userID: string) =>
   infiniteQueryOptions({
     queryKey: [QUERY_KEYS.SAVED_POSTS_BY_USER_ID, userID],
     queryFn: async ({ pageParam }) => {
-      const { data } = await postService.getSavedPostsByUserID(userID, pageParam);
+      const { data } = await postService.getSavedPostsByUserID(
+        userID,
+        pageParam,
+      );
       return data.metadata;
     },
     enabled: !!userID,
@@ -100,14 +103,17 @@ export const getSavedPostsByUserIDQueryOptions = (userID: string) =>
     },
     select: (data) => {
       return data.pages.flatMap((page) => page);
-    }
+    },
   });
 
 export const getLikedPostsByUserIDQueryOptions = (userID: string) =>
   infiniteQueryOptions({
     queryKey: [QUERY_KEYS.LIKED_POSTS_BY_USER_ID, userID],
     queryFn: async ({ pageParam }) => {
-      const { data } = await postService.getLikedPostsByUserID(userID, pageParam);
+      const { data } = await postService.getLikedPostsByUserID(
+        userID,
+        pageParam,
+      );
       return data.metadata;
     },
     enabled: !!userID,
@@ -120,14 +126,17 @@ export const getLikedPostsByUserIDQueryOptions = (userID: string) =>
     },
     select: (data) => {
       return data.pages.flatMap((page) => page);
-    }
+    },
   });
 
 export const getCommentsByPostIDQueryOptions = (postID: string) =>
   infiniteQueryOptions({
     queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID, postID],
     queryFn: async ({ pageParam }) => {
-      const { data } = await commentService.getCommentsByPostID(postID, pageParam);
+      const { data } = await commentService.getCommentsByPostID(
+        postID,
+        pageParam,
+      );
       return data.metadata;
     },
     initialPageParam: 0,
@@ -140,7 +149,7 @@ export const getCommentsByPostIDQueryOptions = (postID: string) =>
     enabled: !!postID,
     select: (data) => {
       return data.pages.flatMap((page) => page);
-    }
+    },
   });
 
 export const getSearchPostsQueryOptions = (search: string, filter: string) =>
@@ -160,7 +169,7 @@ export const getSearchPostsQueryOptions = (search: string, filter: string) =>
     select: (data) => {
       return data.pages.flatMap((page) => page);
     },
-    enabled: !!search
+    enabled: !!search,
   });
 
 export const getSearchUsersQueryOptions = (search: string) =>
@@ -180,7 +189,7 @@ export const getSearchUsersQueryOptions = (search: string) =>
     select: (data) => {
       return data.pages.flatMap((page) => page);
     },
-    enabled: !!search
+    enabled: !!search,
   });
 
 export const getPostQueryOptions = (postID: string) =>
@@ -190,7 +199,7 @@ export const getPostQueryOptions = (postID: string) =>
       const { data } = await postService.getPost(postID);
       return data.metadata;
     },
-    enabled: !!postID
+    enabled: !!postID,
   });
 
 export const getRelatedPostsQueryOptions = (postID: string) =>
@@ -200,7 +209,7 @@ export const getRelatedPostsQueryOptions = (postID: string) =>
       const { data } = await postService.getRelatedPosts(postID);
       return data.metadata;
     },
-    enabled: !!postID
+    enabled: !!postID,
   });
 
 export const getUserByIDQueryOptions = (userID: string) =>
@@ -210,5 +219,5 @@ export const getUserByIDQueryOptions = (userID: string) =>
       const { data } = await userService.getUserByID(userID);
       return data.metadata;
     },
-    enabled: !!userID
+    enabled: !!userID,
   });

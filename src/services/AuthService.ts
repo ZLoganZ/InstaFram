@@ -1,7 +1,7 @@
-import { AxiosResponse } from 'axios';
+import { AxiosResponse } from "axios";
 
-import { IResponse, ILoginResponse, IUser, ILogin, IRegister } from '@/types';
-import BaseService from './BaseService';
+import { IResponse, ILoginResponse, IUser, ILogin, IRegister } from "@/types";
+import BaseService from "./BaseService";
 
 class AuthService extends BaseService {
   constructor() {
@@ -11,19 +11,31 @@ class AuthService extends BaseService {
   checkEmail = (email: string): Promise<AxiosResponse<IResponse<boolean>>> => {
     return this.post(`/auth/checkEmail`, { email });
   };
-  checkEmailForgotPassword = (email: string): Promise<AxiosResponse<IResponse<boolean>>> => {
+  checkEmailForgotPassword = (
+    email: string,
+  ): Promise<AxiosResponse<IResponse<boolean>>> => {
     return this.post(`/auth/checkEmailForgotPassword`, { email });
   };
-  verifyCode = (email: string, code: string): Promise<AxiosResponse<IResponse<boolean>>> => {
+  verifyCode = (
+    email: string,
+    code: string,
+  ): Promise<AxiosResponse<IResponse<boolean>>> => {
     return this.post(`/auth/verifyCode`, { email, code });
   };
-  resetPassword = (email: string, password: string): Promise<AxiosResponse<IResponse<boolean>>> => {
+  resetPassword = (
+    email: string,
+    password: string,
+  ): Promise<AxiosResponse<IResponse<boolean>>> => {
     return this.post(`/auth/resetPassword`, { email, password });
   };
-  login = (payload: ILogin): Promise<AxiosResponse<IResponse<ILoginResponse>>> => {
+  login = (
+    payload: ILogin,
+  ): Promise<AxiosResponse<IResponse<ILoginResponse>>> => {
     return this.post(`/auth/login`, payload);
   };
-  register = (payload: IRegister): Promise<AxiosResponse<IResponse<ILoginResponse>>> => {
+  register = (
+    payload: IRegister,
+  ): Promise<AxiosResponse<IResponse<ILoginResponse>>> => {
     return this.post(`/auth/register`, payload);
   };
   logout = (): Promise<AxiosResponse<IResponse<boolean>>> => {

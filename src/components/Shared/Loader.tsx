@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 interface ILoaderProps {
   className?: string;
@@ -6,8 +6,12 @@ interface ILoaderProps {
 
 const Loader = ({ className }: ILoaderProps) => {
   return (
-    <div className={cn('flex-center w-full', className)}>
-      <img className='size-6 invert dark:invert-0 animate-spin' src='/assets/icons/loader.svg' alt='loader' />
+    <div className={cn("flex-center w-full", className)}>
+      <img
+        className="size-6 animate-spin invert dark:invert-0"
+        src="/assets/icons/loader.svg"
+        alt="loader"
+      />
     </div>
   );
 };

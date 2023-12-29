@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -53,10 +53,10 @@
 
 @layer base {
   * {
-    @apply border-border box-border list-none p-0 m-0 scroll-smooth;
+    @apply m-0 box-border list-none scroll-smooth border-border p-0;
   }
   body {
-    @apply bg-background text-foreground min-h-dvh font-inter;
+    @apply min-h-dvh bg-background font-inter text-foreground;
   }
 }
 
@@ -132,24 +132,24 @@
 
   /* Invert */
   .invert-white {
-    @apply invert brightness-0 transition;
+    @apply brightness-0 invert transition;
   }
 
   .invert-black {
-    @apply invert brightness-100 transition;
+    @apply brightness-100 invert transition;
   }
 
   /* Flex */
   .flex-center {
-    @apply flex justify-center items-center;
+    @apply flex items-center justify-center;
   }
 
   .flex-between {
-    @apply flex justify-between items-center;
+    @apply flex items-center justify-between;
   }
 
   .flex-start {
-    @apply flex justify-start items-center;
+    @apply flex items-center justify-start;
   }
 
   /* Custom scrollbar */

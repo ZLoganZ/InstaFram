@@ -1,20 +1,24 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import PostForm from '@/components/Forms/Post/PostForm';
+import PostForm from "@/components/Forms/Post/PostForm";
 
 const CreatePost = () => {
   useEffect(() => {
-    document.title = 'Create Post - InstaFram';
+    document.title = "Create Post - InstaFram";
   }, []);
 
   return (
-    <div className='flex flex-1'>
-      <div className='flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14 custom-scrollbar'>
-        <div className='max-w-5xl flex-start gap-3 justify-start w-full'>
-          <img src='/assets/icons/add-post.svg' alt='create post' className='size-9' />
-          <h2 className='h3-bold md:h2-bold text-left w-full'>Create post</h2>
+    <div className="flex flex-1">
+      <div className="custom-scrollbar flex flex-1 flex-col items-center gap-10 overflow-scroll px-5 py-10 md:px-8 lg:p-14">
+        <div className="flex-start w-full max-w-5xl justify-start gap-3">
+          <img
+            src="/assets/icons/add-post.svg"
+            alt="create post"
+            className="size-9"
+          />
+          <h2 className="h3-bold md:h2-bold w-full text-left">Create post</h2>
         </div>
-        <PostForm action='create' />
+        <PostForm action="create" />
       </div>
     </div>
   );

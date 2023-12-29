@@ -1,16 +1,16 @@
-import { Outlet } from '@tanstack/react-router';
+import { Outlet } from "@tanstack/react-router";
 
-import TopBar from '@/components/Navbar/TopBar';
-import LeftSideBar from '@/components/Navbar/LeftSideBar';
-import BottomBar from '@/components/Navbar/BottomBar';
+import TopBar from "@/components/Navbar/TopBar";
+import LeftSideBar from "@/components/Navbar/LeftSideBar";
+import BottomBar from "@/components/Navbar/BottomBar";
 
 const MainLayout = () => {
   return (
-    <div className='w-full md:flex overflow-hidden'>
+    <div className="w-full overflow-hidden md:flex">
       <TopBar />
       <LeftSideBar />
 
-      <section className='flex flex-1 h-[calc(100%-160px)] md:h-full overflow-auto'>
+      <section className="flex h-[calc(100%-160px)] flex-1 overflow-auto md:h-full">
         <Outlet />
       </section>
 

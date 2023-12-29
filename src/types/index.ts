@@ -33,7 +33,7 @@ export type ISavedPost = {
   user: IUser;
 };
 
-export type IVisibility = 'Public' | 'Private' | 'Followers';
+export type IVisibility = "Public" | "Private" | "Followers";
 
 export type IPost = {
   _id: string;

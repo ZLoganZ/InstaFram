@@ -1,6 +1,6 @@
-import GridPostsList from '@/components/Post/GridPostsList';
-import Loader from '@/components/Shared/Loader';
-import { IPost } from '@/types';
+import GridPostsList from "@/components/Post/GridPostsList";
+import Loader from "@/components/Shared/Loader";
+import { IPost } from "@/types";
 
 interface ISearchResults {
   isFetching: boolean;
@@ -15,7 +15,9 @@ const SearchPostsResults = ({ isFetching, searchPosts }: ISearchResults) => {
       ) : searchPosts.length > 0 ? (
         <GridPostsList posts={searchPosts} showStats showUser />
       ) : (
-        <p className='text-[#5C5C7B] mt-10 text-center w-full'>No results found</p>
+        <p className="mt-10 w-full text-center text-[#5C5C7B]">
+          No results found
+        </p>
       )}
     </>
   );

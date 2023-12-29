@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
-import Loader from '@/components/Shared/Loader';
-import GridPostsList from '@/components/Post/GridPostsList';
-import { useGetLikedPostsByUserID } from '@/lib/hooks/query';
-import { useAuth } from '@/lib/hooks/useAuth';
+import Loader from "@/components/Shared/Loader";
+import GridPostsList from "@/components/Post/GridPostsList";
+import { useGetLikedPostsByUserID } from "@/lib/hooks/query";
+import { useAuth } from "@/lib/hooks/useAuth";
 
 const LikedPosts = () => {
   const [likedPostsRef, inLikedPostsView] = useInView({ threshold: 0 });
@@ -14,7 +14,7 @@ const LikedPosts = () => {
     isLoadingPosts,
     hasNextPosts,
     isFetchingNextPosts,
-    fetchNextPosts
+    fetchNextPosts,
   } = useGetLikedPostsByUserID(currentUser._id);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const LikedPosts = () => {
       {isLoadingPosts || !likedPosts ? (
         <Loader />
       ) : likedPosts.length === 0 ? (
-        <p className='text-[#5C5C7B]'>No available posts</p>
+        <p className="text-[#5C5C7B]">No available posts</p>
       ) : (
         <>
           <GridPostsList posts={likedPosts} showStats showUser />

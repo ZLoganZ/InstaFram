@@ -1,17 +1,29 @@
-import qs from 'qs';
-import { useRouterState, RouteApi } from '@tanstack/react-router';
-import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
+import qs from "qs";
+import { useRouterState, RouteApi } from "@tanstack/react-router";
+import {
+  InfiniteData,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 
-import { authService } from '@/services/AuthService';
-import { postService } from '@/services/PostService';
-import { userService } from '@/services/UserService';
-import { commentService } from '@/services/CommentService';
-import { IComment, ILogin, INewComment, INewPost, IRegister, IUpdatePost, IUpdateUser } from '@/types';
-import { HEADER, QUERY_KEYS, MUTATION_KEYS } from '@/lib/constants';
-import { parseFormData } from '@/lib/utils';
+import { authService } from "@/services/AuthService";
+import { postService } from "@/services/PostService";
+import { userService } from "@/services/UserService";
+import { commentService } from "@/services/CommentService";
+import {
+  IComment,
+  ILogin,
+  INewComment,
+  INewPost,
+  IRegister,
+  IUpdatePost,
+  IUpdateUser,
+} from "@/types";
+import { HEADER, QUERY_KEYS, MUTATION_KEYS } from "@/lib/constants";
+import { parseFormData } from "@/lib/utils";
 
 export const useSignin = () => {
-  const { redirect } = new RouteApi({ id: '/auth/signin' }).useSearch();
+  const { redirect } = new RouteApi({ id: "/auth/signin" }).useSearch();
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: async (payload: ILogin) => {
       const { data } = await authService.login(payload);
@@ -21,15 +33,15 @@ export const useSignin = () => {
       localStorage.setItem(HEADER.CLIENT_ID, data.user._id);
       localStorage.setItem(HEADER.ACCESSTOKEN, data.tokens.accessToken);
       localStorage.setItem(HEADER.REFRESHTOKEN, data.tokens.refreshToken);
-      window.location.replace(redirect || '/');
-    }
+      window.location.replace(redirect || "/");
+    },
   });
   return {
     signin: mutateAsync,
     isLoadingSignin: isPending,
     isSigninSuccess: isSuccess,
     isSigninError: isError,
-    errorSignin: error
+    errorSignin: error,
   };
 };
 
@@ -43,15 +55,15 @@ export const useSignup = () => {
       localStorage.setItem(HEADER.CLIENT_ID, data.user._id);
       localStorage.setItem(HEADER.ACCESSTOKEN, data.tokens.accessToken);
       localStorage.setItem(HEADER.REFRESHTOKEN, data.tokens.refreshToken);
-      window.location.replace('/');
-    }
+      window.location.replace("/");
+    },
   });
   return {
     signup: mutateAsync,
     isLoadingSignup: isPending,
     isSignupSuccess: isSuccess,
     isSignupError: isError,
-    errorSignup: error
+    errorSignup: error,
   };
 };
 
@@ -60,14 +72,14 @@ export const useCheckEmail = () => {
     mutationFn: async (email: string) => {
       const { data } = await authService.checkEmail(email);
       return data.metadata;
-    }
+    },
   });
   return {
     checkEmail: mutateAsync,
     isLoadingCheckEmail: isPending,
     isCheckEmailSuccess: isSuccess,
     isCheckEmailError: isError,
-    errorCheckEmail: error
+    errorCheckEmail: error,
   };
 };
 
@@ -76,46 +88,52 @@ export const useCheckEmailForgotPassword = () => {
     mutationFn: async (email: string) => {
       const { data } = await authService.checkEmailForgotPassword(email);
       return data.metadata;
-    }
+    },
   });
   return {
     checkEmailForgotPassword: mutateAsync,
     isLoadingCheckEmailForgotPassword: isPending,
     isCheckEmailForgotPasswordSuccess: isSuccess,
     isCheckEmailForgotPasswordError: isError,
-    errorCheckEmailForgotPassword: error
+    errorCheckEmailForgotPassword: error,
   };
 };
 
 export const useVerifyCode = () => {
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: async (payload: { email: string; code: string }) => {
-      const { data } = await authService.verifyCode(payload.email, payload.code);
+      const { data } = await authService.verifyCode(
+        payload.email,
+        payload.code,
+      );
       return data.metadata;
-    }
+    },
   });
   return {
     verifyCode: mutateAsync,
     isLoadingVerifyCode: isPending,
     isVerifyCodeSuccess: isSuccess,
     isVerifyCodeError: isError,
-    errorVerifyCode: error
+    errorVerifyCode: error,
   };
 };
 
 export const useResetPassword = () => {
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: async (payload: { email: string; password: string }) => {
-      const { data } = await authService.resetPassword(payload.email, payload.password);
+      const { data } = await authService.resetPassword(
+        payload.email,
+        payload.password,
+      );
       return data.metadata;
-    }
+    },
   });
   return {
     resetPassword: mutateAsync,
     isLoadingResetPassword: isPending,
     isResetPasswordSuccess: isSuccess,
     isResetPasswordError: isError,
-    errorResetPassword: error
+    errorResetPassword: error,
   };
 };
 
@@ -131,24 +149,26 @@ export const useSignout = () => {
       localStorage.removeItem(HEADER.REFRESHTOKEN);
 
       const { pathname, search, hash } = location;
-      const isRoot = pathname === '/';
+      const isRoot = pathname === "/";
 
-      const url = new URL('/signin', window.location.origin);
+      const url = new URL("/signin", window.location.origin);
       if (!isRoot) {
         url.search = qs.stringify({
-          redirect: `${pathname}${qs.stringify(search, { addQueryPrefix: true })}${hash}`
+          redirect: `${pathname}${qs.stringify(search, {
+            addQueryPrefix: true,
+          })}${hash}`,
         });
       }
 
       window.location.replace(url);
-    }
+    },
   });
   return {
     signout: mutateAsync,
     isLoadingSignout: isPending,
     isSignoutSuccess: isSuccess,
     isSignoutError: isError,
-    errorSignout: error
+    errorSignout: error,
   };
 };
 
@@ -161,16 +181,18 @@ export const useCreatePost = () => {
     },
     onSuccess: (newPost, _) => {
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID, newPost.creator.alias] });
+      queryCLient.invalidateQueries({
+        queryKey: [QUERY_KEYS.POSTS_BY_USER_ID, newPost.creator.alias],
+      });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
-    }
+    },
   });
   return {
     createPost: mutateAsync,
     isLoadingCreatePost: isPending,
     isCreatePostSuccess: isSuccess,
     isCreatePostError: isError,
-    errorCreatePost: error
+    errorCreatePost: error,
   };
 };
 
@@ -178,21 +200,28 @@ export const useUpdatePost = () => {
   const queryCLient = useQueryClient();
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: async (payload: IUpdatePost) => {
-      return await postService.updatePost(payload.postID, parseFormData(payload));
+      return await postService.updatePost(
+        payload.postID,
+        parseFormData(payload),
+      );
     },
     onSuccess: (_, post) => {
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POST, post.postID] });
+      queryCLient.invalidateQueries({
+        queryKey: [QUERY_KEYS.POST, post.postID],
+      });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID] });
+      queryCLient.invalidateQueries({
+        queryKey: [QUERY_KEYS.POSTS_BY_USER_ID],
+      });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
-    }
+    },
   });
   return {
     updatePost: mutateAsync,
     isLoadingUpdatePost: isPending,
     isUpdatePostSuccess: isSuccess,
     isUpdatePostError: isError,
-    errorUpdatePost: error
+    errorUpdatePost: error,
   };
 };
 
@@ -206,16 +235,18 @@ export const useDeletePost = () => {
     onSuccess: (_, postID) => {
       queryCLient.removeQueries({ queryKey: [QUERY_KEYS.POST, postID] });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID] });
+      queryCLient.invalidateQueries({
+        queryKey: [QUERY_KEYS.POSTS_BY_USER_ID],
+      });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
-    }
+    },
   });
   return {
     deletePost: mutateAsync,
     isLoadingDeletePost: isPending,
     isDeletePostSuccess: isSuccess,
     isDeletePostError: isError,
-    errorDeletePost: error
+    errorDeletePost: error,
   };
 };
 
@@ -228,16 +259,18 @@ export const useLikePost = () => {
     onSuccess: (_, postID) => {
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POST, postID] });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID] });
+      queryCLient.invalidateQueries({
+        queryKey: [QUERY_KEYS.POSTS_BY_USER_ID],
+      });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
-    }
+    },
   });
   return {
     likePost: mutateAsync,
     isLoadingLikePost: isPending,
     isLikePostSuccess: isSuccess,
     isLikePostError: isError,
-    errorLikePost: error
+    errorLikePost: error,
   };
 };
 
@@ -250,16 +283,18 @@ export const useSavePost = () => {
     onSuccess: (_, postID) => {
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POST, postID] });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID] });
+      queryCLient.invalidateQueries({
+        queryKey: [QUERY_KEYS.POSTS_BY_USER_ID],
+      });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
-    }
+    },
   });
   return {
     savePost: mutateAsync,
     isLoadingSavePost: isPending,
     isSavePostSuccess: isSuccess,
     isSavePostError: isError,
-    errorSavePost: error
+    errorSavePost: error,
   };
 };
 
@@ -273,18 +308,24 @@ export const useCommentPost = () => {
     onSuccess: (newComment, { post, replyTo }) => {
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POST, post] });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID, post] });
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.REPLIES_BY_COMMENT_ID, replyTo] });
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID, newComment.user.alias] });
+      queryCLient.invalidateQueries({
+        queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID, post],
+      });
+      queryCLient.invalidateQueries({
+        queryKey: [QUERY_KEYS.REPLIES_BY_COMMENT_ID, replyTo],
+      });
+      queryCLient.invalidateQueries({
+        queryKey: [QUERY_KEYS.POSTS_BY_USER_ID, newComment.user.alias],
+      });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
-    }
+    },
   });
   return {
     commentPost: mutateAsync,
     isLoadingCommentPost: isPending,
     isCommentPostSuccess: isSuccess,
     isCommentPostError: isError,
-    errorCommentPost: error
+    errorCommentPost: error,
   };
 };
 
@@ -295,16 +336,20 @@ export const useLikeComment = () => {
       return commentService.likeComment(commentID);
     },
     onSuccess: () => {
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID] });
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.REPLIES_BY_COMMENT_ID] });
-    }
+      queryCLient.invalidateQueries({
+        queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID],
+      });
+      queryCLient.invalidateQueries({
+        queryKey: [QUERY_KEYS.REPLIES_BY_COMMENT_ID],
+      });
+    },
   });
   return {
     likeComment: mutateAsync,
     isLoadingLikeComment: isPending,
     isLikeCommentSuccess: isSuccess,
     isLikeCommentError: isError,
-    errorLikeComment: error
+    errorLikeComment: error,
   };
 };
 
@@ -319,7 +364,9 @@ export const useUpdateComment = (commentID: string) => {
     onSuccess: (newComment, { post }) => {
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POST, post] });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID, newComment.user.alias] });
+      queryCLient.invalidateQueries({
+        queryKey: [QUERY_KEYS.POSTS_BY_USER_ID, newComment.user.alias],
+      });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
       queryCLient.setQueriesData<InfiniteData<IComment[], number>>(
         { queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID, post] },
@@ -327,26 +374,31 @@ export const useUpdateComment = (commentID: string) => {
           if (!oldData) return;
           const { pages, pageParams } = oldData;
 
-          const page = pages.find((page) => page.find((comment) => comment._id === newComment._id));
+          const page = pages.find((page) =>
+            page.find((comment) => comment._id === newComment._id),
+          );
           if (!page) return;
 
           return {
             pageParams,
             pages: [
-              [newComment, ...page.filter((comment) => comment._id !== newComment._id)],
-              ...pages.filter((page) => page !== page)
-            ]
+              [
+                newComment,
+                ...page.filter((comment) => comment._id !== newComment._id),
+              ],
+              ...pages.filter((page) => page !== page),
+            ],
           };
-        }
+        },
       );
-    }
+    },
   });
   return {
     updateComment: mutateAsync,
     isLoadingUpdateComment: isPending,
     isUpdateCommentSuccess: isSuccess,
     isUpdateCommentError: isError,
-    errorUpdateComment: error
+    errorUpdateComment: error,
   };
 };
 
@@ -360,7 +412,9 @@ export const useDeleteComment = () => {
     onSuccess: ({ post }, commentID) => {
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POST, post] });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS] });
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POSTS_BY_USER_ID] });
+      queryCLient.invalidateQueries({
+        queryKey: [QUERY_KEYS.POSTS_BY_USER_ID],
+      });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.TOP_POSTS] });
       queryCLient.setQueriesData<InfiniteData<IComment[], number>>(
         { queryKey: [QUERY_KEYS.COMMENTS_BY_POST_ID, post] },
@@ -368,26 +422,28 @@ export const useDeleteComment = () => {
           if (!oldData) return;
           const { pages, pageParams } = oldData;
 
-          const page = pages.find((page) => page.find((comment) => comment._id === commentID));
+          const page = pages.find((page) =>
+            page.find((comment) => comment._id === commentID),
+          );
           if (!page) return;
 
           return {
             pageParams,
             pages: [
               page.filter((comment) => comment._id !== commentID),
-              ...pages.filter((page) => page !== page)
-            ]
+              ...pages.filter((page) => page !== page),
+            ],
           };
-        }
+        },
       );
-    }
+    },
   });
   return {
     deleteComment: mutateAsync,
     isLoadingDeleteComment: isPending,
     isDeleteCommentSuccess: isSuccess,
     isDeleteCommentError: isError,
-    errorDeleteComment: error
+    errorDeleteComment: error,
   };
 };
 
@@ -395,19 +451,22 @@ export const useUpdateUser = () => {
   const queryCLient = useQueryClient();
   const { mutateAsync, isPending, isSuccess, isError, error } = useMutation({
     mutationFn: async (payload: IUpdateUser) => {
-      return (await userService.updateUser(parseFormData(payload))).data.metadata;
+      return (await userService.updateUser(parseFormData(payload))).data
+        .metadata;
     },
     onSuccess: (user) => {
-      queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.USER, user.alias] });
+      queryCLient.invalidateQueries({
+        queryKey: [QUERY_KEYS.USER, user.alias],
+      });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POPULAR_USERS] });
-    }
+    },
   });
   return {
     updateUser: mutateAsync,
     isLoadingUpdateUser: isPending,
     isUpdateUserSuccess: isSuccess,
     isUpdateUserError: isError,
-    errorUpdateUser: error
+    errorUpdateUser: error,
   };
 };
 
@@ -420,13 +479,13 @@ export const useFollowUser = () => {
     onSuccess: () => {
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.USER] });
       queryCLient.invalidateQueries({ queryKey: [QUERY_KEYS.POPULAR_USERS] });
-    }
+    },
   });
   return {
     followUser: mutateAsync,
     isLoadingFollowUser: isPending,
     isFollowUserSuccess: isSuccess,
     isFollowUserError: isError,
-    errorFollowUser: error
+    errorFollowUser: error,
   };
 };

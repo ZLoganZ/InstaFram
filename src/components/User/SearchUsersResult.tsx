@@ -1,6 +1,6 @@
-import Loader from '@/components/Shared/Loader';
-import GridUsersList from '@/components/User/GridUsersList';
-import { IUser } from '@/types';
+import Loader from "@/components/Shared/Loader";
+import GridUsersList from "@/components/User/GridUsersList";
+import { IUser } from "@/types";
 
 interface ISearchResults {
   isFetching: boolean;
@@ -15,7 +15,9 @@ const SearchUsersResults = ({ isFetching, searchUsers }: ISearchResults) => {
       ) : searchUsers.length > 0 ? (
         <GridUsersList users={searchUsers} />
       ) : (
-        <p className='text-[#5C5C7B] mt-10 text-center w-full'>No results found</p>
+        <p className="mt-10 w-full text-center text-[#5C5C7B]">
+          No results found
+        </p>
       )}
     </>
   );

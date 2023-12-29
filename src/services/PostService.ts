@@ -1,38 +1,57 @@
-import { AxiosResponse } from 'axios';
+import { AxiosResponse } from "axios";
 
-import BaseService from './BaseService';
-import { IPost, IResponse } from '@/types';
+import BaseService from "./BaseService";
+import { IPost, IResponse } from "@/types";
 
 class PostService extends BaseService {
   constructor() {
     super();
   }
 
-  getPosts = (pageParam: number): Promise<AxiosResponse<IResponse<IPost[]>>> => {
+  getPosts = (
+    pageParam: number,
+  ): Promise<AxiosResponse<IResponse<IPost[]>>> => {
     return this.get(`/posts?page=${pageParam}`);
   };
-  getPostsByUserID = (userID: string, pageParam: number): Promise<AxiosResponse<IResponse<IPost[]>>> => {
+  getPostsByUserID = (
+    userID: string,
+    pageParam: number,
+  ): Promise<AxiosResponse<IResponse<IPost[]>>> => {
     return this.get(`/posts/user/${userID}?page=${pageParam}`);
   };
-  getSavedPostsByUserID = (userID: string, pageParam: number): Promise<AxiosResponse<IResponse<IPost[]>>> => {
+  getSavedPostsByUserID = (
+    userID: string,
+    pageParam: number,
+  ): Promise<AxiosResponse<IResponse<IPost[]>>> => {
     return this.get(`/posts/saved/${userID}?page=${pageParam}`);
   };
-  getLikedPostsByUserID = (userID: string, pageParam: number): Promise<AxiosResponse<IResponse<IPost[]>>> => {
+  getLikedPostsByUserID = (
+    userID: string,
+    pageParam: number,
+  ): Promise<AxiosResponse<IResponse<IPost[]>>> => {
     return this.get(`/posts/liked/${userID}?page=${pageParam}`);
   };
   getPost = (postID: string): Promise<AxiosResponse<IResponse<IPost>>> => {
     return this.get(`/posts/${postID}`);
   };
-  getTopPosts = (pageParam: number, filter: string): Promise<AxiosResponse<IResponse<IPost[]>>> => {
+  getTopPosts = (
+    pageParam: number,
+    filter: string,
+  ): Promise<AxiosResponse<IResponse<IPost[]>>> => {
     return this.get(`/posts/top?page=${pageParam}&filter=${filter}`);
   };
-  getRelatedPosts = (postID: string): Promise<AxiosResponse<IResponse<IPost[]>>> => {
+  getRelatedPosts = (
+    postID: string,
+  ): Promise<AxiosResponse<IResponse<IPost[]>>> => {
     return this.get(`/posts/${postID}/related`);
   };
   createPost = (data: FormData): Promise<AxiosResponse<IResponse<IPost>>> => {
     return this.post(`/posts`, data);
   };
-  updatePost = (postID: string, data: FormData): Promise<AxiosResponse<IResponse<IPost>>> => {
+  updatePost = (
+    postID: string,
+    data: FormData,
+  ): Promise<AxiosResponse<IResponse<IPost>>> => {
     return this.put(`/posts/${postID}`, data);
   };
   deletePost = (postID: string): Promise<AxiosResponse<IResponse<IPost>>> => {
@@ -47,9 +66,11 @@ class PostService extends BaseService {
   searchPosts = (
     pageParam: number,
     search: string,
-    filter: string
+    filter: string,
   ): Promise<AxiosResponse<IResponse<IPost[]>>> => {
-    return this.get(`/posts/search?search=${search}&filter=${filter}&page=${pageParam}`);
+    return this.get(
+      `/posts/search?search=${search}&filter=${filter}&page=${pageParam}`,
+    );
   };
 }
 

@@ -1,7 +1,7 @@
-import { Link, useRouterState } from '@tanstack/react-router';
+import { Link, useRouterState } from "@tanstack/react-router";
 
-import { navbarLinks } from '@/lib/constants';
-import { cn } from '@/lib/utils';
+import { navbarLinks } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 const BottomBar = () => {
   const routerState = useRouterState();
@@ -9,24 +9,33 @@ const BottomBar = () => {
   const { pathname } = routerState.location;
 
   return (
-    <section className='z-50 flex-between w-full sticky bottom-0 rounded-t-[20px] bg-light-2 dark:bg-dark-2 px-5 py-4 md:hidden'>
+    <section className="flex-between sticky bottom-0 z-50 w-full rounded-t-[20px] bg-light-2 px-5 py-4 md:hidden dark:bg-dark-2">
       {navbarLinks.map((link) => {
         const isActive = pathname === link.route;
 
         return (
           <Link
             className={cn(
-              'flex-center flex-col gap-1 px-3 py-2 transition group hover:bg-primary rounded-lg',
-              isActive && 'bg-primary'
+              "flex-center group flex-col gap-1 rounded-lg px-3 py-2 transition hover:bg-primary",
+              isActive && "bg-primary",
             )}
             key={link.label}
-            to={link.route}>
+            to={link.route}
+          >
             <img
               src={link.imgURL}
               alt={link.label}
-              className={cn('size-5 group-hover:invert-white', isActive && 'invert-white')}
+              className={cn(
+                "group-hover:invert-white size-5",
+                isActive && "invert-white",
+              )}
             />
-            <p className={cn('tiny-medium text-dark-2 dark:text-light-2', isActive && 'invert-white')}>
+            <p
+              className={cn(
+                "tiny-medium text-dark-2 dark:text-light-2",
+                isActive && "invert-white",
+              )}
+            >
               {link.label}
             </p>
           </Link>

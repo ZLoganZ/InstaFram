@@ -1,15 +1,15 @@
-import { Outlet } from '@tanstack/react-router';
+import { Outlet } from "@tanstack/react-router";
 
 const AuthLayout = () => {
   return (
     <>
-      <section className='flex flex-1 justify-center items-center flex-col py-10'>
+      <section className="flex flex-1 flex-col items-center justify-center py-10">
         <Outlet />
       </section>
       <img
-        className='hidden lg:block h-dvh w-1/2 object-cover bg-no-repeat bg-center'
-        src='/assets/images/side-img.svg'
-        alt='side-image'
+        className="hidden h-dvh w-1/2 bg-center bg-no-repeat object-cover lg:block"
+        src="/assets/images/side-img.svg"
+        alt="side-image"
       />
     </>
   );

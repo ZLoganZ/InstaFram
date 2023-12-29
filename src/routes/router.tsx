@@ -1,6 +1,6 @@
-import { Router } from '@tanstack/react-router';
+import { Router } from "@tanstack/react-router";
 
-import { rootRoute, queryClient } from '@/routes/root.routes';
+import { rootRoute, queryClient } from "@/routes/root.routes";
 import {
   MainRoute,
   HomeRoute,
@@ -11,39 +11,53 @@ import {
   ProfileRoute,
   UserPostsRoute,
   LikedPostsRoute,
-  SavedPostsRoute
-} from '@/routes/private.routes';
+  SavedPostsRoute,
+} from "@/routes/private.routes";
 import {
   AuthRoute,
   SigninRoute,
   SignupRoute,
   NotFoundRoute,
   ForgotPasswordRoute,
-  ResetPasswordRoute
-} from '@/routes/public.routes';
+  ResetPasswordRoute,
+} from "@/routes/public.routes";
 
-import Loader from '@/components/Shared/Loader';
+import Loader from "@/components/Shared/Loader";
 
 const routeTree = rootRoute.addChildren([
-  AuthRoute.addChildren([SigninRoute, SignupRoute, ForgotPasswordRoute, ResetPasswordRoute]),
+  AuthRoute.addChildren([
+    SigninRoute,
+    SignupRoute,
+    ForgotPasswordRoute,
+    ResetPasswordRoute,
+  ]),
   MainRoute.addChildren([
     HomeRoute,
     ExploreRoute,
     PeopleRoute,
     CreatePostRoute,
     PostDetailsRoute,
-    ProfileRoute.addChildren([UserPostsRoute, LikedPostsRoute, SavedPostsRoute])
+    ProfileRoute.addChildren([
+      UserPostsRoute,
+      LikedPostsRoute,
+      SavedPostsRoute,
+    ]),
   ]),
-  NotFoundRoute
+  NotFoundRoute,
 ]);
 
 export const router = new Router({
   routeTree,
-  defaultPendingComponent: () => <Loader className='h-dvh' />,
-  context: { queryClient, userID: undefined!, userAlias: undefined!, verified: undefined! }
+  defaultPendingComponent: () => <Loader className="h-dvh" />,
+  context: {
+    queryClient,
+    userID: undefined!,
+    userAlias: undefined!,
+    verified: undefined!,
+  },
 });
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router;
   }

@@ -1,26 +1,36 @@
-import { z } from 'zod';
-import { useEffect, useState } from 'react';
-import { Link, useNavigate, RouteApi } from '@tanstack/react-router';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from "zod";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, RouteApi } from "@tanstack/react-router";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import Loader from '@/components/Shared/Loader';
-import { useCheckEmailForgotPassword, useVerifyCode } from '@/lib/hooks/mutation';
-import { ForgotPasswordSchema } from '@/lib/schema';
-import { ErrorResponse } from '@/types';
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import Loader from "@/components/Shared/Loader";
+import {
+  useCheckEmailForgotPassword,
+  useVerifyCode,
+} from "@/lib/hooks/mutation";
+import { ForgotPasswordSchema } from "@/lib/schema";
+import { ErrorResponse } from "@/types";
 
-const routeApi = new RouteApi({ id: '/auth/forgot' });
+const routeApi = new RouteApi({ id: "/auth/forgot" });
 
 const ForgotPasswordForm = () => {
   const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
     resolver: zodResolver(ForgotPasswordSchema),
     defaultValues: {
-      email: '',
-      code: ''
-    }
+      email: "",
+      code: "",
+    },
   });
 
   const navigate = useNavigate();
@@ -30,7 +40,8 @@ const ForgotPasswordForm = () => {
 
   const [showVerifyCode, setShowVerifyCode] = useState(false);
 
-  const { checkEmailForgotPassword, isLoadingCheckEmailForgotPassword } = useCheckEmailForgotPassword();
+  const { checkEmailForgotPassword, isLoadingCheckEmailForgotPassword } =
+    useCheckEmailForgotPassword();
   const { verifyCode, isLoadingVerifyCode } = useVerifyCode();
 
   const onSubmit = async (values: z.infer<typeof ForgotPasswordSchema>) => {
@@ -45,28 +56,28 @@ const ForgotPasswordForm = () => {
           window.crypto.getRandomValues(array);
           const token = Array.from(array)
             .map((n) => n.toString(16))
-            .join('');
+            .join("");
           navigate({
-            to: '/reset',
+            to: "/reset",
             search: {
               email: values.email,
-              token: token
+              token: token,
             },
-            replace: true
+            replace: true,
           });
         },
         onError: (error) => {
           const errorResponse = error as ErrorResponse;
           switch (errorResponse.response.data.message) {
-            case 'Code is invalid':
-              form.setError('code', {
-                message: 'Code is invalid'
+            case "Code is invalid":
+              form.setError("code", {
+                message: "Code is invalid",
               });
               break;
             default:
               break;
           }
-        }
+        },
       });
     } else {
       await checkEmailForgotPassword(values.email, {
@@ -76,41 +87,53 @@ const ForgotPasswordForm = () => {
         onError: (error) => {
           const errorResponse = error as ErrorResponse;
           switch (errorResponse.response.data.message) {
-            case 'Email is not exist':
-              form.setError('email', {
-                message: 'Email is not exist'
+            case "Email is not exist":
+              form.setError("email", {
+                message: "Email is not exist",
               });
               break;
             default:
               break;
           }
-        }
+        },
       });
     }
   };
 
   useEffect(() => {
-    document.title = 'Forgot password - InstaFram';
+    document.title = "Forgot password - InstaFram";
   }, []);
 
   return (
     <Form {...form}>
-      <div className='sm:w-[420px] flex-center flex-col'>
-        <div className='flex gap-1 items-center'>
-          <img src='/assets/images/logo.svg' alt='logo' className='size-9' />
-          <p className='font-mono h2-bold select-none'>InstaFram</p>
+      <div className="flex-center flex-col sm:w-[420px]">
+        <div className="flex items-center gap-1">
+          <img src="/assets/images/logo.svg" alt="logo" className="size-9" />
+          <p className="h2-bold select-none font-mono">InstaFram</p>
         </div>
-        <h2 className='h3-bold md:h2-bold pt-5 sm:pt-8'>Forgot your password</h2>
-        <p className='text-[#7878A3] small-medium md:base-regular'>Enter your email to reset your password</p>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-5 w-full mt-4'>
+        <h2 className="h3-bold md:h2-bold pt-5 sm:pt-8">
+          Forgot your password
+        </h2>
+        <p className="small-medium md:base-regular text-[#7878A3]">
+          Enter your email to reset your password
+        </p>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="mt-4 flex w-full flex-col gap-5"
+        >
           <FormField
             control={form.control}
-            name='email'
+            name="email"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type='email' placeholder='Your email' {...field} readOnly={showVerifyCode} />
+                  <Input
+                    type="email"
+                    placeholder="Your email"
+                    {...field}
+                    readOnly={showVerifyCode}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -119,31 +142,36 @@ const ForgotPasswordForm = () => {
 
           {showVerifyCode && (
             <>
-              <span className='text-center subtle-regular md:small-regular'>
+              <span className="subtle-regular md:small-regular text-center">
                 <p>
                   We just sent you a
-                  <span className='subtle-semibold md:small-semibold'> verification code</span> to your email.
+                  <span className="subtle-semibold md:small-semibold">
+                    {" "}
+                    verification code
+                  </span>{" "}
+                  to your email.
                 </p>
                 <p>
                   Please check your inbox. Can't find it?&nbsp;
                   <span
-                    className='cursor-pointer underline text-primary'
+                    className="cursor-pointer text-primary underline"
                     onClick={() => {
                       setShowVerifyCode(false);
                       form.reset();
-                    }}>
+                    }}
+                  >
                     Try again
                   </span>
                 </p>
               </span>
               <FormField
                 control={form.control}
-                name='code'
+                name="code"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Code</FormLabel>
                     <FormControl>
-                      <Input placeholder='Enter the code' {...field} />
+                      <Input placeholder="Enter the code" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -152,22 +180,28 @@ const ForgotPasswordForm = () => {
             </>
           )}
 
-          <Button type='submit' disabled={isLoadingVerifyCode || isLoadingCheckEmailForgotPassword}>
+          <Button
+            type="submit"
+            disabled={isLoadingVerifyCode || isLoadingCheckEmailForgotPassword}
+          >
             {isLoadingVerifyCode || isLoadingCheckEmailForgotPassword ? (
-              <div className='flex-center gap-2'>
+              <div className="flex-center gap-2">
                 <Loader />
-                {showVerifyCode ? 'Submitting...' : 'Verifying email...'}
+                {showVerifyCode ? "Submitting..." : "Verifying email..."}
               </div>
             ) : showVerifyCode ? (
-              'Submit'
+              "Submit"
             ) : (
-              'Verify email'
+              "Verify email"
             )}
           </Button>
 
-          <p className='small-regular md:base-regular text-dark-2 dark:text-light-2 text-center mt-2'>
+          <p className="small-regular md:base-regular mt-2 text-center text-dark-2 dark:text-light-2">
             Already remember your password?&nbsp;
-            <Link to='/signin' className='text-primary small-semibold md:base-semibold hover:underline'>
+            <Link
+              to="/signin"
+              className="small-semibold md:base-semibold text-primary hover:underline"
+            >
               Sign in
             </Link>
           </p>
