@@ -58,8 +58,8 @@ export const ResetPasswordRoute = new Route({
   getParentRoute: () => AuthRoute,
   validateSearch: (search) => resetSchema.parse(search),
   component: lazyRouteComponent(() => import('@/components/Forms/Auth/ResetPasswordForm')),
-  beforeLoad: async ({ context }) => {
-    if (!context.verified.isVerified) {
+  beforeLoad: async ({ context: { verified } }) => {
+    if (!verified.isVerified) {
       redirect({
         to: '/forgot',
         replace: true,
