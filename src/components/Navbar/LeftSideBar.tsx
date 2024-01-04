@@ -59,7 +59,11 @@ const LeftSideBar = () => {
                   isActive && "bg-primary",
                 )}
               >
-                <Link to={link.route} className="flex items-center gap-4 p-4">
+                <Link
+                  to={link.route}
+                  className="flex items-center gap-4 p-4"
+                  search={{}}
+                >
                   <img
                     src={link.imgURL}
                     alt={link.label}

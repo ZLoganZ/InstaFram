@@ -21,6 +21,7 @@ const BottomBar = () => {
             )}
             key={link.label}
             to={link.route}
+            search={{}}
           >
             <img
               src={link.imgURL}

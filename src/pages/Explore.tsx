@@ -62,12 +62,14 @@ const Explore = () => {
       navigate({
         search: (pre) => ({ ...pre, search: searchDebounce }),
         replace: true,
+        params: {},
       });
       searchInputRef.current = searchDebounce;
     } else if (searchDebounce === "") {
       navigate({
         search: (pre) => ({ ...pre, search: undefined }),
         replace: true,
+        params: {},
       });
     }
   }, [searchDebounce]);
@@ -145,6 +147,7 @@ const Explore = () => {
                 onClick={() =>
                   navigate({
                     search: (pre) => ({ ...pre, filter: filterValue }),
+                    params: {},
                   })
                 }
                 checked={filter === filterValue}
