@@ -215,8 +215,8 @@ export const SavedPostsRoute = new Route({
 });
 
 export const NotFoundProfileRoute = new Route({
-  path: "*",
-  getParentRoute: () => ProfileRoute,
+  path: "/$profileID/*",
+  getParentRoute: () => MainRoute,
   component: lazyRouteComponent(() => import("@/pages/NotFound")),
   wrapInSuspense: true,
 });

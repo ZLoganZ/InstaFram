@@ -42,8 +42,8 @@ const routeTree = rootRoute.addChildren([
       UserPostsRoute,
       LikedPostsRoute,
       SavedPostsRoute,
-      NotFoundProfileRoute,
     ]),
+    NotFoundProfileRoute,
   ]),
   NotFoundRoute,
 ]);
