@@ -10,7 +10,7 @@ export type AuthContextType = {
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export interface ErrorResponse extends Error {
+export type ErrorResponse = Error & {
   response: {
     data: {
       message: string;
@@ -18,7 +18,7 @@ export interface ErrorResponse extends Error {
     };
     status: number;
   };
-}
+};
 
 export type IUpdateUser = {
   name: string;
