@@ -12,6 +12,7 @@ import {
   UserPostsRoute,
   LikedPostsRoute,
   SavedPostsRoute,
+  NotFoundProfileRoute,
 } from "@/routes/private.routes";
 import {
   AuthRoute,
@@ -41,6 +42,7 @@ const routeTree = rootRoute.addChildren([
       UserPostsRoute,
       LikedPostsRoute,
       SavedPostsRoute,
+      NotFoundProfileRoute,
     ]),
   ]),
   NotFoundRoute,

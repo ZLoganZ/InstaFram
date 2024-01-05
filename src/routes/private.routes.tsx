@@ -213,3 +213,10 @@ export const SavedPostsRoute = new Route({
   },
   wrapInSuspense: true,
 });
+
+export const NotFoundProfileRoute = new Route({
+  path: "*",
+  getParentRoute: () => ProfileRoute,
+  component: lazyRouteComponent(() => import("@/pages/NotFound")),
+  wrapInSuspense: true,
+});
