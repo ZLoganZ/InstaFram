@@ -2,12 +2,12 @@ import { useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
 
 import Loader from "@/components/Shared/Loader";
+import HoverUser from "@/components/User/HoverUser";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { useLikeComment } from "@/lib/hooks/mutation";
 import { useGetRepliesByCommentID } from "@/lib/hooks/query";
 import { cn, getDateTimeToNow, getImageURL } from "@/lib/utils";
 import { IComment, IReplyTo } from "@/types";
-import HoverUser from "../User/HoverUser";
 
 interface ICommentProps {
   comment: IComment;
