@@ -24,10 +24,10 @@ const HoverUser = ({
   children,
   showFollowButton = false,
 }: IHoverUser) => {
-  const [open, setOpen] = useState(false);
+  const [enabled, setEnabled] = useState(false);
 
   const { currentUser, setUser } = useAuth();
-  const { user, isLoadingUser } = useGetUserByID(userID, open);
+  const { user, isLoadingUser } = useGetUserByID(userID, enabled);
 
   const { followUser, isLoadingFollowUser } = useFollowUser();
 
@@ -47,7 +47,7 @@ const HoverUser = ({
   };
 
   return (
-    <HoverCard openDelay={300} closeDelay={200} onOpenChange={setOpen}>
+    <HoverCard openDelay={300} closeDelay={200} onOpenChange={setEnabled}>
       <HoverCardTrigger asChild>{children}</HoverCardTrigger>
       <HoverCardContent className="w-full max-w-5xl">
         {isLoadingUser || !user ? (
