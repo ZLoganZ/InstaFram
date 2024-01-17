@@ -54,7 +54,7 @@ const CommentInput = ({
     <Form {...form}>
       <form
         className="flex-center w-full max-w-5xl gap-3 rounded-[2rem] border border-light-4 bg-light-2 
-        px-4 py-3 max-xs:flex-col dark:border-dark-4 dark:bg-dark-2"
+        px-4 py-3 dark:border-dark-4 dark:bg-dark-2 max-xs:flex-col"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FormField

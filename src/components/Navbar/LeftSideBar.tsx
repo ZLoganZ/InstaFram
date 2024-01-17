@@ -15,7 +15,7 @@ const LeftSideBar = () => {
   const { pathname } = routerState.location;
 
   return (
-    <nav className="hidden min-w-[270px] flex-col justify-between bg-light-2 px-6 py-10 md:flex dark:bg-dark-2">
+    <nav className="hidden min-w-[270px] flex-col justify-between bg-light-2 px-6 py-10 dark:bg-dark-2 md:flex">
       <div className="flex flex-col gap-11">
         <Link to="/" className="flex items-center gap-1">
           <img src="/assets/images/logo.svg" alt="logo" className="size-9" />

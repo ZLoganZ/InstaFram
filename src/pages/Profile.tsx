@@ -140,7 +140,7 @@ const Profile = () => {
             <div className="flex w-full max-w-5xl">
               <Link
                 className={cn(
-                  "flex-center w-full flex-1 gap-3 rounded-l-lg bg-light-2 py-4 xl:w-48 xl:flex-initial dark:bg-dark-2",
+                  "flex-center w-full flex-1 gap-3 rounded-l-lg bg-light-2 py-4 dark:bg-dark-2 xl:w-48 xl:flex-initial",
                   pathname === `/${profileID}` && "!bg-light-4 dark:!bg-dark-4",
                 )}
                 to="/$profileID"
@@ -155,7 +155,7 @@ const Profile = () => {
               </Link>
               <Link
                 className={cn(
-                  "flex-center w-full flex-1 gap-3 bg-light-2 py-4 xl:w-48 xl:flex-initial dark:bg-dark-2",
+                  "flex-center w-full flex-1 gap-3 bg-light-2 py-4 dark:bg-dark-2 xl:w-48 xl:flex-initial",
                   pathname === `/${profileID}/liked` &&
                     "!bg-light-4 dark:!bg-dark-4",
                 )}
@@ -171,7 +171,7 @@ const Profile = () => {
               </Link>
               <Link
                 className={cn(
-                  "flex-center w-full flex-1 gap-3 rounded-r-lg bg-light-2 py-4 xl:w-48 xl:flex-initial dark:bg-dark-2",
+                  "flex-center w-full flex-1 gap-3 rounded-r-lg bg-light-2 py-4 dark:bg-dark-2 xl:w-48 xl:flex-initial",
                   pathname === `/${profileID}/saved` &&
                     "!bg-light-4 dark:!bg-dark-4",
                 )}

@@ -9,7 +9,7 @@ const BottomBar = () => {
   const { pathname } = routerState.location;
 
   return (
-    <section className="flex-between sticky bottom-0 z-50 w-full rounded-t-[20px] bg-light-2 px-5 py-4 md:hidden dark:bg-dark-2">
+    <section className="flex-between sticky bottom-0 z-50 w-full rounded-t-[20px] bg-light-2 px-5 py-4 dark:bg-dark-2 md:hidden">
       {navbarLinks.map((link) => {
         const isActive = pathname === link.route;
 

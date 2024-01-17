@@ -23,7 +23,7 @@ const TopBar = () => {
   const { pathname } = routerState.location;
 
   return (
-    <section className="sticky top-0 z-50 w-full bg-light-2 md:hidden dark:bg-dark-2">
+    <section className="sticky top-0 z-50 w-full bg-light-2 dark:bg-dark-2 md:hidden">
       <div className="flex-between px-5 py-4">
         <Link to="/" className="flex items-center gap-1">
           <img src="/assets/images/logo.svg" alt="logo" className="size-9" />

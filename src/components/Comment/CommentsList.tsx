@@ -45,7 +45,7 @@ const CommentsList = ({
           No comments yet
         </p>
       ) : (
-        <ul className="custom-scrollbar flex max-h-[30rem] flex-col gap-5 overflow-auto rounded-2xl bg-light-2 p-5 lg:max-h-[35rem] dark:bg-dark-2">
+        <ul className="custom-scrollbar flex max-h-[30rem] flex-col gap-5 overflow-auto rounded-2xl bg-light-2 p-5 dark:bg-dark-2 lg:max-h-[35rem]">
           {comments.map((comment) => (
             <li key={comment._id}>
               <CommentCard

@@ -15,7 +15,7 @@ const PostCard = ({ post }: IPostCard) => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full max-w-screen-sm rounded-3xl border border-light-4 bg-light-2 p-5 lg:p-7 dark:border-dark-4 dark:bg-dark-2">
+    <div className="w-full max-w-screen-sm rounded-3xl border border-light-4 bg-light-2 p-5 dark:border-dark-4 dark:bg-dark-2 lg:p-7">
       <div className="flex-between">
         <div className="flex items-center gap-3">
           <HoverUser userID={post.creator._id} showFollowButton>

@@ -77,13 +77,13 @@ const PostDetails = () => {
               <p className="small-medium lg:base-medium">Back</p>
             </Button>
           </div>
-          <div className="flex w-full max-w-5xl flex-col rounded-[30px] border border-light-4 bg-light-2 xl:flex-row xl:rounded-l-[24px] dark:border-dark-4 dark:bg-dark-2">
+          <div className="flex w-full max-w-5xl flex-col rounded-[30px] border border-light-4 bg-light-2 dark:border-dark-4 dark:bg-dark-2 xl:flex-row xl:rounded-l-[24px]">
             <img
               src={getImageURL(post.image, "post")}
               alt="post"
-              className="h-80 rounded-t-[30px] bg-light-2 object-cover p-5 lg:h-[480px] xl:w-[48%] xl:rounded-l-[24px] xl:rounded-tr-none dark:bg-dark-2"
+              className="h-80 rounded-t-[30px] bg-light-2 object-cover p-5 dark:bg-dark-2 lg:h-[480px] xl:w-[48%] xl:rounded-l-[24px] xl:rounded-tr-none"
             />
-            <div className="flex flex-1 flex-col items-start gap-5 rounded-[30px] bg-light-2 p-8 lg:gap-7 dark:bg-dark-2">
+            <div className="flex flex-1 flex-col items-start gap-5 rounded-[30px] bg-light-2 p-8 dark:bg-dark-2 lg:gap-7">
               <div className="flex-between w-full">
                 <div className="flex items-center gap-3">
                   <HoverUser userID={post.creator._id} showFollowButton>
