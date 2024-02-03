@@ -73,9 +73,9 @@ const Home = () => {
           <Loader />
         ) : (
           <ul className="grid gap-6 2xl:grid-cols-2">
-            {topCreators.map((user) => (
-              <li key={user._id}>
-                <UserCard user={user} />
+            {topCreators.map((topCreator) => (
+              <li key={topCreator._id}>
+                <UserCard user={topCreator} />
               </li>
             ))}
           </ul>

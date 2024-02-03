@@ -51,23 +51,23 @@ const StatNumber = ({ dataList, textWhite, dataCount, type }: IStatNumber) => {
                   </p>
                 </li>
               ) : (
-                dataList.slice(0, 10).map((like) => (
-                  <li key={like._id}>
+                dataList.slice(0, 10).map((data) => (
+                  <li key={data._id}>
                     <Link
                       to="/$profileID"
-                      params={{ profileID: like.alias || like._id }}
+                      params={{ profileID: data.alias || data._id }}
                       className="group flex items-center gap-2.5"
                     >
                       <img
                         src={
-                          getImageURL(like.image, "miniAvatar") ||
+                          getImageURL(data.image, "miniAvatar") ||
                           "/assets/icons/profile-placeholder.svg"
                         }
                         alt="avatar"
                         className="size-8 rounded-full"
                       />
                       <p className="small-regular line-clamp-1 group-hover:underline">
-                        {like.name}
+                        {data.name}
                       </p>
                     </Link>
                   </li>

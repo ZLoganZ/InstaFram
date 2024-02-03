@@ -69,8 +69,8 @@ const PostForm = ({ post, action, setOpen }: IPostForm) => {
       const locationData = await fetch(
         "https://restcountries.com/v3.1/all?fields=name",
       ).then(async (res) => {
-        const data: ILocationResponse[] = await res.json();
-        return data
+        const locations: ILocationResponse[] = await res.json();
+        return locations
           .map((location) => {
             return {
               label: location.name.common,
