@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { useEffect } from "react";
-import { Link, useNavigate, RouteApi } from "@tanstack/react-router";
+import { Link, useNavigate, getRouteApi } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -20,7 +20,7 @@ import { useToast } from "@/lib/hooks/useToast";
 import { ResetPasswordSchema } from "@/lib/schema";
 import { ErrorResponse } from "@/types";
 
-const routeApi = new RouteApi({ id: "/auth/reset" });
+const routeApi = getRouteApi("/auth/reset");
 
 const ResetPasswordForm = () => {
   const { email } = routeApi.useSearch();

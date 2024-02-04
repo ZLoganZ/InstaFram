@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, Outlet, useRouterState, RouteApi } from "@tanstack/react-router";
+import {
+  Link,
+  Outlet,
+  useRouterState,
+  getRouteApi,
+} from "@tanstack/react-router";
 
 import NotFound from "@/pages/NotFound";
 
@@ -13,7 +18,7 @@ import { useFollowUser } from "@/lib/hooks/mutation";
 import { useAuth } from "@/lib/hooks/useAuth";
 import { cn, getImageURL } from "@/lib/utils";
 
-const routeApi = new RouteApi({ id: "/main/$profileID" });
+const routeApi = getRouteApi("/main/$profileID");
 
 const Profile = () => {
   const { profileID } = routeApi.useParams();

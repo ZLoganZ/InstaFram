@@ -1,4 +1,4 @@
-import { useNavigate, RouteApi } from "@tanstack/react-router";
+import { useNavigate, getRouteApi } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
@@ -19,7 +19,7 @@ import { useGetTopPosts, useSearchPosts } from "@/lib/hooks/query";
 import { useDebounce } from "@/lib/hooks/useDebounce";
 import { FILTERS } from "@/lib/constants";
 
-const routeApi = new RouteApi({ id: "/main/explore" });
+const routeApi = getRouteApi("/main/explore");
 
 const Explore = () => {
   const [postsRef, inPostsView] = useInView({ threshold: 0 });

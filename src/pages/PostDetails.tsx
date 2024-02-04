@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useRouter, RouteApi } from "@tanstack/react-router";
+import {
+  Link,
+  useNavigate,
+  useRouter,
+  getRouteApi,
+} from "@tanstack/react-router";
 
 import NotFound from "@/pages/NotFound";
 
@@ -20,7 +25,7 @@ import PostOptions from "@/components/Post/PostOptions";
 import CommentInput from "@/components/Forms/Comment/CommentInput";
 import { IReplyTo } from "@/types";
 
-const routeApi = new RouteApi({ id: "/main/post/$postID" });
+const routeApi = getRouteApi("/main/post/$postID");
 
 const PostDetails = () => {
   const { postID } = routeApi.useParams();

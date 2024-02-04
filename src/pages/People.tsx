@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { RouteApi, useNavigate } from "@tanstack/react-router";
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { useInView } from "react-intersection-observer";
 
 import { Label } from "@/components/ui/label";
@@ -10,7 +10,7 @@ import SearchUsersResults from "@/components/User/SearchUsersResult";
 import { useGetTopCreators, useSearchUsers } from "@/lib/hooks/query";
 import { useDebounce } from "@/lib/hooks/useDebounce";
 
-const routeApi = new RouteApi({ id: "/main/people" });
+const routeApi = getRouteApi("/main/people");
 
 const People = () => {
   const { search } = routeApi.useSearch();

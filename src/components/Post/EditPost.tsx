@@ -1,4 +1,4 @@
-import { RouteApi } from "@tanstack/react-router";
+import { getRouteApi } from "@tanstack/react-router";
 
 import Loader from "@/components/Shared/Loader";
 import PostForm from "@/components/Forms/Post/PostForm";
@@ -8,7 +8,7 @@ interface IEditPost {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const routeApi = new RouteApi({ id: "/main/post/$postID" });
+const routeApi = getRouteApi("/main/post/$postID");
 
 const EditPost = ({ setOpen }: IEditPost) => {
   const { postID } = routeApi.useParams();

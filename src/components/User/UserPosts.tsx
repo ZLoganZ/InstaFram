@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-import { RouteApi } from "@tanstack/react-router";
+import { getRouteApi } from "@tanstack/react-router";
 
 import Loader from "@/components/Shared/Loader";
 import GridPostsList from "@/components/Post/GridPostsList";
 import { useGetPostsByUserID } from "@/lib/hooks/query";
 
-const routeApi = new RouteApi({ id: "/main/$profileID/" });
+const routeApi = getRouteApi("/main/$profileID/");
 
 const UserPosts = () => {
   const [postsRef, inPostsView] = useInView({ threshold: 0 });

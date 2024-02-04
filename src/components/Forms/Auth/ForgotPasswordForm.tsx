@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, RouteApi } from "@tanstack/react-router";
+import { Link, useNavigate, getRouteApi } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -22,7 +22,7 @@ import {
 import { ForgotPasswordSchema } from "@/lib/schema";
 import { ErrorResponse } from "@/types";
 
-const routeApi = new RouteApi({ id: "/auth/forgot" });
+const routeApi = getRouteApi("/auth/forgot");
 
 const ForgotPasswordForm = () => {
   const form = useForm<z.infer<typeof ForgotPasswordSchema>>({
