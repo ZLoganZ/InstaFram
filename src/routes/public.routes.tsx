@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { Route, lazyRouteComponent, redirect } from "@tanstack/react-router";
+import {
+  lazyRouteComponent,
+  redirect,
+  createRoute,
+} from "@tanstack/react-router";
 
 import { rootRoute } from "@/routes/root.routes";
 
@@ -14,7 +18,7 @@ const resetSchema = z.object({
   token: z.string().optional(),
 });
 
-export const AuthRoute = new Route({
+export const AuthRoute = createRoute({
   id: "auth",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("@/layouts/AuthLayout")),
@@ -31,7 +35,7 @@ export const AuthRoute = new Route({
   wrapInSuspense: true,
 });
 
-export const SigninRoute = new Route({
+export const SigninRoute = createRoute({
   path: "/signin",
   getParentRoute: () => AuthRoute,
   validateSearch: (search) => redirectSchema.parse(search),
@@ -41,7 +45,7 @@ export const SigninRoute = new Route({
   wrapInSuspense: true,
 });
 
-export const SignupRoute = new Route({
+export const SignupRoute = createRoute({
   path: "/signup",
   getParentRoute: () => AuthRoute,
   component: lazyRouteComponent(
@@ -50,7 +54,7 @@ export const SignupRoute = new Route({
   wrapInSuspense: true,
 });
 
-export const ForgotPasswordRoute = new Route({
+export const ForgotPasswordRoute = createRoute({
   path: "/forgot",
   getParentRoute: () => AuthRoute,
   component: lazyRouteComponent(
@@ -59,7 +63,7 @@ export const ForgotPasswordRoute = new Route({
   wrapInSuspense: true,
 });
 
-export const ResetPasswordRoute = new Route({
+export const ResetPasswordRoute = createRoute({
   path: "/reset",
   getParentRoute: () => AuthRoute,
   validateSearch: (search) => resetSchema.parse(search),
@@ -78,7 +82,7 @@ export const ResetPasswordRoute = new Route({
   wrapInSuspense: true,
 });
 
-export const NotFoundRoute = new Route({
+export const NotFoundRoute = createRoute({
   path: "*",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("@/pages/NotFound")),

@@ -1,4 +1,4 @@
-import { Router } from "@tanstack/react-router";
+import { createRouter } from "@tanstack/react-router";
 
 import { rootRoute, queryClient } from "@/routes/root.routes";
 import {
@@ -48,7 +48,7 @@ const routeTree = rootRoute.addChildren([
   NotFoundRoute,
 ]);
 
-export const router = new Router({
+export const router = createRouter({
   routeTree,
   defaultPendingComponent: () => <Loader className="h-dvh" />,
   context: {

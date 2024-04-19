@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import {
   Outlet,
-  rootRouteWithContext,
+  createRootRouteWithContext,
   useRouterState,
   ScrollRestoration,
 } from "@tanstack/react-router";
@@ -113,7 +113,7 @@ const LoadingBar = ({
   );
 };
 
-export const rootRoute = rootRouteWithContext<{
+export const rootRoute = createRootRouteWithContext<{
   queryClient: QueryClient;
   userID: string;
   userAlias: string;

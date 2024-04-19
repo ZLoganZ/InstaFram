@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { Route, lazyRouteComponent, redirect } from "@tanstack/react-router";
+import {
+  lazyRouteComponent,
+  redirect,
+  createRoute,
+} from "@tanstack/react-router";
 
 import { rootRoute } from "@/routes/root.routes";
 
@@ -24,7 +28,7 @@ const searchQuerySchema = z.object({
   filter: z.string().default("All"),
 });
 
-export const MainRoute = new Route({
+export const MainRoute = createRoute({
   id: "main",
   getParentRoute: () => rootRoute,
   component: lazyRouteComponent(() => import("@/layouts/MainLayout")),
@@ -42,7 +46,7 @@ export const MainRoute = new Route({
   wrapInSuspense: true,
 });
 
-export const HomeRoute = new Route({
+export const HomeRoute = createRoute({
   path: "/",
   getParentRoute: () => MainRoute,
   component: lazyRouteComponent(() => import("@/pages/Home")),
@@ -59,7 +63,7 @@ export const HomeRoute = new Route({
   wrapInSuspense: true,
 });
 
-export const ExploreRoute = new Route({
+export const ExploreRoute = createRoute({
   path: "/explore",
   getParentRoute: () => MainRoute,
   validateSearch: (search) => searchQuerySchema.parse(search),
@@ -82,7 +86,7 @@ export const ExploreRoute = new Route({
   wrapInSuspense: true,
 });
 
-export const PeopleRoute = new Route({
+export const PeopleRoute = createRoute({
   path: "/people",
   getParentRoute: () => MainRoute,
   component: lazyRouteComponent(() => import("@/pages/People")),
@@ -98,14 +102,14 @@ export const PeopleRoute = new Route({
   wrapInSuspense: true,
 });
 
-export const CreatePostRoute = new Route({
+export const CreatePostRoute = createRoute({
   path: "/posts/create",
   getParentRoute: () => MainRoute,
   component: lazyRouteComponent(() => import("@/components/Post/CreatePost")),
   wrapInSuspense: true,
 });
 
-export const PostDetailsRoute = new Route({
+export const PostDetailsRoute = createRoute({
   path: "/post/$postID",
   getParentRoute: () => MainRoute,
   parseParams: (params) => ({ postID: z.string().parse(params.postID) }),
@@ -123,7 +127,7 @@ export const PostDetailsRoute = new Route({
   wrapInSuspense: true,
 });
 
-export const ProfileRoute = new Route({
+export const ProfileRoute = createRoute({
   path: "/$profileID",
   getParentRoute: () => MainRoute,
   parseParams: (params) => ({ profileID: z.string().parse(params.profileID) }),
@@ -139,7 +143,7 @@ export const ProfileRoute = new Route({
   wrapInSuspense: true,
 });
 
-export const UserPostsRoute = new Route({
+export const UserPostsRoute = createRoute({
   path: "/",
   getParentRoute: () => ProfileRoute,
   component: lazyRouteComponent(() => import("@/components/User/UserPosts")),
@@ -154,7 +158,7 @@ export const UserPostsRoute = new Route({
   wrapInSuspense: true,
 });
 
-export const LikedPostsRoute = new Route({
+export const LikedPostsRoute = createRoute({
   path: "liked",
   getParentRoute: () => ProfileRoute,
   component: lazyRouteComponent(() => import("@/components/User/LikedPosts")),
@@ -184,7 +188,7 @@ export const LikedPostsRoute = new Route({
   wrapInSuspense: true,
 });
 
-export const SavedPostsRoute = new Route({
+export const SavedPostsRoute = createRoute({
   path: "saved",
   getParentRoute: () => ProfileRoute,
   component: lazyRouteComponent(() => import("@/components/User/SavedPosts")),
@@ -214,7 +218,7 @@ export const SavedPostsRoute = new Route({
   wrapInSuspense: true,
 });
 
-export const NotFoundProfileRoute = new Route({
+export const NotFoundProfileRoute = createRoute({
   path: "/$profileID/*",
   getParentRoute: () => MainRoute,
   component: lazyRouteComponent(() => import("@/pages/NotFound")),
